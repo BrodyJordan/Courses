@@ -29,3 +29,5 @@ General structure of my courses:
 `-- Course Y/
     ...
 ```
+
+Each .tex document is built using pdfTeX in a .tmp directory (hidden in .gitignore), then the PDF is moved to the root directory of the .tex file.
