@@ -1,0 +1,42 @@
+{
+    "CSCE-636": {
+        "name": "Deep Learning",
+        "description": "Basic concepts in neural computing; functional equivalence and convergence properties of neural network models; associative memory models; associative, competitive and adaptive resonance models of adaptation and learning; selective applications of neural networks to vision, speech, motor control and planning; neural network modeling environments.",
+        "instructor": "Dr. Anxiao Jiang",
+        "semester": "Fall 2025",
+        "lectureTime": "ONLINE",
+        "lectureLocation": "ONLINE",
+        "assignments": [],
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\"
+    },
+    "ECEN-601": {
+        "name": "Mathematical Methods in Signal Processing",
+        "description": "Representations and algorithms for signal processing; linear algebra, vector spaces, normed and inner product spaces; projection, orthogonalization, rank-nullity theorem; matrix representations, singular value decomposition; sampling, Fourier analysis, spectral methods; statistical signal processing and linear estimation.",
+        "instructor": "Dr. Krishna Narayanan",
+        "semester": "Fall 2025",
+        "lectureTime": "TTh 2:20pm - 3:35pm",
+        "lectureLocation": "ETB 1003",
+        "assignments": [],
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\"
+    },
+    "ECEN-629": {
+        "name": "Applied Convex Optimization",
+        "description": "Introduction to convex optimization including convex set, convex functions, convex optimization problems, KKT conditions and duality, unconstrained optimization, and interior-point methods for constrained optimization; applications in information science, digital systems, networks and learning.",
+        "instructor": "Dr. Chao Tian",
+        "semester": "Fall 2025",
+        "lectureTime": "TTh 12:45pm - 2:00pm",
+        "lectureLocation": "ETB 1003",
+        "assignments": [],
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\"
+    },
+    "ECEN-635": {
+        "name": "Electromagnetic Theory",
+        "description": "Maxwells equations, boundary conditions, Poyntings theorem, electromagnetic potentials, Greens functions, Helmholtzs equation, field equivalence theorems; applications to problems involving transmission scattering and diffraction of electromagnetic waves.",
+        "instructor": "Dr. Robert Nevels",
+        "semester": "Fall 2025",
+        "lectureTime": "ONLINE",
+        "lectureLocation": "ONLINE",
+        "assignments": [],
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\"
+    }
+}
