@@ -31,3 +31,7 @@ General structure of my courses:
 ```
 
 Each .tex document is built using pdfTeX in a .tmp directory (hidden in .gitignore), then the PDF is moved to the root directory of the .tex file.
+
+## To Do
+1. Improve .tex templates by converting them to .sty files
+2. Fetch color information from courses.json
