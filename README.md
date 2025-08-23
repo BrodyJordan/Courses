@@ -26,6 +26,6 @@ General structure of my courses:
 |   `-- Assignments/
 |       |-- Homework X/
 |       `-- Project X/
-`-- Course Y
+`-- Course Y/
     ...
 ```
