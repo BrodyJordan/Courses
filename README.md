@@ -19,7 +19,7 @@ General structure of my courses:
 |   |   |-- Course X.tex
 |   |   |-- Course X.pdf
 |   |   |-- Assets/
-|   |       `-- cover.svg
+|   |   |   `-- cover.svg
 |   |   `-- Chapters/
 |   |       |-- acknowledgement.tex
 |   |       `-- *.tex
