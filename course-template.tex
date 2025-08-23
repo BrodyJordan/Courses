@@ -1,0 +1,121 @@
+% ===============================
+% course-template.tex
+% ===============================
+
+\documentclass[11pt, oneside]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[letterpaper,top=1in]{geometry}
+\usepackage{titling}
+\usepackage{setspace}
+\usepackage[inkscapearea=page, inkscapepath=svgdir]{svg}
+\usepackage{amsmath}
+
+% ==============================================================
+% MODULAR VARIABLES (set in main file before \input{course-template.tex})
+% ==============================================================
+
+\providecommand{\courseNumber}{ECEN-XXX}
+\providecommand{\studentName}{Brody Jordan}
+\providecommand{\coverImage}{Assets/cover.svg}
+\providecommand{\universityShort}{TAMU}
+\providecommand{\universityLong}{Texas A\&M University}
+\providecommand{\acknowledgements}{Chapters/acknowledgement.tex}
+\providecommand{\bgColor}{EAF4FF}
+\providecommand{\fgColor}{5D7A94}
+
+% ==============================================================
+
+\usepackage{jsonparse}
+
+\JSONParseFromFile{\courseData}{C:/Users/bljor/Sync/Courses/courses.json}
+
+\providecommand{\courseTitle}{\JSONParseValue{\courseData}{\courseNumber.name}}
+\providecommand{\courseDescription}{\JSONParseValue{\courseData}{\courseNumber.description}}
+\providecommand{\courseInstructor}{\JSONParseValue{\courseData}{\courseNumber.instructor}}
+\providecommand{\courseLocation}{\JSONParseValue{\courseData}{\courseNumber.lectureLocation}}
+\providecommand{\courseTime}{\JSONParseValue{\courseData}{\courseNumber.lectureTime}}
+\providecommand{\courseSemester}{\JSONParseValue{\courseData}{\courseNumber.semester}}
+% \providecommand{\colorBG}{\JSONParseValue{\courseData}{\courseNumber.colorBG}}
+% \providecommand{\colorFG}{\JSONParseValue{\courseData}{\courseNumber.colorFG}}
+
+% ==============================================================
+
+% Define a custom command for the source text on the title page
+\newcommand{\source}[1]{\large{#1}}
+
+% ==============================================================
+
+\usepackage[svgnames]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{fontawesome7}
+
+\definecolor{bgc}{HTML}{\bgColor}
+\definecolor{fgc}{HTML}{\fgColor}
+
+\settowidth{\labelwidth}{\textbf{Instructor:}}
+
+% 2. Create a length for the icons (this is the new part).
+\newlength{\iconwidth}
+\settowidth{\iconwidth}{\faChalkboardUser} % Measure the widest icon
+
+
+% --- TCOLORBOX DEFINITION ---
+\newtcolorbox{coursetbox}[1][]{
+    enhanced,
+    colback=bgc,
+    colframe=fgc!70, 
+    coltitle=fgc,    
+    fonttitle=\bfseries,
+    attach boxed title to top left={xshift=10mm, yshift=-2mm},
+    boxed title style={colback=white, arc=1.5mm, boxrule=0.5pt},
+    arc=3mm,           
+    boxrule=0.5pt,     
+    drop shadow={fgc!30, opacity=0.5}, 
+    #1
+}
+
+% ==============================================================
+% BEGIN DOCUMENT
+% ==============================================================
+\begin{document}
+
+% --- FRONT MATTER ---
+\frontmatter
+
+% --- TITLE PAGE ---
+\begin{titlepage}
+    \centering
+    \vspace*{2.33cm}
+    \noindent\rule{\linewidth}{1pt}\vspace*{10pt}\\
+    \textbf{\Huge \courseTitle}\\
+    \vspace*{15pt}\textbf{\small \universityShort\ \courseNumber}\\
+    \noindent\rule{\linewidth}{1pt}\vspace*{10pt}\\
+    \vspace*{10mm}
+    \source{\Large \studentName}\par
+    \vspace{1mm}
+    \source{\small \courseSemester}\par
+	\vspace{15mm}
+	\includesvg[width=0.8\textwidth]{\coverImage}
+\end{titlepage}
+
+\input{\acknowledgements}
+\vspace*{\fill}
+\begin{coursetbox}[title=\JSONParseValue{\courseData}{\courseNumber.name} (\courseNumber)]
+    \begin{tabularx}{\linewidth}{@{} l X @{}}
+        \makebox[\iconwidth]{\faChalkboardUser}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Instructor:}} & \JSONParseValue{\courseData}{\courseNumber.instructor} \\
+        \makebox[\iconwidth]{\faCalendar}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Semester:}}   & \JSONParseValue{\courseData}{\courseNumber.semester} \\
+        \makebox[\iconwidth]{\faClock}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Time:}}         & \JSONParseValue{\courseData}{\courseNumber.lectureTime} \\
+        \makebox[\iconwidth]{\faMapLocationDot}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Location:}}   & \JSONParseValue{\courseData}{\courseNumber.lectureLocation}
+    \end{tabularx}
+\tcblower
+    \textbf{Description:} \JSONParseValue{\courseData}{\courseNumber.description}
+\end{coursetbox}
+
+\setstretch{1.2}
+\tableofcontents
+\setstretch{1.0}
+
