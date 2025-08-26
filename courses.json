@@ -7,7 +7,8 @@
         "lectureTime": "ONLINE",
         "lectureLocation": "ONLINE",
         "assignments": [],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\"
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
+		"noteFile": "DeepLearning.tex"
     },
     "ECEN-601": {
         "name": "Mathematical Methods in Signal Processing",
@@ -17,7 +18,8 @@
         "lectureTime": "TTh 2:20pm - 3:35pm",
         "lectureLocation": "ETB 1003",
         "assignments": [],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\"
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
+		"noteFile": "MathMethods.tex"
     },
     "ECEN-629": {
         "name": "Applied Convex Optimization",
@@ -27,7 +29,8 @@
         "lectureTime": "TTh 12:45pm - 2:00pm",
         "lectureLocation": "ETB 1003",
         "assignments": [],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\"
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
+		"noteFile": "ConvexOptimization.tex"
     },
     "ECEN-635": {
         "name": "Electromagnetic Theory",
@@ -37,6 +40,7 @@
         "lectureTime": "ONLINE",
         "lectureLocation": "ONLINE",
         "assignments": [],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\"
+        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
+		"noteFile": "ElectromagneticTheory.tex"
     }
 }
