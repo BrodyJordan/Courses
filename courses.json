@@ -6,9 +6,18 @@
         "semester": "Fall 2025",
         "lectureTime": "ONLINE",
         "lectureLocation": "ONLINE",
-        "assignments": [],
+        "assignments": [
+            {
+                "name": "Homework 1",
+                "dueDate": "08/28/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 1",
+                "file": "CSCE-636 - Homework 1 - Brody Jordan.tex",
+                "id": "1756273273927",
+                "completed": false
+            }
+        ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
-		"noteFile": "DeepLearning.tex"
+        "noteFile": "DeepLearning.tex"
     },
     "ECEN-601": {
         "name": "Mathematical Methods in Signal Processing",
@@ -19,7 +28,7 @@
         "lectureLocation": "ETB 1003",
         "assignments": [],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
-		"noteFile": "MathMethods.tex"
+        "noteFile": "MathMethods.tex"
     },
     "ECEN-629": {
         "name": "Applied Convex Optimization",
@@ -30,7 +39,7 @@
         "lectureLocation": "ETB 1003",
         "assignments": [],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
-		"noteFile": "ConvexOptimization.tex"
+        "noteFile": "ConvexOptimization.tex"
     },
     "ECEN-635": {
         "name": "Electromagnetic Theory",
@@ -41,6 +50,6 @@
         "lectureLocation": "ONLINE",
         "assignments": [],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
-		"noteFile": "ElectromagneticTheory.tex"
+        "noteFile": "ElectromagneticTheory.tex"
     }
 }

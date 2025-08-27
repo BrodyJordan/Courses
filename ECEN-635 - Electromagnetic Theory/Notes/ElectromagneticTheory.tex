@@ -1,23 +1,30 @@
+% =======================================
 % !TEX root = ./ElectromagneticTheory.tex
+% =======================================
 
-% ===============================
-% ElectromagneticTheory.tex
-% ===============================
+\documentclass[11pt, oneside]{book}
 
-\def\courseNumber{ECEN-635}
-\def\coverImage{Assets/cover.svg}
-\def\acknowledgement{Chapters/acknowledgement.tex}
-\def\bgColor{EAEAF7}
-\def\fgColor{6A608B}
+\usepackage[
+    courseNumber=ECEN-635,
+    coverImage=Assets/cover.svg,
+    acknowledgements=Chapters/acknowledgement.tex,
+    bgColor=EAEAF7,
+    fgColor=6A608B
+]{C:/Users/bljor/Sync/Courses/coursetemplate}
 
-\input{C:/Users/bljor/Sync/Courses/course-template.tex}
+\usepackage{ElectromagneticTheory}
 
+\begin{document}
+
+\frontmatter
+\makecoursetitle
 \mainmatter
 
 % ===============================
 \input{Chapters/introduction.tex}
 
 % ===============================
+
 \backmatter
 \addcontentsline{toc}{chapter}{Bibliography}
 % \bibliographystyle{plain}

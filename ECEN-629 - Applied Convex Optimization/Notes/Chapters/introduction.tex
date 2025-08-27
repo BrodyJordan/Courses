@@ -1,2 +1,65 @@
+% !TEX root = ../ConvexOptimization.tex
+
 \chapter{Introduction}
-Hey!
+Optimization. Intuitively, we encounter these problems quite often in our lives. 
+
+\[
+\text{minimize } f(x) \text{ subject to } f_i(x) \leq b_i, \quad i=1,\dots,n
+\]
+
+where $x=(x_1, \dots, x_n)$
+$f_0: \mathbb{R}^n \to \mathbb{R}$ is the objective function
+$f_i: \mathbb{R}^n \to \mathbb{R}$ are the constraint functions
+
+the optimal solution $x^*$ gives the smallest value of $f_0$ that satisfies the constraints.
+
+And exercise: aim to balance time spent studying for final exams.
+
+\[
+\text{maximize } t_1 \alpha_1 + t_2 \alpha_2 + t_3 \alpha_3 \\
+\text{ subject to } 10d \geq t_1 \geq 0 \\
+\dots
+t_1 + t_2 + t_3 = 14d
+\]
+
+Optimization methods: least squares
+
+\[
+\text{minimize } ||Ax - b||^2_2
+\] has analytical solution
+
+\[
+x^* = (A^T A)^{-1} A^T b
+\]
+
+Optimization methods: linear programming
+
+\[
+\text{minimize } c^T x
+\]
+subject to
+\[
+a_i^T x \leq b_i, \quad i=1,\dots,m
+\] has no analytical solution
+
+Optimization methods: convex optimization 
+
+\[
+\text{minimize } f_0(x) 
+\]
+subject to
+\[
+f_i(x) \leq b_i, \quad i=1,\dots,m
+\] has no analytical solution. often difficult to recognize.
+
+Example: $m$ lamps illuminating $n$ patches
+
+intensity $I_k$ at patch $k$ depends on lamp powers $p_j$
+\[
+I_k = \sum_{j=1}^m a_{kj} p_j \quad a_{kj}^{-2} \text{max} \{\cos \theta_{kj}, 0\}
+\]
+
+Want to minimize
+\[
+|\log I_k - \log I_\text{des}|
+\]

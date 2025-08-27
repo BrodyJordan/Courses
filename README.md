@@ -11,7 +11,7 @@ General structure of my courses:
 |
 |-- courses.json
 |-- assignment-template.tex
-|-- course-template.tex
+|-- coursetemplate.sty
 |--
 |-- Course X/
 |   |-- Syllabus.pdf

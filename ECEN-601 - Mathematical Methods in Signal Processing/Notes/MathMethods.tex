@@ -1,22 +1,27 @@
+% ===============================
 % !TEX root = ./MathMethods.tex
-
-% ===============================
-% MathMethods.tex
 % ===============================
 
-\def\courseNumber{ECEN-601}
-\def\coverImage{Assets/cover.svg}
-\def\acknowledgement{Chapters/acknowledgement.tex}
-\def\bgColor{E0F2F1}
-\def\fgColor{4A7C77}
+\documentclass[11pt, oneside]{book}
 
-\input{C:/Users/bljor/Sync/Courses/course-template.tex}
+\usepackage[
+    courseNumber=ECEN-601,
+    coverImage=Assets/cover.svg,
+    acknowledgements=Chapters/acknowledgement.tex,
+    bgColor=E0F2F1,
+    fgColor=4A7C77
+]{C:/Users/bljor/Sync/Courses/coursetemplate}
 
+\usepackage{MathMethods}
+
+\begin{document}
+
+\frontmatter
+\makecoursetitle
 \mainmatter
 
 % ===============================
 \input{Chapters/introduction.tex}
-
 
 % ===============================
 
