@@ -1,0 +1,19 @@
+% ===============================
+% ConvexOptimization.sty
+% ===============================
+
+\ProvidesPackage{ConvexOptimization}[]
+
+\RequirePackage{pgfplots}
+\RequirePackage[labelfont=bf]{caption}
+
+\newcommand{\keyword}[1]{\marginpar{\textbf{#1}}\textbf{#1}}
+\setcounter{secnumdepth}{3}
+
+\newcommand{\opt}[4]{%
+    \begin{aligned}
+        & \underset{#2}{\operatorname{#1}} & & #3 \\
+        & \text{subject to} & & \begin{aligned}[t] #4 \end{aligned}
+    \end{aligned}
+}
+
