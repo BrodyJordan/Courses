@@ -10,7 +10,7 @@ General structure of my courses:
 .
 |
 |-- courses.json
-|-- assignment-template.tex
+|-- assignment.sty
 |-- coursetemplate.sty
 |--
 |-- Course X/
