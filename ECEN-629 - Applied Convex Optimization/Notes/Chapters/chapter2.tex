@@ -1,0 +1,46 @@
+\chapter{Convex sets}
+
+\definemathoperator{\conv}{\text{conv}}
+
+We start this chapter by defining an \textit{affine set}. Say we have some $x_1$ and $x_2$. An affine set contains all points on the line through $x_1$ and $x_2$. 
+
+\[
+    x = \theta x_1 + (1 - \theta) x_2, \quad (\theta \in \mathbb{R})
+\]
+
+\textit{Affine set}: contains the line through any two distinct points in the set. And example of this sould 
+be the solution set of linear equations $\{x | Ax + b\}$
+
+\textit{Convex set}: line segment between $x_1$ and $x_2$: all points
+
+\[
+    x = \theta x_1 + (1 - \theta) x_2, \quad (0 \leq \theta \leq 1)
+\]
+
+The convex set contains the line segment between \textit{any} two points in set.
+
+\[
+    x_1, x_2 \in C, \quad 0 \leq \theta \leq 1 \implies \theta x_1 + (1 - \theta) x_2 \in C
+\]
+
+Exercise 1
+
+Let $C \subset \mathbb{R}^n$ be a convex set, $x_1$, $x_2$, $\dots$, $x_k \in C$. Let $\theta_1$, $\theta_2$, $\dots$, $\theta_k \in \mathbb{R}$ satisfy $\theta_i \geq 0$ and $\sum_{i=1}^k \theta_i = 1$. Show that
+
+Show that $\theta_1 x_1 + \theta_2 x_2 + \dots + \theta_k x_k \in C$.
+
+\begin{align*}
+    & \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_k x_k = 1 \\
+    & = (\theta_1 + \theta_2) \left( \frac{\theta_1}{\theta_1 + \theta _2} x_1 + \frac{\theta_2}{\theta_1 + \theta_2} x_2 \right) + \theta_3 x_3
+\end{align*}
+
+Convex combination and convex hull
+
+Convex combination of $x_1$, $\dots$, $x_k$: any point $x$ of form
+
+\[  
+    x = \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_k x_k, \quad \theta_i \geq 0, \sum_{i=1}^k \theta_i = 1
+\]
+
+Convex hull ($\conv{S}$): set of all convex combinations of points in $S$.
+
