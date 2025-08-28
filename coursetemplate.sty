@@ -1,0 +1,124 @@
+% ===============================
+% coursetemplate.sty
+% ===============================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{coursetemplate}[2025/08/26 v1.0 Course Notes Template]
+
+% Use kvoptions for easy key-value package options
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=coursetemplate,
+  prefix=coursetemplate@
+}
+
+% --- Define Package Options ---
+% These replace the \def commands in your main file
+\DeclareStringOption[Brody Jordan]{studentName}
+\DeclareStringOption[Assets/cover.svg]{coverImage}
+\DeclareStringOption[TAMU]{universityShort}
+\DeclareStringOption[Texas A\&M University]{universityLong}
+\DeclareStringOption[Chapters/acknowledgement.tex]{acknowledgements}
+\DeclareStringOption[EAF4FF]{bgColor}
+\DeclareStringOption[5D7A94]{fgColor}
+\DeclareStringOption[C:/Users/bljor/Sync/Courses/courses.json]{courseDataPath}
+\DeclareStringOption{courseNumber}
+
+% Process the options passed to the package in \usepackage
+\ProcessKeyvalOptions*
+
+% --- Load Required Packages ---
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{graphicx}
+\RequirePackage[letterpaper,top=1in]{geometry}
+\RequirePackage{titling}
+\RequirePackage{setspace}
+\RequirePackage[inkscapearea=page, inkscapepath=svgdir]{svg}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{jsonparse}
+\RequirePackage[svgnames]{xcolor}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tabularx}
+\RequirePackage{fontawesome7}
+\RequirePackage{parskip}
+
+% --- JSON Data Parsing ---
+% Use the path provided in the package options
+\JSONParseFromFile{\courseData}{\coursetemplate@courseDataPath}
+
+% Define macros from the parsed JSON data
+\providecommand{\courseTitle}{\JSONParseValue{\courseData}{\coursetemplate@courseNumber.name}}
+\providecommand{\courseDescription}{\JSONParseValue{\courseData}{\coursetemplate@courseNumber.description}}
+\providecommand{\courseInstructor}{\JSONParseValue{\courseData}{\coursetemplate@courseNumber.instructor}}
+\providecommand{\courseLocation}{\JSONParseValue{\courseData}{\coursetemplate@courseNumber.lectureLocation}}
+\providecommand{\courseTime}{\JSONParseValue{\courseData}{\coursetemplate@courseNumber.lectureTime}}
+\providecommand{\courseSemester}{\JSONParseValue{\courseData}{\coursetemplate@courseNumber.semester}}
+
+\newcommand{\courseNumber}{\coursetemplate@courseNumber}
+\newcommand{\studentName}{\coursetemplate@studentName}
+\newcommand{\universityShort}{\coursetemplate@universityShort}
+\newcommand{\universityLong}{\coursetemplate@universityLong}
+
+% --- Color and Style Definitions ---
+\definecolor{bgc}{HTML}{\coursetemplate@bgColor}
+\definecolor{fgc}{HTML}{\coursetemplate@fgColor}
+
+\settowidth{\labelwidth}{\textbf{Instructor:}}
+\newlength{\iconwidth}
+\settowidth{\iconwidth}{\faChalkboardUser} % Measure the widest icon
+
+% --- TColorBox Definition ---
+\newtcolorbox{coursetbox}[1][]{
+    enhanced,
+    colback=bgc,
+    colframe=fgc!70, 
+    coltitle=fgc,    
+    fonttitle=\bfseries,
+    attach boxed title to top left={xshift=10mm, yshift=-2mm},
+    boxed title style={colback=white, arc=1.5mm, boxrule=0.5pt},
+    arc=3mm,           
+    boxrule=0.5pt,     
+    drop shadow={fgc!30, opacity=0.5}, 
+    #1
+}
+
+% --- Main Command to Generate Title and Info Box ---
+% This command encapsulates all the front matter content
+\newcommand{\makecoursetitle}{
+    \begin{titlepage}
+        \centering
+        \vspace*{2.33cm}
+        \noindent\rule{\linewidth}{1pt}\vspace*{10pt}\\
+        \textbf{\Huge \courseTitle}\\
+        \vspace*{15pt}\textbf{\small \coursetemplate@universityShort\ \coursetemplate@courseNumber}\\
+        \noindent\rule{\linewidth}{1pt}\vspace*{10pt}\\
+        \vspace*{10mm}
+        {\Large \coursetemplate@studentName}\par
+        \vspace{1mm}
+        {\small \courseSemester}\par
+        \vspace{15mm}
+        \includesvg[width=0.8\textwidth]{\coursetemplate@coverImage}
+    \end{titlepage}
+
+    \input{\coursetemplate@acknowledgements}
+    \vspace*{\fill}
+    
+    \begin{coursetbox}[title=\courseTitle\ (\coursetemplate@courseNumber)]
+        \begin{tabularx}{\linewidth}{@{} l X @{}}
+            \makebox[\iconwidth]{\faChalkboardUser}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Instructor:}} & \courseInstructor \\
+            \makebox[\iconwidth]{\faCalendar}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Semester:}}   & \courseSemester \\
+            \makebox[\iconwidth]{\faClock}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Time:}}         & \courseTime \\
+            \makebox[\iconwidth]{\faMapLocationDot}\hspace{0.5em} \makebox[\labelwidth][l]{\textbf{Location:}}   & \courseLocation
+        \end{tabularx}
+    \tcblower
+        \textbf{Description:} \courseDescription
+    \end{coursetbox}
+    
+    \setstretch{1.2}
+    \tableofcontents
+    \setstretch{1.0}
+}
+
+\endinput

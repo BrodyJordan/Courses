@@ -1,0 +1,129 @@
+% ===============================
+% assignment.sty (LuaLaTeX)
+% ===============================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{assignment}[]
+
+% --- Load Required Packages ---
+\RequirePackage{amsmath, amssymb}
+\RequirePackage{mathtools}
+
+\RequirePackage{nicefrac}
+\RequirePackage{siunitx}
+\RequirePackage{ellipsis}
+
+\RequirePackage{pdfpages}
+\RequirePackage{graphicx}
+\RequirePackage{svg}
+
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{multicol}
+
+\RequirePackage{enumitem}
+
+\RequirePackage[letterpaper, margin=1in]{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{extramarks}
+
+% --- Define Package Options ---
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{family=assignment, prefix=assignment@}
+\DeclareStringOption[Due Date]{assignmentDueDate}
+\DeclareStringOption[431005357]{uin} % For student ID number
+\DeclareStringOption[C:/Users/bljor/Sync/Courses/courses.json]{courseDataPath}
+\ProcessKeyvalOptions*
+
+% --- JSON Data Parsing (LuaLaTeX)---
+\directlua{
+	local jobname = tex.jobname:gsub('"', '')
+	local courseCode, assignmentName, authorName = jobname:match("(.*)-(.*)-(.*)")
+	courseCode = courseCode:gsub(" ", "")
+	assignmentName = assignmentName:sub(2, -2)
+	authorName = authorName:sub(2, -1)
+
+	tex.sprint("\\def\\assignmentCourse{" .. courseCode .. "}")
+	tex.sprint("\\def\\assignmentTitle{" .. assignmentName .. "}")
+	tex.sprint("\\def\\assignmentAuthor{" .. authorName .. "}")
+	
+	local json = require("json")
+  	local file = io.open("C:\\Users\\bljor\\Sync\\Courses\\courses.json", "r")
+	local myTable = {}
+
+	if file then
+		local contents = file:read( "*a" )
+		myTable = json.decode(contents)
+		file:close()
+	end
+
+	tex.sprint("\\def\\courseName{" .. myTable[courseCode]["name"] .. "}")
+	tex.sprint("\\def\\courseDescription{" .. myTable[courseCode]["description"] .. "}")
+	tex.sprint("\\def\\courseInstructor{" .. myTable[courseCode]["instructor"] .. "}")
+	tex.sprint("\\def\\courseLectureTime{" .. myTable[courseCode]["lectureTime"] .. "}")
+	tex.sprint("\\def\\courseLectureLocation{" .. myTable[courseCode]["lectureLocation"] .. "}")
+}
+
+% --- Page Layout and Header/Footer ---
+\linespread{1.1}
+\headsep=0.25in
+\setlength\parindent{0pt}
+\setlist{nosep}
+\sisetup{detect-all=true}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\ifnum\value{page}>1 \topxmark \else \firstxmark \fi}
+\fancyhead[C]{\assignmentCourse: \assignmentTitle}
+\fancyhead[R]{\assignmentAuthor}
+\fancyfoot[L]{\lastxmark}
+\fancyfoot[C]{\thepage}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+% --- Custom Environments and Commands ---
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\newenvironment{homeworkProblem}{%
+  \par\nobreak
+  \extramarks
+    {Problem \arabic{homeworkProblemCounter}}
+    {Problem \arabic{homeworkProblemCounter}}
+  \extramarks
+    {Problem \arabic{homeworkProblemCounter} (continued)}
+    {Problem \arabic{homeworkProblemCounter} continued on next page\ldots}
+  \section*{Problem \arabic{homeworkProblemCounter}}
+}{%
+  \par\nobreak
+  \stepcounter{homeworkProblemCounter}
+  \extramarks
+    {Problem \arabic{homeworkProblemCounter}}
+    {}
+}
+
+\newcounter{partCounter}
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}}
+\newcommand{\solution}{\textbf{\large Solution} \\\\}
+
+% --- Title Command ---
+\newcommand{\makeAssignmentTitle}{
+    \title{
+        \vspace{2in}
+        \LARGE{\textbf{\assignmentCourse: \assignmentTitle}} \\
+        \normalsize\vspace{0.1in}\normalsize{Due on \assignment@assignmentDueDate} \\
+        \normalsize\vspace{0.1in}\small{Instructor: \courseInstructor} \\
+        \vspace{2in}
+        \large{\assignmentAuthor \\ \assignment@uin}
+    }
+    
+    \begin{titlepage}
+      \maketitle
+      \thispagestyle{empty}
+    \end{titlepage}
+
+    \pagebreak
+}
+
+\endinput
