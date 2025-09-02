@@ -5,7 +5,6 @@
 % -- BEGIN LECTURE 1 (8/26/2025)
 
 Optimization. We regularly encounter many optimizations in our daily lives. Intuitively, we think of optimization as finding the best way for \textit{something}. In mathematics, optimization has a more formal meaning. It is defined rigorously with an objective function, a set of variables, and a set of constraints. A mathematical optimization problem has the following form:
-
 \[
     \opt{minimize}{}{f_0(x)}{f_i(x) \leq b_i, \quad i=1,\dots,m}
 \]
@@ -67,19 +66,14 @@ Let's say we have $m$ lamps illuminating $n$ patches. Intensity $I_k$ at patch $
 \[
     I_k = \sum_{j=1}^m a_{kj} p_j \quad a_{kj}^{-2} \text{max} \{\cos \theta_{kj}, \, 0\}
 \]
-
 We aim to achieve a desired illumination, $I_\text{des}$, with bounded lamp powers. Thus we state the problem as follows
-
 \[ % TODO: fix this {}_ hack
     \opt{minimize}{}{\max {}_{k=1, \dots, n} \, |\log I_k - \log I_\text{des}|}{0 \leq p_j \leq p_\text{max}, \quad j=1, \dots, m}
 \]
-
 We can solve this problem by converting it to a convex optimization problem. Now, the problem is stated as
-
 \[
     \opt{minimize}{}{f_0(p) = \max {}_{k=1, \dots, n} \, h(I_k / I_\text{des})}{0 \leq p_j \leq p_\text{max}, \quad j=1, \dots, m}
 \]
-
 where $h(u) = \max\{u, \, 1/u\}$.
 
 \begin{figure}[hbpt!]
@@ -92,12 +86,6 @@ where $h(u) = \max\{u, \, 1/u\}$.
     \caption{Illustration of the convex optimization problem ($h(u)$).}
 \end{figure}
 
-This transformation is valid because the maximum of a convex function is convex. 
+This transformation is valid because \textit{the maximum of a convex function is convex}. These convex optimization problems will be the focus of this course.
 
 % -- END LECTURE 1 (8/26/2025)
-
-% -- BEGIN LECTURE 2 (8/28/2025)
-
-
-
-% -- END LECTURE 2 (8/28/2025)

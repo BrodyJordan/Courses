@@ -6,16 +6,7 @@
         "semester": "Fall 2025",
         "lectureTime": "ONLINE",
         "lectureLocation": "ONLINE",
-        "assignments": [
-            {
-                "name": "Homework 1",
-                "dueDate": "08/28/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 1",
-                "file": "CSCE-636 - Homework 1 - Brody Jordan.tex",
-                "id": "1756273273927",
-                "completed": false
-            }
-        ],
+        "assignments": [],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
         "noteFile": "DeepLearning.tex"
     },
