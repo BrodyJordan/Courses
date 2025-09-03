@@ -2,50 +2,8 @@
 
 
 
-% \tikzstyle{block} = [rectangle, draw, text width=6.5cm, text centered, rounded corners, minimum height=2em]
-% \tikzstyle{eqblock} = [rectangle, text width=6cm, text centered]
-% \tikzstyle{sideblock} = [rectangle, draw, text width=4.5cm, text centered, rounded corners, minimum height=2em]
-% \tikzstyle{title} = [text width=5cm, text centered]
-% \tikzstyle{arrow_node} = [text centered]
-% \tikzstyle{line} = [draw, -latex']
-
-\begin{tikzpicture} % [node distance = 0.7cm and 1cm]
-
-    % Maxwell's Equations
-    \node[draw, 
-        minimum width=2cm,
-        minimum height=1cm] at (0, 0) {
-            \[
-            \begin{align*}
-                \nabla\times E &= -j\omega\mu H \\
-                \nabla\times H &= J+j\omega\epsilon E \\
-                \nabla\cdot E &= \frac{\rho_{v}}{\epsilon} \\
-                \nabla\cdot H &= 0
-            \end{align*}
-            \]
-        };
-
-
-    % \node [eqblock] (maxwell) {
-    %     \begin{align*}
-    %         \nabla\times E &= -j\omega\mu H \\
-    %         \nabla\times H &= J+j\omega\epsilon E \\
-    %         \nabla\cdot E &= \frac{\rho_{v}}{\epsilon} \\
-    %         \nabla\cdot H &= 0
-    %     \end{align*}
-    % };
-    
-    % % Arrows
-    % \path [line] (maxwell) -- (helmholtz_title);
-    % \path [line] (solution) -- (arrow1);
-    % \path [line] (arrow1) -- (prop_const);
-    % \path [line] (prop_const) -- (arrow2);
-    % \path [line] (arrow2) -- (loss);
-    % \path [line] (loss) -- (time_example);
-    % \path [line] (time_example) -- (reflection);
-    % \path [line] (tl_eq) -- (tl_helmholtz);
-    % \path [line] (tl_helmholtz) -- (tl_sol);
-    % \path [line] (tl_sol) -- (arrow3);
-    % \path [line] (arrow3) -- (polarization);
-
-\end{tikzpicture}
+\begin{figure}
+    \centering
+    \scalebox{0.8}{\input{Chapters/flowchart.tex}}
+    \caption{Flowchart of key equations and concepts in electromagnetic theory.}
+\end{figure}
