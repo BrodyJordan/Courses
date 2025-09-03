@@ -1,0 +1,142 @@
+\begin{tikzpicture}[font=\small,thick]
+
+    \tikzstyle{main} = [draw, rectangle, sharp corners, align=center, minimum width=4cm, minimum height=1cm, inner sep=3mm]
+
+    \node[main] (maxwells) {
+        \textbf{Maxwell's Equations} \\\\
+        $\begin{aligned}
+            \nabla\times \mathbf{E} &= -j\omega\mu \mathbf{H} \\
+            \nabla\times \mathbf{H} &= \mathbf{J}+j\omega\epsilon \mathbf{E} \\
+            \nabla\cdot \mathbf{E} &= \frac{\rho_{v}}{\epsilon} \\
+            \nabla\cdot \mathbf{H} &= 0
+        \end{aligned}$
+    };
+
+    % -------- BEGIN Maxwell's Equations --------
+
+    % Helmholtz Equation
+    \node[main, below left=of maxwells] (helmholtz) {
+        \textbf{Helmholtz Equation} \\\\
+        $\nabla^{2}\mathbf{E} + k^2 \mathbf{E} = 0$
+    };
+
+        % -------- BEGIN Helmholtz Equation Path --------
+        \node[main, below=of helmholtz] (helmsoln) {
+            \textbf{Solution} \\\\
+            $\begin{aligned}
+                \mathbf{E} &= \mathbf{E}_0 e^{-jk \bh{k} \cdot \mathbf{r}} \\
+                \mathbf{E}_0 &= E_x \bh{x} + E_y \bh{y} + E_z \bh{z} \\
+                \mathbf{r} &= x \bh{x} + y \bh{y} + z \bh{z}
+            \end{aligned}$
+        };
+
+        \node[main, below=of helmsoln] (wavenumber) {
+            \textbf{Wave Number} \\\\
+            $\begin{aligned}
+                k &= \frac{2\pi}{\lambda} = \frac{\omega}{v_p} \\
+                v_p &= 1/\sqrt{\mu \epsilon}
+            \end{aligned}$
+        };
+
+        \node[main, below=of wavenumber, align=left] (loss) {
+            Add loss $\sigma$ (S/m) $= 1/\rho$ \\
+            $k \rightarrow \gamma = \alpha + j\beta$ \\
+            $E_x = E_0 e^{-\gamma z} = E_0 e^{-\alpha z} e^{-j \beta z}$ \\
+            Skin depth $\delta_d = 1/\alpha$ \\
+            Loss tangent $= \sigma/\omega \varepsilon$
+        };
+
+        \node[main, below=of loss] (realpart) {
+            $\begin{aligned}
+            \bm{\mathcal{E}}(\mathbf{r}, t) &= \Re \{\mathbf{E}(\mathbf{r}, \omega) e^{j\omega t}\} \\
+            &= \Re \{(E_0 e^{-jkz} \bh{x}) e^{j\omega t}\} \\
+            &= E_0 \cos(\omega t - kz) \bh{x}
+            \end{aligned}$
+        };
+
+        \node[main, below=of realpart] (lossfinal) {
+            \textbf{Wave Polarization} \\\\
+            $ \mathbf{E} = \underbrace{E_{01} e^{-jkz} \bh{x}}_{E_x} + \underbrace{E_{02} e^{-j(kz+\theta)} \bh{y}}_{E_y}$ \\\\
+            Linear polarization: $E_{01} = E_{02} = E_0$, $\theta = 0^{\circ}$ \\
+            Right/left hand circular: $E_{01} = E_{02} = E_0$, $\theta = \pm 90^{\circ}$ \\
+            Right/left hand elliptical: $E_{01} \neq E_{02}$ or $\theta = \pm 90^{\circ}$ 
+        };
+
+        % -------- END Helmholtz Equation Path --------
+
+    % Boundary conditions
+    \node[main, below=of maxwells] (boundaryconditions) {
+        \textbf{Boundary Conditions} \\\\
+        $\begin{aligned}
+            &\bh{n} \times (\mathbf{E}_1 - \mathbf{E}_2) = 0 \\
+            &\bh{n} \times (\mathbf{H}_1 - \mathbf{H}_2) = \mathbf{J}_s\\
+            &\bh{n} \cdot (\epsilon_1 \mathbf{E}_1 - \epsilon_2 \mathbf{E}_2) = \rho_s \\
+            &\bh{n} \cdot (\mu_1 \mathbf{H}_1 - \mu_2 \mathbf{H}_2) = 0
+        \end{aligned}$
+    };
+
+        % -------- BEGIN Boundary conditions Path --------
+
+        \node[main, below=of boundaryconditions] (bcfinal) {
+            Fields reflected $\Gamma$ and \\
+            transmitted $T$ through a \\
+            boundary \\\\
+            Snell's law \\
+            Critical angle \\
+            Brewster angle \\
+            Penetration depth
+        };
+
+        % -------- END Boundary conditions Path --------
+
+    % Transmission Line equations
+    \node[main, below right=of maxwells] (transmissionline) {
+        \textbf{TL Equations} \\\\
+        $\begin{aligned}
+            \frac{\partial V}{\partial z} &= (R + j \omega L) I \\
+            \frac{\partial I}{\partial z} &= (G + j \omega C) V
+        \end{aligned}$
+    };
+
+        % -------- BEGIN Helmholtz Equation Path --------
+        \node[main, below=of transmissionline] (tlhelmholtz) {
+            \textbf{Helmholtz Equations} \\\\
+            $\begin{aligned}
+                &\frac{\partial^2 V}{\partial z^2} - \gamma^2 V = 0 \\
+                &\frac{\partial^2 I}{\partial z^2} - \gamma^2 I = 0
+            \end{aligned}$
+        };
+
+        \node[main, below=of tlhelmholtz] (tlsolutions) {
+            \textbf{Solutions} \\\\
+            $\begin{aligned}
+                V(z) &= V_0 e^{-j \beta z} (1 + \Gamma_L e^{-j2 \beta z}) \\
+                I(z) &= \frac{V_0}{Z_0} e^{-j \beta z} (1 - \Gamma_L e^{-j2 \beta z})
+            \end{aligned}$
+        };
+
+        \node[main, below=of tlsolutions] (tlfinal) {
+            $\begin{aligned}
+                S = \frac{1 + |\Gamma|}{1 - |\Gamma|}, \quad \Gamma_L = \frac{Z_L - Z_0}{Z_L + Z_0} \\
+                Z_\text{in} (l) = Z_0 \frac{Z_L + j Z_0 \tan(\beta l)}{Z_0 + j Z_L \tan(\beta l)}
+            \end{aligned}$
+        };
+
+    % -------- END Maxwell's Equations --------
+
+    % -------- LINES --------
+    \draw[-latex] (maxwells.south) -- (boundaryconditions.north);
+    \draw[-latex] (maxwells) -| (helmholtz);
+    \draw[-latex] (maxwells) -| (transmissionline);
+    \draw[-latex] (helmholtz.south) -- (helmsoln.north);
+    \draw[-latex] (helmsoln.south) -- (wavenumber);
+    \draw[-latex] (wavenumber.south) -- (loss.north);
+    \draw[-latex] (loss.south) -- (realpart.north);
+    \draw[-latex] (transmissionline.south) -- (tlhelmholtz.north);
+    \draw[-latex] (tlhelmholtz.south) -- (tlsolutions.north);
+    \draw[-latex] (tlsolutions.south) -- (tlfinal.north);
+    \draw[-latex] (realpart.south) -- (lossfinal.north);
+    \draw[-latex] (boundaryconditions.south) -- (bcfinal.north);
+    \draw[-latex] (helmsoln) -| (bcfinal);
+
+\end{tikzpicture}
