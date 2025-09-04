@@ -39,7 +39,16 @@
         "semester": "Fall 2025",
         "lectureTime": "ONLINE",
         "lectureLocation": "ONLINE",
-        "assignments": [],
+        "assignments": [
+            {
+                "name": "Quiz 1 - Greek Letters",
+                "dueDate": "09/04/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Quiz 1 - Greek Letters",
+                "file": "ECEN-635 - Quiz 1 - Greek Letters - Brody Jordan.tex",
+                "id": "1757020362003",
+                "completed": false
+            }
+        ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
         "noteFile": "ElectromagneticTheory.tex"
     }
