@@ -28,7 +28,16 @@
         "semester": "Fall 2025",
         "lectureTime": "TTh 12:45pm - 2:00pm",
         "lectureLocation": "ETB 1003",
-        "assignments": [],
+        "assignments": [
+            {
+                "name": "Homework 1",
+                "dueDate": "09/15/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 1",
+                "file": "ECEN-629 - Homework 1 - Brody Jordan.tex",
+                "id": "1757046343720",
+                "completed": false
+            }
+        ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
         "noteFile": "ConvexOptimization.tex"
     },
@@ -46,7 +55,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Quiz 1 - Greek Letters",
                 "file": "ECEN-635 - Quiz 1 - Greek Letters - Brody Jordan.tex",
                 "id": "1757020362003",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
