@@ -1,0 +1,198 @@
+% !TEX root = ./ECEN-629 - Homework 1 - Brody Jordan.tex
+
+\documentclass[11pt]{article}
+
+\usepackage[
+    assignmentDueDate={September 16, 2025 at 12:45 pm}
+]{C:/Users/bljor/Sync/Courses/assignment}
+
+\usepackage{amsmath}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\norms}[1]{\left \lVert #1 \right \rVert}
+
+\begin{document}
+\makeAssignmentTitle
+
+% -- PROBLEM 1 --
+\begin{homeworkProblem}
+
+Compute the norms of the following vector $x = (-100, -99, -98, \ldots, 99, 100)^T$.
+
+\begin{enumerate}[label=(\alph*), topsep=5pt]
+    \item $\ell_1$ norm;
+    \item $\ell_\infty$ norm;
+    \item $\ell_2$ norm.
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+We have the definition of a norm as 
+\[
+    \norms{x}_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{\!\!1/p}
+\]
+Then for each part we have:
+\begin{align*}
+    \ell_1: \norms{x}_1 &= |-100| + |-99| + \ldots + |99| + |100| \\
+    &= 2(1 + 2 + \ldots + 99 + 100) \\
+    &= 2 \cdot \frac{100 \cdot 101}{2} \\
+    &= 10100 \\\\
+    \ell_\infty: \norms{x}_\infty &=  \max\{x\} \\
+    &= 100 \\\\
+    \ell_2: \norms{x}_2 &= \sqrt{(-100)^2 + (-99)^2 + \ldots + (99)^2 + (100)^2} \\
+    &= \sqrt{2(1^2 + 2^2 + \ldots + 99^2 + 100^2)} \\
+    &= \sqrt{2 \cdot \frac{100 \cdot 101 \cdot 201}{6}} \\
+    &= \sqrt{676700} \\
+    &\approx 822.62
+\end{align*}
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 2 --
+\begin{homeworkProblem}
+
+For a quadratic function $f(x) = x^T P x + q^T x + r$ where $P$ is not necessarily symmetric, show that the gradient 
+is $\nabla f(x) = (P + P^T) x + q$. Find the Hessian of the function. Provide details in your proofs. \vspace{1\baselineskip}
+
+\solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 3 --
+\begin{homeworkProblem}
+
+A matrix $A \in \mathbb{R}^{m \times n}$ can also be viewed as a vector, by stacking all its $n$ columns into a single 
+length-$mn$ column. Let $x \in \mathbb{R}^m$, $y \in \mathbb{R}^n$ be two column vectors. Show that
+\[
+    \tr(A^T xy^T) = \left<xy^T, A\right> = x^T Ay,
+\] 
+where $\tr$ is the trace of the matrix. \vspace{1\baselineskip}
+
+\solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 4 --
+\begin{homeworkProblem}
+
+Let $B \in \mathbb{R}^{n \times n}$ be a given symmetric matrix of size $n$-by-$n$. Determine if the following set is convex:
+the set of all $n$-by-$n$ symmetric $A$ matrices, such that $A - B$ is positive semidefinite. If it is convex, provide your
+reasoning; if not, provide a counter-example. \vspace{1\baselineskip}
+
+\solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 5 --
+\begin{homeworkProblem}
+
+A set is defined as 
+\[
+    \{x \in \mathbb{R}^n \mid \norms{x-a}_2 \leq \theta \norms{x-y}_2 \text{ for all } y \in S\}
+\]
+where $S \subseteq \mathbb{R}^n$.
+\begin{enumerate}[label=(\alph*), topsep=5pt]
+    \item Determine whether the set is convex, which may depend on the value of $\theta$. For the case that it is, provide your reasoning; otherwise, provide a counter-example.
+    \item Let $a = (1, 0)^T$ and $S = \{(-1, 0)^T, (0, -1)^T\}$. For $\theta = 2$ and $\theta = 0.5$, sketch the resultant set, respectively.
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 6 --
+\begin{homeworkProblem}
+
+\begin{enumerate}[label=(\alph*), topsep=0pt, itemsep=2pt]
+    \item Show that if $S_1$ and $S_2$ are convex set in $\mathbb{R}^n$, then the set sum
+    \[
+        S \triangleq \{x_1 + x_2 \mid x_1 \in S_1, \, x_2 \in S_2\}
+    \] is also convex.
+    \item Let $S_1 = \{(-1, -1)^T\}$ and $S_2 = \{(2, 2)^T + u \mid \norms{u} \leq 1\}$. What is their set sum?
+    \item Show that if $S_1$ and $S_2$ are convex set in $\mathbb{R}^n$, then the inverse sum
+    \[
+        S \triangleq \bigcup_{1 \geq \lambda \geq 0} \{\lambda S_1 \, \cap \, (1 - \lambda)S_2\}
+    \] is also convex, where $\lambda S_j = \{\lambda x_j \mid x_j \in S_j\}, \, j = 1, 2$.
+    \item Let $S_1 = \{(1, 1)^T\}$ and $S_2 = \{(2, 2)^T + u \mid \norms{u} \leq 1\}$. What is their inverse sum?
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 7 --
+\begin{homeworkProblem}
+
+It is known that one halfspace contains another in the following form
+\[
+    \{x \mid a^T x \leq b\} \subseteq \{x \mid c \cdot a^T x \leq \tilde{b}\}.
+\] Provide the conditions that the parameters $c$, $b$, and $\tilde{b}$ must satisfy. Are these conditions also sufficient for the
+containment relation between these two halfspaces? \vspace{1\baselineskip}
+
+\solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 8 --
+\begin{homeworkProblem}
+
+For a pair of given sets $C, D \subseteq \mathbb{R}^n$, consider the following set
+\[
+    S = \{(a, b) \in \mathbb{R}^{n + 1} \mid a^T x \leq b \text{ for all } x \in C, \, a^T x \geq b \text{ for all } x \in D\}.
+\] Prove that the set $S$ is convex. \vspace{1\baselineskip}
+
+\solution
+
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 9 --
+\begin{homeworkProblem}
+
+Let $C = \{X \in \mathbb{R}^{n \times n} \mid a^T X a \geq 0, \, \forall a \in \mathbb{R}^n \}$. Determine whether the set
+\[
+    \mathcal{S} = \{A \in \mathbb{R}^{n \times n} \mid A - M \in C \}
+\]
+is convex, where $M \in C$ is a fixed matrix. Provide justification or a counterexample. Note that usually the definition of a 
+matrix being positive-definite requires the matrix to be symmetric, but this problem removes that condition. \vspace{1\baselineskip}
+
+\solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% -- PROBLEM 10 --
+\begin{homeworkProblem}
+
+Plot the norm balls of radius $r = 1$ for the following norms in $\mathbb{R}^2$ and $\mathbb{R}^3$:
+
+\begin{enumerate}[label=(\alph*), topsep=5pt]
+    \item $\ell_1$ norm;
+    \item $\ell_\infty$ norm;
+    \item $\ell_2$ norm.
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+
+\end{homeworkProblem}
+
+\end{document}
