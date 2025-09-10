@@ -17,7 +17,16 @@
         "semester": "Fall 2025",
         "lectureTime": "TTh 2:20pm - 3:35pm",
         "lectureLocation": "ETB 1003",
-        "assignments": [],
+        "assignments": [
+            {
+                "name": "Homework 1",
+                "dueDate": "09/12/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 1",
+                "file": "ECEN-601 - Homework 1 - Brody Jordan.tex",
+                "id": "1757548271453",
+                "completed": false
+            }
+        ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
         "noteFile": "MathMethods.tex"
     },
@@ -58,10 +67,10 @@
                 "completed": true
             },
             {
-                "name": "Homework 2",
-                "dueDate": "09/10/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 2",
-                "file": "ECEN-635 - Homework 2 - Brody Jordan.tex",
+                "name": "Homework 1",
+                "dueDate": "09/12/2025",
+                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 1",
+                "file": "ECEN-635 - Homework 1 - Brody Jordan.tex",
                 "id": "1757361178513",
                 "completed": false
             }
