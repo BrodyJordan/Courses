@@ -1,0 +1,263 @@
+% !TEX root = ./ECEN-635 - Homework 1 - Brody Jordan.tex
+
+\documentclass[11pt]{article}
+
+\usepackage[
+    assignmentDueDate={September 12, 2025 at 4:30 pm}
+]{C:/Users/bljor/Sync/Courses/assignment}
+
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{mathrsfs}
+\usepackage{cases}
+
+\begin{document}
+\makeAssignmentTitle
+
+% --- Problem 1 ---
+\begin{homeworkProblem}
+
+Convert the following time domain expressions for the electric and magnetic field intro frequency and domain expressions. 
+Show each mathematical step in your calculations. A miraculous answer without the complete calculation will be judged harshly.
+
+\begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=0pt]
+    \item $\mathbf{E}(t)=4 \cos (\omega t-28 z) \hat{\mathbf{y}} \;\; \unit{V/m}$
+    \item $\mathbf{E}(t)=9 \sin (\omega t-23 z) \hat{\mathbf{x}} \;\; \unit{V/m}$
+    \item $\mathbf{H}(t)=7 \cos (\omega t-23 z) \hat{\mathbf{y}} \;\; \unit{mA/m}$ \qquad \textit{changed polarization from x to y}
+    \item $\mathbf{E}(t)=4.6 e^{-48 \pi z} \cos (\omega t-139 z+\pi / 4) \hat{\mathbf{y}} \;\; \unit{V/m}$
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+\textbf{Part (a)}
+\begin{align*}
+    \cos (\omega t - 28 z) &= \Re \{ e^{j(\omega t - 28 z)}\} \\
+    &= \Re \{ e^{j\omega t} e^{-j 28 z}\} \\
+    &\Rightarrow \quad \mathbf{E}(\omega) = 4 e^{-j 28 z} \hat{\mathbf{y}} \;\; \unit{V/m}
+\end{align*}
+
+\textbf{Part (b)}
+\begin{align*}
+    9 \sin (\omega t - 23 z) &= -9 \cos (\omega t - 23 z + \pi/2) \\
+    &= \Re \{ -9 e^{j(\omega t - 23 z + \pi/2)}\} \\
+    &\Rightarrow \quad \mathbf{E}(\omega) = -9 e^{j \pi/2} e^{-j 23 z} \hat{\mathbf{x}} \;\; \unit{V/m}
+\end{align*}
+
+\textbf{Part (c)}
+\begin{align*}
+    7 \cos (\omega t - 23 z) &= \Re \{ 7 e^{j(\omega t - 23 z)}\} \\
+    &= \Re \{ 7 e^{j\omega t} e^{-j 23 z}\} \\
+    &\Rightarrow \quad \mathbf{H}(\omega) = 7 e^{-j 23 z} \hat{\mathbf{y}} \;\; \unit{mA/m}
+\end{align*}
+
+\textbf{Part (d)}
+\begin{align*}
+    4.6 e^{-48 \pi z} \cos (\omega t - 139 z + \pi/4) &= 4.6 e^{-48 \pi z} \Re \{ e^{j(\omega t - 139 z + \pi/4)}\} \\
+    &= 4.6 e^{-48 \pi z} \Re \{ e^{j\omega t} e^{-j 139 z} e^{j \pi/4}\} \\
+    &\Rightarrow \quad \mathbf{E}(\omega) = 4.6 e^{-(48\pi +j 139) z} e^{j \pi/4} \hat{\mathbf{y}} \;\; \unit{V/m}
+\end{align*}
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% --- Problem 2 ---
+\begin{homeworkProblem}
+
+Convert the following frequency domain expressions to the time domain. Show each mathematical step in your calculation.
+
+\begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=0pt]
+    \item $\mathbf{E} = 15 e^{-j 23 z} \hat{\mathbf{x}} \;\; \unit{V/m}$
+    \item $\mathbf{E} = 32 e^{-(52 + j 135) z} \hat{\mathbf{y}} \;\; \unit{V/m}$
+    \item $\mathbf{H} = [(2 + j2) \hat{\mathbf{x}} + (1 - j 3) \hat{\mathbf{y}}] e^{-j 245 z} \;\; \unit{A/m}$
+    \item $\rho = 3 j e^{j\pi/2} \;\; \unit{C/m^3}$ \\
+    Be sure to place each of the vector components in simplest magnitude and phase form before
+    converting to the time domain.
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+\textbf{Part (a)}
+\begin{align*}
+    \mathbf{E} &= 15 e^{-j 23 z} \hat{\mathbf{x}} \;\; \unit{V/m} \\
+    &= \Re \{15 e^{j(\omega t - 23 z)}\} \hat{\mathbf{x}} \;\; \unit{V/m} \\
+    &\Rightarrow \quad \mathbf{E}(t) = 15 \cos (\omega t - 23 z) \hat{\mathbf{x}} \;\; \unit{V/m}
+\end{align*}
+
+\textbf{Part (b)}
+\begin{align*}
+    \mathbf{E} &= 32 e^{-(52 + j 135) z
+} \hat{\mathbf{y}} \;\; \unit{V/m} \\
+    &= 32 e^{-52 z} e^{-j 135 z} \hat{\mathbf{y}} \;\; \unit{V/m} \\
+    &= \Re \{32 e^{-52 z} e^{j(\omega t - 135 z)}\} \hat{\mathbf{y}} \;\; \unit{V/m} \\
+    &\Rightarrow \quad \mathbf{E}(t) = 32 e^{-  52 z} \cos (\omega t - 135 z) \hat{\mathbf{y}} \;\; \unit{V/m}
+\end{align*}
+
+\textbf{Part (c)}
+\begin{align*}
+    \mathbf{H} &= [(2 + j2) \hat{\mathbf{x}} + (1 - j 3) \hat{\mathbf{y}}] e^{-j 245 z} \;\; \unit{A/m} \\
+    &= [2\sqrt{2} e^{j \pi/4} \hat{\mathbf{x}} + \sqrt{10} e^{-j \arctan(3)} \hat{\mathbf{y}}] e^{-j 245 z} \;\; \unit{A/m} \\
+    &= \Re \{2\sqrt{2} e^{j(\omega t - 245 z + \pi/4)} \hat{\mathbf{x}} + \sqrt{10} e^{j(\omega t - 245 z - \arctan(3))} \hat{\mathbf{y}}\} \;\; \unit{A/m} \\
+    &\Rightarrow \quad \mathbf{H}(t) = 2\sqrt{2} \cos (\omega t - 245 z + \pi/4) \hat{\mathbf{x}} + \sqrt{10} \cos (\omega t - 245 z - \arctan(3)) \hat{\mathbf{y}} \;\; \unit{A/m}
+\end{align*}
+
+\textbf{Part (d)}
+\begin{align*}
+    \rho &= 3 j e^{j\pi/2} \;\; \unit{C/m^3} \\
+    &= \Re \{3 e^{j(\omega t + \pi/2 + \pi/2)}\} \;\; \unit{C/m^3} \quad\quad \text{since } j=e^{j\pi/2} \\
+    &\Rightarrow \quad \rho(t) = 3 \cos (\omega t + \pi) \;\; \unit{C/m^3}
+\end{align*}
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% --- Problem 3 ---
+\begin{homeworkProblem}
+
+Assuming a homogeneous region where there is no current, charge, or loss:
+\begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=0pt]
+    \item Use Maxwell's equations to convert the frequency domain electric field expression in 2(b) to the corresponding
+    magnetic field. Show all mathematical steps.
+    \item Use Maxwell’s equations to convert the frequency domain magnetic field in 2(c) into a frequency
+    domain electric field into a frequency domain magnetic field. Show all mathematical steps.
+\end{enumerate} \vspace{1\baselineskip}
+
+\solution
+
+\textbf{Part (a)} \vspace{1\baselineskip}
+
+We have Maxwell's equations which provides a relationship between the electric and magnetic fields, and we have an electric field from 2(b): 
+\[\begin{cases}
+    \nabla \times \mathbf{E} = -j \omega \mathbf{H} \\
+    \mathbf{E} = 32 e^{-(52 + j 135) z} \hat{\mathbf{y}}
+\end{cases}\]
+Since this electric field has only a y-component, the curl becomes
+\[
+    \nabla\times\mathbf{E} = \left(-\frac{\partial}{\partial z} E_y\right)\hat{\mathbf{x}} + \left(\frac{\partial}{\partial x} E_y\right) \hat{\mathbf{z}}
+\]
+The partial derivative of $E_y$ with respect to $x$ is zero, so our curl simplifies to
+\begin{align*}
+    \nabla\times\mathbf{E} &= -\frac{\partial}{\partial z} \left(32 e^{-(52 + j 135) z}\right) \hat{\mathbf{x}} + 0 \hat{\mathbf{z}} \\
+    &= -32 (-(52 + j 135)) e^{-(52 + j 135) z} \hat{\mathbf{x}} \\
+    &= 32 (52 + j 135) e^{-(52 + j 135) z} \hat{\mathbf{x}}
+\end{align*}
+Now, substituting this into Maxwell's equation, we can find the magnetic field
+\begin{align*}
+    32 (52 + j 135) e^{-(52 + j 135) z} \hat{\mathbf{x}} = -j \omega \mathbf{H} \\
+    \implies \mathbf{H} = -\frac{32 (52 + j 135)}{j \omega} e^{-(52 + j 135) z} \hat{\mathbf{x}}
+\end{align*}
+\vspace{1\baselineskip}
+
+\textbf{\textit{Part (b) continued on next page...}}
+
+\pagebreak
+
+\textbf{Part (b)} \vspace{1\baselineskip}
+
+Now we have a magnetic field from 2(c) and Maxwell's equations:
+\[\begin{cases}
+    \nabla \times \mathbf{H} = j \omega \epsilon \mathbf{E} \\
+    \mathbf{H} = [(2 + j2) \hat{\mathbf{x}} + (1 - j 3) \hat{\mathbf{y}}] e^{-j 245 z}
+\end{cases}\]
+Calculating the curl of $\mathbf{H}$, we have
+\begingroup
+\addtolength{\jot}{1em}
+\begin{align*}
+    \nabla\times\mathbf{H} &= \left(-\frac{\partial}{\partial z} H_y\right) \mathbf{\hat{x}} + \left(\frac{\partial}{\partial z} H_x\right) \mathbf{\hat{y}} + \left(\frac{\partial}{\partial x} H_y - \frac{\partial}{\partial y} H_x\right) \mathbf{\hat{z}} \\
+    &= \left(-\frac{\partial}{\partial z} H_y\right) \mathbf{\hat{x}} + \left(\frac{\partial}{\partial z} H_x\right) \mathbf{\hat{y}} \\
+    &= \left(-\frac{\partial}{\partial z} \left((1 - j 3) e^{-j 245 z}\right)\right) \mathbf{\hat{x}} + \left(\frac{\partial}{\partial z} \left((2 + j2) e^{-j 245 z}\right)\right) \mathbf{\hat{y}} \\
+    &= \left(- (1 - j 3)(-j 245) e^{-j 245 z}\right) \mathbf{\hat{x}} + \left((2 + j2)(-j 245) e^{-j 245 z}\right) \mathbf{\hat{y}} \\
+    &= \left(735 + j245\right) e^{-j 245 z} \mathbf{\hat{x}} + \left(490 - j 490\right) e^{-j 245 z} \mathbf{\hat{y}}
+\end{align*}
+\endgroup
+Now relating it to the electric field using Maxwell's equations
+\[
+    \left(735 + j245\right) e^{-j 245 z} \mathbf{\hat{x}} + \left(490 - j 490\right) e^{-j 245 z} \mathbf{\hat{y}} = j \omega \epsilon \mathbf{E} \\
+\]
+\[
+    \implies \mathbf{E} = \frac{1}{j \omega \epsilon} \left[ \left(735 + j245\right) e^{-j 245 z} \mathbf{\hat{x}} + \left(490 - j 490\right) e^{-j 245 z} \mathbf{\hat{y}} \right]
+\]
+\end{homeworkProblem}
+
+\pagebreak
+
+% --- Problem 4 ---
+\begin{homeworkProblem}
+
+Use 1(b) and the corresponding electric field found in problem 1(c) to calculate the time average power density. 
+Show all mathematical steps. \vspace{1\baselineskip}
+
+\solution
+
+We have the electric and magnetic fields from problems 1(b) and 1(c) and a relationship between them:
+\[\begin{cases}
+    \mathbf{E}(t) = 9 \sin (\omega t - 23 z) \hat{\mathbf{x}} \;\; \unit{V/m} &\quad\quad \text{from 1(b)}  \\
+    \mathbf{H}(t) = 7 \cos (\omega t - 23 z) \hat{\mathbf{y}} \;\; \unit{mA/m} &\quad\quad \text{from 1(c)} \\
+    \bm{\mathscr{S}}_{av} = \mathbf{S} = \frac{1}{2} \Re \{\mathbf{E} \times \mathbf{H}^*\}
+\end{cases}\]
+In the frequency domain and in base SI units, we have
+\[\begin{cases}
+    \mathbf{E}(\omega) = 9 e^{-j \pi/2} e^{-j 23 z} \hat{\mathbf{x}} &\quad\quad \text{from 1(b)}  \\
+    \mathbf{H}(\omega) = 7\cdot10^{-3} e^{-j 23 z} \hat{\mathbf{y}} &\quad\quad \text{from 1(c)}
+\end{cases}\]
+Now we can compute $\mathbf{E}\times \mathbf{H}^*$. Their cross will only have a $z$-component since $\hat{\mathbf{x}} \times \hat{\mathbf{y}} = \hat{\mathbf{z}}$.
+\begin{align*}
+    \mathbf{E} \times \mathbf{H}^* &= (9 e^{-j \pi/2} e^{-j 23 z} \hat{\mathbf{x}}) \times (7\cdot10^{-3} e^{j 23 z} \hat{\mathbf{y}}) \\
+    &= 63\cdot10^{-3} e^{-j \pi/2} (\hat{\mathbf{x}} \times \hat{\mathbf{y}}) \\
+    &= 63\cdot10^{-3} e^{-j \pi/2} \hat{\mathbf{z}} \\
+    &= -j 63\cdot10^{-3} \hat{\mathbf{z}}
+\end{align*}
+So the time average power density is
+\begin{align*}
+    \mathbf{S} = \frac{1}{2} \Re \{\mathbf{E} \times \mathbf{H}^*\} &= \frac{1}{2} \Re \{-j 63\cdot10^{-3} \hat{\mathbf{z}}\} \\
+    &= \frac{1}{2} (0) \hat{\mathbf{z}} \\
+    &= 0 \hat{\mathbf{z}} \;\; \unit{W/m^2}
+\end{align*}
+\end{homeworkProblem}
+
+\pagebreak
+
+% --- Problem 5 ---
+\begin{homeworkProblem}
+
+Starting with the frequency domain form of Maxwell's equations, derive the magnetic field vector Helmholtz equation. Number
+your Maxwell equations and at every step write briefly which Maxwell equation and/or which identity you are using
+from the Vectory Identities section of Appendix II.3.1 (pg. 958). Assume there is no electric or magnetic current and
+no electric or magnetic charge. \vspace{1\baselineskip}
+
+\solution
+
+Here are Maxwell's equations with no charges
+\begin{numcases}{}
+    \nabla\times\mathbf{E} = -j \omega \mu \mathbf{H} &\quad\quad \\
+    \nabla\times\mathbf{H} = j \omega \epsilon \mathbf{E} &\quad\quad \\
+    \nabla \cdot \mathbf{E} = 0 &\quad\quad \\
+    \nabla \cdot \mathbf{H} = 0 &\quad\quad
+\end{numcases}
+
+Start by taking the curl of equation (2)
+\begin{equation}
+\nabla \times (\nabla \times \mathbf{H}) = \nabla \times (j \omega \epsilon \mathbf{E}) \quad\quad
+\end{equation}
+Using vector identity (Appendix II-51) on the left hand side of (5)
+\begin{equation}
+\nabla \times (\nabla \times \mathbf{H}) = \nabla(\nabla \cdot \mathbf{H}) - \nabla^2 \mathbf{H} \quad\quad
+\end{equation}
+We substitute (6) into (5) to get
+\begin{equation}
+\nabla(\nabla \cdot \mathbf{H}) - \nabla^2 \mathbf{H} = \nabla \times (j \omega \epsilon \mathbf{E})
+\end{equation}
+Now substituting equation (1) and (4) into (7)
+\begin{equation}
+- \nabla^2 \mathbf{H} = j \omega \epsilon (-j \omega \mu \mathbf{H})
+\end{equation}
+Simplifying (8) by grouping the constants into $k^2$ gives us 
+\begin{equation}
+\nabla^2 \mathbf{H} + \omega^2 \mu \epsilon \mathbf{H} = 0 \quad\quad \Rightarrow \quad\quad \nabla^2 \mathbf{H} + k^2 \mathbf{H} = 0
+\end{equation}
+Which is the magnetic field vector Helmholtz equation. :)
+
+\end{homeworkProblem}
+
+\end{document}
