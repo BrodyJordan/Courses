@@ -6,6 +6,14 @@
     assignmentDueDate={September 12, 2025 at 5:00 pm}
 ]{C:/Users/bljor/Sync/Courses/assignment}
 
+\usepackage{multicol}
+
+\usepackage{booktabs}
+\usepackage{xcolor,colortbl}
+
+
+\definecolor{bg}{HTML}{C1E1C1}
+
 \begin{document}
 \makeAssignmentTitle
 
@@ -15,13 +23,13 @@
 Which of the following expressions are statements?
 
 \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2pt]
-    \item Today is a nice day.
-    \item Go to sleep.
-    \item Is it going to snow tomorrow?
-    \item The U.S. has 49 states.
-    \item I like to eat fruit, and you often think about traveling to Spain.
+    \item Today is a nice day. 
+    \item Go to sleep. \textbf{(Not a statement)}
+    \item Is it going to snow tomorrow? \textbf{(Not a statement)}
+    \item The U.S. has 49 states. \textbf{(Statement)}
+    \item I like to eat fruit, and you often think about traveling to Spain. \textbf{(Statement)}
     \item If we go out tonight, the babysitter will be unhappy.
-    \item Call me on Thursday if you are home.
+    \item Call me on Thursday if you are home. \textbf{(Not a statement)}
 \end{enumerate} \vspace{1\baselineskip}
 
 \end{homeworkProblem}
@@ -45,6 +53,18 @@ Translate the following statements into words.
 
 \solution
 
+\textbf{Part (a):} If I am eating spaghetti, then I am happy. \\
+
+\textbf{Part (b):} I am happy if and only if I am watching a movie. \\
+
+\textbf{Part (c):} If I am watching a movie or I am eating spaghetti, then I am happy. \\
+ 
+\textbf{Part (d):} \\
+
+\textbf{Part (e):} \\
+
+\textbf{Part (f):}
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -65,6 +85,18 @@ Let $E = $ "The house is blue," let $F = $ "The house is 30 years old" and $G = 
 
 \solution
 
+\textbf{Part (a):} $F \rightarrow G$.\\
+
+\textbf{Part (b):} $E \rightarrow (G \lor F)$ \\
+
+\textbf{Part (c):} $similar to above$ \\
+ 
+\textbf{Part (d):} $a$ \\
+
+\textbf{Part (e):} $a$ \\
+
+\textbf{Part (f):} $a$
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -83,6 +115,96 @@ Make a truth table for each of the following statements.
 \end{enumerate} \vspace{1\baselineskip}
 
 \solution
+
+% ----- TABLE A ------
+\begin{minipage}{.48\textwidth}
+\textbf{Part (a)} \\[0.25\baselineskip]
+\begin{tabular}{@{}cc|c>{\columncolor{bg!75}}cc@{}}
+    \toprule
+    $P$ & $Q$ & $P$ & $\land$ & $\lnot Q$ \\ \midrule
+    T & T & T & T & F \\
+    T & F & T & F & T \\
+    F & T & F & F & F \\
+    F & F & F & F & T \\ 
+    \bottomrule
+\end{tabular} \\[3\baselineskip]
+\end{minipage} 
+\hfill
+% ----- TABLE B ------
+\begin{minipage}{.48\textwidth}
+\textbf{Part (b)} \\[0.25\baselineskip]
+\begin{tabular}{@{}cc|ccc>{\columncolor{bg!75}}cc@{}}
+    \toprule
+    $R$ & $S$ & $(R$ & $\lor$ & $S)$ & $\land$ & $\lnot R$ \\ \midrule
+    T   & T   & T    & T      & T    & F       & F         \\
+    T   & F   & T    & T      & F    & F       & F         \\
+    F   & T   & F    & T      & T    & T       & T         \\
+    F   & F   & F    & F      & F    & F       & T         \\ 
+    \bottomrule
+\end{tabular} \\[3\baselineskip]
+\end{minipage}
+\hfill
+% ----- TABLE C ------
+\begin{minipage}{.48\textwidth}
+\noindent\textbf{Part (c)} \\[0.25\baselineskip]
+\begin{tabular}{@{}ccc|c>{\columncolor{bg!75}}cccc@{}}
+    \toprule
+    $X$ & $Y$ & $Z$ & $X$ & $\lor$ & $(\lnot Y$ & $\lor$ & $Z)$ \\ \midrule
+    T   & T   & T   & T   & T      & F          & T      & T    \\
+    T   & T   & F   & T   & T      & F          & F      & F    \\
+    T   & F   & T   & T   & T      & T          & T      & T    \\
+    T   & F   & F   & T   & T      & T          & T      & F    \\
+    F   & T   & T   & F   & T      & F          & T      & T    \\
+    F   & T   & F   & F   & F      & F          & F      & F    \\
+    F   & F   & T   & F   & T      & T          & T      & T    \\
+    F   & F   & F   & F   & T      & T          & T      & F    \\ \bottomrule
+\end{tabular}
+\end{minipage}
+\hfill
+% ----- TABLE D ------
+\begin{minipage}{.48\textwidth}
+\noindent\textbf{Part (d)} \\[0.25\baselineskip]
+\begin{tabular}{@{}ccc|ccc>{\columncolor{bg!75}}cccc@{}}
+    \toprule
+    $A$ & $B$ & $C$ & $(A$ & $\lor$ & $B)$ & $\land$ & $(A$ & $\lor$ & $C)$ \\ \midrule
+    T   & T   & T   & T    & T      & T    & T       & T    & T      & T    \\
+    T   & T   & F   & T    & T      & T    & T       & T    & T      & F    \\
+    T   & F   & T   & T    & T      & F    & T       & T    & T      & T    \\
+    T   & F   & F   & T    & T      & F    & T       & T    & T      & F    \\
+    F   & T   & T   & F    & T      & T    & T       & F    & T      & T    \\
+    F   & T   & F   & F    & T      & T    & F       & F    & F      & F    \\
+    F   & F   & T   & F    & F      & F    & F       & F    & T      & T    \\
+    F   & F   & F   & F    & F      & F    & F       & F    & F      & F    \\ \bottomrule
+\end{tabular}
+\end{minipage}
+
+\vspace{2.5\baselineskip}
+\textit{Final truth table on following page...}
+
+\pagebreak
+
+\textbf{Part (e)} \\[0.25\baselineskip]
+\begin{tabular}{@{}cccc|ccc>{\columncolor{bg!75}}ccccc@{}}
+    \toprule
+    $P$ & $Q$ & $R$ & $S$ & $(P$ & $\land$ & $R)$ & $\lor$ & $\lnot$ & $(Q$ & $\land$ & $S)$ \\ \midrule
+    T   & T   & T   & T   & T    & T       & T    & T      & F       & T    & T       & T    \\
+    T   & T   & T   & F   & T    & T       & T    & T      & T       & T    & F       & F    \\
+    T   & T   & F   & T   & T    & F       & F    & F      & F       & T    & T       & T    \\
+    T   & T   & F   & F   & T    & F       & F    & T      & T       & T    & F       & F    \\
+    T   & F   & T   & T   & T    & T       & T    & T      & T       & F    & F       & T    \\
+    T   & F   & T   & F   & T    & T       & T    & T      & T       & F    & F       & F    \\
+    T   & F   & F   & T   & T    & F       & F    & T      & T       & F    & F       & T    \\
+    T   & F   & F   & F   & T    & F       & F    & T      & T       & F    & F       & F    \\
+    F   & T   & T   & T   & F    & F       & T    & F      & F       & T    & T       & T    \\
+    F   & T   & T   & F   & F    & F       & T    & T      & T       & T    & F       & F    \\
+    F   & T   & F   & T   & F    & F       & F    & F      & F       & T    & T       & T    \\
+    F   & T   & F   & F   & F    & F       & F    & T      & T       & T    & F       & F    \\
+    F   & F   & T   & T   & F    & F       & T    & T      & T       & F    & F       & T    \\
+    F   & F   & T   & F   & F    & F       & T    & T      & T       & F    & F       & F    \\
+    F   & F   & F   & T   & F    & F       & F    & T      & T       & F    & F       & T    \\
+    F   & F   & F   & F   & F    & F       & F    & T      & T       & F    & F       & F    \\ \bottomrule
+\end{tabular}
+
 
 \end{homeworkProblem}
 
