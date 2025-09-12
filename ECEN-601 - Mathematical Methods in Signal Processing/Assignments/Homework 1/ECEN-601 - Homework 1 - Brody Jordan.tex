@@ -23,16 +23,23 @@
 Which of the following expressions are statements?
 
 \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2pt]
-    \item Today is a nice day. 
+    \item Today is a nice day. \textbf{(Not a statement)}
     \item Go to sleep. \textbf{(Not a statement)}
     \item Is it going to snow tomorrow? \textbf{(Not a statement)}
     \item The U.S. has 49 states. \textbf{(Statement)}
-    \item I like to eat fruit, and you often think about traveling to Spain. \textbf{(Statement)}
-    \item If we go out tonight, the babysitter will be unhappy.
+    \item I like to eat fruit, and you often think about traveling to Spain. \textbf{(Not a statement)}
+    \item If we go out tonight, the babysitter will be unhappy. \textbf{(Not a statement)}
     \item Call me on Thursday if you are home. \textbf{(Not a statement)}
 \end{enumerate} \vspace{1\baselineskip}
 
-\end{homeworkProblem}
+\solution
+
+Only \textbf{(d)} is a statement. \\
+
+I feel like \textbf{(a)} \textit{could} be a statement, though it varies from person-to-person (similar to \textbf{(e)}), so I say not a statement. 
+Additionally, \textbf{(f)} is a conditional statement, but I don't think that's what the question is asking.
+
+\end{homeworkProblem} 
 
 \pagebreak
 
@@ -59,11 +66,11 @@ Translate the following statements into words.
 
 \textbf{Part (c):} If I am watching a movie or I am eating spaghetti, then I am happy. \\
  
-\textbf{Part (d):} \\
+\textbf{Part (d):} If I am eating spaghetti then I am happy, or I am watching a movie. \\
 
-\textbf{Part (e):} \\
+\textbf{Part (e):} If I am watching a movie then I am not happy, and if I am eating spaghetti then I am not happy. \\
 
-\textbf{Part (f):}
+\textbf{Part (f):} I am happy and I am not watching a movie, if and only if I am watching a movie or I am eating spaghetti. 
 
 \end{homeworkProblem}
 
@@ -89,13 +96,13 @@ Let $E = $ "The house is blue," let $F = $ "The house is 30 years old" and $G = 
 
 \textbf{Part (b):} $E \rightarrow (G \lor F)$ \\
 
-\textbf{Part (c):} $similar to above$ \\
+\textbf{Part (c):} $(E \rightarrow G) \lor F$ \\
  
-\textbf{Part (d):} $a$ \\
+\textbf{Part (d):} $\lnot G \leftrightarrow F$ \\
 
-\textbf{Part (e):} $a$ \\
+\textbf{Part (e):} $(E \rightarrow F) \land (F \rightarrow \lnot G)$ \\
 
-\textbf{Part (f):} $a$
+\textbf{Part (f):} $G \leftrightarrow (G \land F)$
 
 \end{homeworkProblem}
 
@@ -116,6 +123,9 @@ Make a truth table for each of the following statements.
 
 \solution
 
+I have constructed these truth tables in a manner similar to the truth tables in Engineering Fundamentals.
+Additionally, I have highlighted the final column of each truth table in light green. \vspace{1\baselineskip}
+
 % ----- TABLE A ------
 \begin{minipage}{.48\textwidth}
 \textbf{Part (a)} \\[0.25\baselineskip]
@@ -127,7 +137,7 @@ Make a truth table for each of the following statements.
     F & T & F & F & F \\
     F & F & F & F & T \\ 
     \bottomrule
-\end{tabular} \\[3\baselineskip]
+\end{tabular} \\[2\baselineskip]
 \end{minipage} 
 \hfill
 % ----- TABLE B ------
@@ -141,7 +151,7 @@ Make a truth table for each of the following statements.
     F   & T   & F    & T      & T    & T       & T         \\
     F   & F   & F    & F      & F    & F       & T         \\ 
     \bottomrule
-\end{tabular} \\[3\baselineskip]
+\end{tabular} \\[2\baselineskip]
 \end{minipage}
 \hfill
 % ----- TABLE C ------
@@ -217,7 +227,7 @@ Simplify the following statements (making use of any equivalance of statements g
 
 \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2pt]
     \item $\lnot (P \rightarrow \lnot Q)$
-    \item $A \rightarrow (B \land A)$
+    \item $A \rightarrow (A \land B)$
     \item $(X \land Y) \rightarrow X$
     \item $\lnot(M \lor L) \land L$
     \item $(P \rightarrow Q) \lor Q$
@@ -225,6 +235,22 @@ Simplify the following statements (making use of any equivalance of statements g
 \end{enumerate} \vspace{1\baselineskip}
 
 \solution
+
+These simplifications can be found pretty quickly by writing out the truth tables, though I will omit that process and use the stated identities in the text and notes. \vspace{1\baselineskip}
+
+\textbf{Part (a):} $\lnot (P \rightarrow \lnot Q) \equiv P \land \lnot (\lnot Q) \equiv P \land Q$. \\
+
+\textbf{Part (b):} $A \rightarrow (A \land B) \equiv \lnot A \lor (A \land B) \equiv (\lnot A \lor A) \land (\lnot A \lor B) \equiv \lnot A \lor B$. \\
+
+\textbf{Part (c):} $(X \land Y) \rightarrow X \equiv \lnot(X \land Y) \lor X \equiv \mathord{\underbrace{(\lnot X \lor X)}_{\text{tautology}}} \lor (\lnot Y) \equiv \texttt{TRUE}$. \\
+
+\textbf{Part (d):} $\lnot(M \lor L) \land L \equiv (\lnot M \land \lnot L) \land L \equiv \mathord{\underbrace{(\lnot L \land L)}_{\text{contradiction}}} \land L \equiv \texttt{FALSE}$. \\
+
+\textbf{Part (e):} $(P \rightarrow Q) \lor Q \equiv (\lnot P \lor Q) \lor Q \equiv (Q \lor Q) \lor \lnot P \equiv Q \lor \lnot P$ \\
+
+\textbf{Part (f):} $\lnot (X \rightarrow Y) \lor Y \equiv (X \land \lnot Y) \lor Y \equiv \mathord{\underbrace{(Y \lor \lnot Y)}_{\text{tautology}}} \land (Y \lor X) \equiv X \lor Y$
+
+
 
 \end{homeworkProblem}
 
@@ -245,6 +271,16 @@ words.
 \end{enumerate} \vspace{1\baselineskip}
 
 \solution
+
+\textbf{Part (a):} Every person has green hair. \\
+
+\textbf{Part (b):} At least one person likes pickles. // Some people like pickles. \\
+
+\textbf{Part (c):} All people have a pet frog and like pickles. \\
+ 
+\textbf{Part (d):} For some people, if they have green hair, then they have a pet frog.  \\
+
+\textbf{Part (e):} Every person has a pet frog if and only if they do not like pickles.
 
 \end{homeworkProblem}
 

@@ -13,7 +13,7 @@
     "ECEN-601": {
         "name": "Mathematical Methods in Signal Processing",
         "description": "Representations and algorithms for signal processing; linear algebra, vector spaces, normed and inner product spaces; projection, orthogonalization, rank-nullity theorem; matrix representations, singular value decomposition; sampling, Fourier analysis, spectral methods; statistical signal processing and linear estimation.",
-        "instructor": "Dr. Krishna Narayanan",
+        "instructor": "Dr. Jean-François Chamberland",
         "semester": "Fall 2025",
         "lectureTime": "TTh 2:20pm - 3:35pm",
         "lectureLocation": "ETB 1003",
@@ -24,7 +24,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 1",
                 "file": "ECEN-601 - Homework 1 - Brody Jordan.tex",
                 "id": "1757548271453",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
@@ -72,7 +72,7 @@
                 "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 1",
                 "file": "ECEN-635 - Homework 1 - Brody Jordan.tex",
                 "id": "1757361178513",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
