@@ -8,7 +8,7 @@
 
 \usepackage{amsmath}
 \DeclareMathOperator{\tr}{tr}
-\newcommand{\norms}[1]{\left \lVert #1 \right \rVert}
+\renewcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \begin{document}
 \makeAssignmentTitle
@@ -16,7 +16,7 @@
 % -- PROBLEM 1 --
 \begin{homeworkProblem}
 
-Compute the norms of the following vector $x = (-100, -99, -98, \ldots, 99, 100)^T$.
+Compute the norm of the following vector $x = (-100, -99, -98, \ldots, 99, 100)^T$.
 
 \begin{enumerate}[label=(\alph*), topsep=5pt]
     \item $\ell_1$ norm;
@@ -28,17 +28,17 @@ Compute the norms of the following vector $x = (-100, -99, -98, \ldots, 99, 100)
 
 We have the definition of a norm as 
 \[
-    \norms{x}_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{\!\!1/p}
+    \norm{x}_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{\!\!1/p}
 \]
 Then for each part we have:
 \begin{align*}
-    \ell_1: \norms{x}_1 &= |-100| + |-99| + \ldots + |99| + |100| \\
+    \ell_1: \norm{x}_1 &= |-100| + |-99| + \ldots + |99| + |100| \\
     &= 2(1 + 2 + \ldots + 99 + 100) \\
     &= 2 \cdot \frac{100 \cdot 101}{2} \\
     &= 10100 \\\\
-    \ell_\infty: \norms{x}_\infty &=  \max\{x\} \\
+    \ell_\infty: \norm{x}_\infty &=  \max\{x\} \\
     &= 100 \\\\
-    \ell_2: \norms{x}_2 &= \sqrt{(-100)^2 + (-99)^2 + \ldots + (99)^2 + (100)^2} \\
+    \ell_2: \norm{x}_2 &= \sqrt{(-100)^2 + (-99)^2 + \ldots + (99)^2 + (100)^2} \\
     &= \sqrt{2(1^2 + 2^2 + \ldots + 99^2 + 100^2)} \\
     &= \sqrt{2 \cdot \frac{100 \cdot 101 \cdot 201}{6}} \\
     &= \sqrt{676700} \\
@@ -56,6 +56,8 @@ For a quadratic function $f(x) = x^T P x + q^T x + r$ where $P$ is not necessari
 is $\nabla f(x) = (P + P^T) x + q$. Find the Hessian of the function. Provide details in your proofs. \vspace{1\baselineskip}
 
 \solution
+
+
 
 \end{homeworkProblem}
 
@@ -96,7 +98,7 @@ reasoning; if not, provide a counter-example. \vspace{1\baselineskip}
 
 A set is defined as 
 \[
-    \{x \in \mathbb{R}^n \mid \norms{x-a}_2 \leq \theta \norms{x-y}_2 \text{ for all } y \in S\}
+    \{x \in \mathbb{R}^n \bigm\vert \norm{x-a}_2 \leq \theta \norm{x-y}_2 \text{ for all } y \in S\}
 \]
 where $S \subseteq \mathbb{R}^n$.
 \begin{enumerate}[label=(\alph*), topsep=5pt]
@@ -116,14 +118,14 @@ where $S \subseteq \mathbb{R}^n$.
 \begin{enumerate}[label=(\alph*), topsep=0pt, itemsep=2pt]
     \item Show that if $S_1$ and $S_2$ are convex set in $\mathbb{R}^n$, then the set sum
     \[
-        S \triangleq \{x_1 + x_2 \mid x_1 \in S_1, \, x_2 \in S_2\}
+        S \triangleq \{x_1 + x_2 \bigm\vert x_1 \in S_1, \, x_2 \in S_2\}
     \] is also convex.
-    \item Let $S_1 = \{(-1, -1)^T\}$ and $S_2 = \{(2, 2)^T + u \mid \norms{u} \leq 1\}$. What is their set sum?
+    \item Let $S_1 = \{(-1, -1)^T\}$ and $S_2 = \{(2, 2)^T + u \bigm\vert \norm{u} \leq 1\}$. What is their set sum?
     \item Show that if $S_1$ and $S_2$ are convex set in $\mathbb{R}^n$, then the inverse sum
     \[
         S \triangleq \bigcup_{1 \geq \lambda \geq 0} \{\lambda S_1 \, \cap \, (1 - \lambda)S_2\}
-    \] is also convex, where $\lambda S_j = \{\lambda x_j \mid x_j \in S_j\}, \, j = 1, 2$.
-    \item Let $S_1 = \{(1, 1)^T\}$ and $S_2 = \{(2, 2)^T + u \mid \norms{u} \leq 1\}$. What is their inverse sum?
+    \] is also convex, where $\lambda S_j = \{\lambda x_j \bigm\vert x_j \in S_j\}, \, j = 1, 2$.
+    \item Let $S_1 = \{(1, 1)^T\}$ and $S_2 = \{(2, 2)^T + u \bigm\vert \norm{u} \leq 1\}$. What is their inverse sum?
 \end{enumerate} \vspace{1\baselineskip}
 
 \solution
@@ -137,7 +139,7 @@ where $S \subseteq \mathbb{R}^n$.
 
 It is known that one halfspace contains another in the following form
 \[
-    \{x \mid a^T x \leq b\} \subseteq \{x \mid c \cdot a^T x \leq \tilde{b}\}.
+    \{x \bigm\vert a^T x \leq b\} \subseteq \{x \bigm\vert c \cdot a^T x \leq \tilde{b}\}.
 \] Provide the conditions that the parameters $c$, $b$, and $\tilde{b}$ must satisfy. Are these conditions also sufficient for the
 containment relation between these two halfspaces? \vspace{1\baselineskip}
 
@@ -152,7 +154,7 @@ containment relation between these two halfspaces? \vspace{1\baselineskip}
 
 For a pair of given sets $C, D \subseteq \mathbb{R}^n$, consider the following set
 \[
-    S = \{(a, b) \in \mathbb{R}^{n + 1} \mid a^T x \leq b \text{ for all } x \in C, \, a^T x \geq b \text{ for all } x \in D\}.
+    S = \{(a, b) \in \mathbb{R}^{n + 1} \bigm\vert a^T x \leq b \text{ for all } x \in C, \, a^T x \geq b \text{ for all } x \in D\}.
 \] Prove that the set $S$ is convex. \vspace{1\baselineskip}
 
 \solution
@@ -166,9 +168,9 @@ For a pair of given sets $C, D \subseteq \mathbb{R}^n$, consider the following s
 % -- PROBLEM 9 --
 \begin{homeworkProblem}
 
-Let $C = \{X \in \mathbb{R}^{n \times n} \mid a^T X a \geq 0, \, \forall a \in \mathbb{R}^n \}$. Determine whether the set
+Let $C = \{X \in \mathbb{R}^{n \times n} \bigm\vert a^T X a \geq 0, \, \forall a \in \mathbb{R}^n \}$. Determine whether the set
 \[
-    \mathcal{S} = \{A \in \mathbb{R}^{n \times n} \mid A - M \in C \}
+    \mathcal{S} = \{A \in \mathbb{R}^{n \times n} \bigm\vert A - M \in C \}
 \]
 is convex, where $M \in C$ is a fixed matrix. Provide justification or a counterexample. Note that usually the definition of a 
 matrix being positive-definite requires the matrix to be symmetric, but this problem removes that condition. \vspace{1\baselineskip}
@@ -182,7 +184,7 @@ matrix being positive-definite requires the matrix to be symmetric, but this pro
 % -- PROBLEM 10 --
 \begin{homeworkProblem}
 
-Plot the norm balls of radius $r = 1$ for the following norms in $\mathbb{R}^2$ and $\mathbb{R}^3$:
+Plot the norm balls of radius $r = 1$ for the following norm in $\mathbb{R}^2$ and $\mathbb{R}^3$:
 
 \begin{enumerate}[label=(\alph*), topsep=5pt]
     \item $\ell_1$ norm;
