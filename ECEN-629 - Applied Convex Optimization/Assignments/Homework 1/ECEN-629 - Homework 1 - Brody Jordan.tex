@@ -182,11 +182,11 @@ where $S \subseteq \mathbb{R}^n$.
 \textbf{Part (a):} I will define two arbitray points in $C$, now $x_1, x_2 \in C$ and check for convexity. I'll use 
 $\phi x_1 + (1 - \phi) x_2$ to avoid confusion with $\theta$.
 \[
-    \norm{\phi x_1 + (1 - \phi)x_2 - a}_2 \leq \theta \norm{\phi x_1 + (1 - \phi)x_2 - y}_2, \quad \forall y \in S
+    \norm{\phi x_1 + (1 - \phi)x_2 - a}_2 \leq \theta \norm{\phi x_1 + (1 - \phi)x_2 - y}_2
 \]
 Which equals
 \[
-    \norm{\phi (x_1 - a) + (1 - \phi)(x_2 - a)}_2 \leq \theta \norm{\phi (x_1 - y) + (1 - \phi)(x_2 - y)}_2, \quad \forall y \in S
+    \norm{\phi (x_1 - a) + (1 - \phi)(x_2 - a)}_2 \leq \theta \norm{\phi (x_1 - y) + (1 - \phi)(x_2 - y)}_2
 \]
 The value of $\theta$ determines the size and shape of the set. \\
 
@@ -321,9 +321,11 @@ Thus, $S$ is a convex set. \\
 \end{align*}
 Which is a circle of radius 1 centered at (1, 1). \\
 
-\textbf{Part (c):} We choose two arbitray points $x, y \in S$ \\
-
-\textbf{Part (d):} 
+\textbf{Part (c):} The linear combination of two points in $S$ is also in $S$, so the inverse sum is a convex set. \\
+\textbf{Part (d):} The inverse sum of $S_1$ and $S_2$ is
+\[
+    S = \bigcup_{1 \geq \lambda \geq 0} \{\lambda (1, 1)^T \, \cap \, (1 - \lambda)((2, 2)^T + u) \bigm\vert \norm{u} \leq 1\}
+\]
 
 \end{homeworkProblem}
 
@@ -468,7 +470,6 @@ Plot the norm balls of radius $r = 1$ for the following norm in $\mathbb{R}^2$ a
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
         \begin{tikzpicture}[scale=1.2]
-            \begin{axis}
             \draw[step=0.5,gray!30] (-1.5,-1.5) grid (1.5,1.5);
             \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x_1$};
             \draw[->] (0,-1.5) -- (0,1.5) node[above] {$x_2$};
@@ -483,7 +484,7 @@ Plot the norm balls of radius $r = 1$ for the following norm in $\mathbb{R}^2$ a
         \centering
         \begin{tikzpicture}[scale=1.2]
             % Grid and axes
-
+            
             \draw[step=0.5,gray!30] (-1.5,-1.5) grid (1.5,1.5);
             \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x_1$};
             \draw[->] (0,-1.5) -- (0,1.5) node[above] {$x_2$};
