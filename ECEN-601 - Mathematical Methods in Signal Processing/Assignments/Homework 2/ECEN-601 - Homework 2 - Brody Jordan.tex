@@ -15,10 +15,10 @@
 
 % ------ Problem 1 ------
 \begin{homeworkProblem}
-Negate the following statement: For every real number $\varepsilon > 0$ there exists a positive integer $k$ 
-such that all positive integers $n$, it is the case that $|a_n - k^2| < \varepsilon$. \vspace{1\baselineskip}
+    Negate the following statement: For every real number $\varepsilon > 0$ there exists a positive integer $k$
+    such that all positive integers $n$, it is the case that $|a_n - k^2| < \varepsilon$. \vspace{1\baselineskip}
 
-\solution
+    \solution
 
 
 \end{homeworkProblem}
@@ -27,22 +27,22 @@ such that all positive integers $n$, it is the case that $|a_n - k^2| < \varepsi
 
 % ------ Problem 2 ------
 \begin{homeworkProblem}
-Let $f : X \ra Y$, $A, B \subseteq X$, and $C, D \subseteq Y$. Show that $f^{-1}$ preserves inclusions, unions,
-and intersections. \\[0.2\baselineskip]
-{[Hint: Recall that $f(A) \triangleq \{f(x) \mid x \in A\}$ and $f^{-1}(C) \triangleq \{x \in X \mid f(x) \in C\}$.]} 
-\begin{enumerate}[label=(\alph*), itemsep=5pt, topsep=10pt]
-    \item Show that $C \subseteq D \implies f^{-1}(C) \subseteq f^{-1}(D)$.
-    \item Show that $f^{-1}(C \cup D) = f^{-1}(C) \cup f^{-1}(D)$.
-    \item Show that $f^{-1}(C \cap D) = f^{-1}(C) \cap f^{-1}(D)$.
-\end{enumerate} \vspace{0.2\baselineskip}
-Show that $f$ preserves inclusions and unions, but not intersections.
-\begin{enumerate}[label=(\alph*), itemsep=5pt, topsep=10pt]
-    \item Show that $A \subseteq B \Longrightarrow f(A) \subseteq f(B)$.
-    \item Show that $f(A \cup B)=f(A) \cup f(B)$.
-    \item Show that $f(A \cap B) \subseteq f(A) \cap f(B)$. Give an example where equality does not occur.
-\end{enumerate} \vspace{1\baselineskip}
+    Let $f : X \ra Y$, $A, B \subseteq X$, and $C, D \subseteq Y$. Show that $f^{-1}$ preserves inclusions, unions,
+    and intersections. \\[0.2\baselineskip]
+    {[Hint: Recall that $f(A) \triangleq \{f(x) \mid x \in A\}$ and $f^{-1}(C) \triangleq \{x \in X \mid f(x) \in C\}$.]}
+    \begin{enumerate}[label=(\alph*), itemsep=5pt, topsep=10pt]
+        \item Show that $C \subseteq D \implies f^{-1}(C) \subseteq f^{-1}(D)$.
+        \item Show that $f^{-1}(C \cup D) = f^{-1}(C) \cup f^{-1}(D)$.
+        \item Show that $f^{-1}(C \cap D) = f^{-1}(C) \cap f^{-1}(D)$.
+    \end{enumerate} \vspace{0.2\baselineskip}
+    Show that $f$ preserves inclusions and unions, but not intersections.
+    \begin{enumerate}[label=(\alph*), itemsep=5pt, topsep=10pt]
+        \item Show that $A \subseteq B \Longrightarrow f(A) \subseteq f(B)$.
+        \item Show that $f(A \cup B)=f(A) \cup f(B)$.
+        \item Show that $f(A \cap B) \subseteq f(A) \cap f(B)$. Give an example where equality does not occur.
+    \end{enumerate} \vspace{1\baselineskip}
 
-\solution
+    \solution
 
 
 \end{homeworkProblem}
@@ -51,57 +51,57 @@ Show that $f$ preserves inclusions and unions, but not intersections.
 
 % ------ Problem 3 ------
 \begin{homeworkProblem}
-Let $\underline{x}=\left(x_1, \ldots, x_n\right)$,  $\underline{y}=\left(y_1, \ldots, y_n\right) \in \mathbb{R}^n$ and
-consider the function $\rho$ given by
-\[
-    \rho(\underline{x}, \underline{y}) = \max{|x_1 - y_1|, \cdots, |x_n - y_n|}.
-\]
-Show that $\rho$ is a metric. \vspace{1\baselineskip}
+    Let $\underline{x}=\left(x_1, \ldots, x_n\right)$,  $\underline{y}=\left(y_1, \ldots, y_n\right) \in \mathbb{R}^n$ and
+    consider the function $\rho$ given by
+    \[
+        \rho(\underline{x}, \underline{y}) = \max{|x_1 - y_1|, \cdots, |x_n - y_n|}.
+    \]
+    Show that $\rho$ is a metric. \vspace{1\baselineskip}
 
-\solution
+    \solution
 \end{homeworkProblem}
 
 \pagebreak
 
 % ------ Problem 4 ------
 \begin{homeworkProblem}
-Suppose $a \in B_d (x, \varepsilon)$ with $\varepsilon > 0$. Find an explicit $\delta > 0$ such that the open ball 
-$B_d(a, \delta)$ centered at $a$ is contained in $B_d(x, \varepsilon)$. \vspace{1\baselineskip}
+    Suppose $a \in B_d (x, \varepsilon)$ with $\varepsilon > 0$. Find an explicit $\delta > 0$ such that the open ball
+    $B_d(a, \delta)$ centered at $a$ is contained in $B_d(x, \varepsilon)$. \vspace{1\baselineskip}
 
-\solution
+    \solution
 \end{homeworkProblem}
 
 \pagebreak
 
 % ------ Problem 5 ------
 \begin{homeworkProblem}
-This problem outlines a proof that the Euclidean distance $d$ on $\mathbb{R}^n$ is a metric, as follows: If 
-$\b{x}, \b{y} \in \mathbb{R}^n$ and $c \in \mathbb{R}$, define
-\begin{align*}
-    \b{x} + \b{y} & =\left(x_1+y_1, \ldots, x_n+y_n\right) & c \b{x} & =\left(c x_1, \ldots, c x_n\right), \\
-    \b{x} \cdot \b{y} & =x_1 y_1+\cdots+x_n y_n & \|\b{x}\| & =(\b{x} \cdot \b{x})^{1 / 2} .
-\end{align*}
-\begin{enumerate}[label=(\alph*), itemsep=5pt]
-    \item Show that $\b{x} \cdot (\b{y} + \b{z}) = (\b{x} \cdot \b{y}) + (\b{x} \cdot \b{z})$.
-    \item Show that $|\b{x} \cdot \b{y}| \leq \norm{\b{x}} \norm{\b{y}}$. [Hint: if $\b{x}, \b{y} \neq 0$, 
-    let $a = 1/\norm{\b{x}}$ and $b = 1/\norm{\b{y}}$, and use the fact that $\norm{a\b{x} \pm b \b{y}} \geq 0$.]
-    \item Show that $\norm{\b{x} + \b{y}} \leq \norm{\b{x}} + \norm{\b{y}}$. [Hint: Compute $(\b{x} + \b{y}) \cdot (\b{x} + \b{y})$
-    and apply previous result.]
-    \item Verify that the Euclidean distance $d(\b{x}, \b{y})$ is a metric.
-\end{enumerate} \vspace{1\baselineskip}
+    This problem outlines a proof that the Euclidean distance $d$ on $\mathbb{R}^n$ is a metric, as follows: If
+    $\b{x}, \b{y} \in \mathbb{R}^n$ and $c \in \mathbb{R}$, define
+    \begin{align*}
+        \b{x} + \b{y}     & =\left(x_1+y_1, \ldots, x_n+y_n\right) & c \b{x}   & =\left(c x_1, \ldots, c x_n\right), \\
+        \b{x} \cdot \b{y} & =x_1 y_1+\cdots+x_n y_n                & \|\b{x}\| & =(\b{x} \cdot \b{x})^{1 / 2} .
+    \end{align*}
+    \begin{enumerate}[label=(\alph*), itemsep=5pt]
+        \item Show that $\b{x} \cdot (\b{y} + \b{z}) = (\b{x} \cdot \b{y}) + (\b{x} \cdot \b{z})$.
+        \item Show that $|\b{x} \cdot \b{y}| \leq \norm{\b{x}} \norm{\b{y}}$. [Hint: if $\b{x}, \b{y} \neq 0$,
+                      let $a = 1/\norm{\b{x}}$ and $b = 1/\norm{\b{y}}$, and use the fact that $\norm{a\b{x} \pm b \b{y}} \geq 0$.]
+        \item Show that $\norm{\b{x} + \b{y}} \leq \norm{\b{x}} + \norm{\b{y}}$. [Hint: Compute $(\b{x} + \b{y}) \cdot (\b{x} + \b{y})$
+                      and apply previous result.]
+        \item Verify that the Euclidean distance $d(\b{x}, \b{y})$ is a metric.
+    \end{enumerate} \vspace{1\baselineskip}
 
-\solution
+    \solution
 \end{homeworkProblem}
 
 \pagebreak
 
 % ------ Problem 6 ------
 \begin{homeworkProblem}
-Define $f_n : [0, 1] \ra \R$ by the equation $f_n(x) = x^n$. Show that the sequence $\{f_n(x)\}$ converges for each $x \in [0, 1]$, 
-but that the sequence $\{f_n\}$ does not converge uniformly. Recall that uniform convergence to $f$ on $[a, b]$ implies that,
-for any $\varepsilon > 0$, there exists an $N$ such that $|f_n(t) - f(t)| < \varepsilon$ for all $n > N$ and all $t \in [a, b]$. \\
+    Define $f_n : [0, 1] \ra \R$ by the equation $f_n(x) = x^n$. Show that the sequence $\{f_n(x)\}$ converges for each $x \in [0, 1]$,
+    but that the sequence $\{f_n\}$ does not converge uniformly. Recall that uniform convergence to $f$ on $[a, b]$ implies that,
+    for any $\varepsilon > 0$, there exists an $N$ such that $|f_n(t) - f(t)| < \varepsilon$ for all $n > N$ and all $t \in [a, b]$. \\
 
-\solution
+    \solution
 
 \end{homeworkProblem}
 
@@ -109,11 +109,14 @@ for any $\varepsilon > 0$, there exists an $N$ such that $|f_n(t) - f(t)| < \var
 
 % ------ OPTIONAL PROBLEM ------
 \begin{homeworkProblem}
-Negate the following statement: There exists an integer $Q$ such that for all real numbers $x > 0$, there exists a positive
-integer $k$ such that $\ln(Q - x) > 5$ and that if $x \leq k$ then $Q$ is cacophonous. (The last term used in this exercise is 
-meaningless.) \\
+    Negate the following statement: There exists an integer $Q$ such that for all real numbers $x > 0$, there exists a positive
+    integer $k$ such that $\ln(Q - x) > 5$ and that if $x \leq k$ then $Q$ is cacophonous. (The last term used in this exercise is
+    meaningless.) \\
 
-\solution
+    \solution
+
 \end{homeworkProblem}
-
+\[
+    a=2
+\]
 \end{document}
