@@ -72,7 +72,7 @@
 \sisetup{detect-all=true}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\ifnum\value{page}>1 \topxmark \else \firstxmark \fi}
+% \fancyhead[L]{\ifnum\value{page}>1 \topxmark \else \firstxmark \fi}
 \fancyhead[C]{\assignmentCourse: \assignmentTitle}
 \fancyhead[R]{\assignmentAuthor}
 \fancyfoot[L]{\lastxmark}
@@ -88,39 +88,52 @@
 \setcounter{homeworkProblemCounter}{1}
 \newenvironment{homeworkProblem}{%
   \par\nobreak
-  \extramarks
+  \extramarks[main]
     {Problem \arabic{homeworkProblemCounter}}
     {Problem \arabic{homeworkProblemCounter}}
-  \extramarks
+  \extramarks[main]
     {Problem \arabic{homeworkProblemCounter} (continued)}
     {Problem \arabic{homeworkProblemCounter} continued on next page\ldots}
   \section*{Problem \arabic{homeworkProblemCounter}}
 }{%
   \par\nobreak
   \stepcounter{homeworkProblemCounter}
-  \extramarks
-    {Problem \arabic{homeworkProblemCounter}}
-    {}
+  \extramarks[main]{}{}
 }
 
 \newcounter{optionalProblemCounter}
 \setcounter{optionalProblemCounter}{1}
 \newenvironment{optionalProblem}{%
   \par\nobreak
-  \extramarks
+  \extramarks[optional]
     {Optional Problem \arabic{optionalProblemCounter}}
     {Optional Problem \arabic{optionalProblemCounter}}
-  \extramarks
+  \extramarks[optional]
     {Optional Problem \arabic{optionalProblemCounter} (continued)}
     {Optional Problem \arabic{optionalProblemCounter} continued on next page\ldots}
   \section*{Optional Problem \arabic{optionalProblemCounter}}
 }{%
   \par\nobreak
   \stepcounter{optionalProblemCounter}
-  \extramarks
-    {Optional Problem \arabic{optionalProblemCounter}}
-    {}
+  \extramarks[optional]{}{}
 }
+
+\fancyhead[L]{%
+  \ifnum\value{page}>1
+    \ifx\topxmark[optional]\empty
+      \topxmark[main]%
+    \else
+      \topxmark[optional]%
+    \fi
+  \else
+    \ifx\firstxmark[optional]\empty
+      \firstxmark[main]%
+    \else
+      \firstxmark[optional]%
+    \fi
+  \fi
+}
+
 
 \newcounter{partCounter}
 \renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}}
