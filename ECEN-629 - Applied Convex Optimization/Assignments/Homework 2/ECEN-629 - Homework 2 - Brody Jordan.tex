@@ -1,0 +1,155 @@
+% !TEX root = ./ECEN-629 - Homework 2 - Brody Jordan.tex
+
+\documentclass[11pt]{article}
+
+\usepackage[
+    assignmentDueDate={September 30, 2025 at 11:59 pm}
+]{C:/Users/bljor/Sync/Courses/assignment}
+
+
+\begin{document}
+\makeAssignmentTitle
+
+% ——————— PROBLEM 1 —————— %
+\begin{homeworkProblem}
+    Suppose $f : \R \rightarrow \R$ is concave, and $a, b \in \dom f$ with $a < b$.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Prove the following inequality:
+              \[
+                  \frac{f(x) - f(a)}{x - a} \geq \frac{f(b) - f(a)}{b - a} \geq \frac{f(b) - f(x)}{b - x}.
+              \]
+              for any $x \in (a, b)$.
+        \item For $f = -x^2 + 2x + 5$, $a = 0$, and $b = 3$, draw a sketch to illustrate the inequalities above.
+    \end{enumerate} \vspace{1\baselineskip}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 2 —————— %
+\begin{homeworkProblem}
+    Show that the maximum of a convex function $f$ over the polyhedron $\mathcal{P} = \conv \{v_1, v_2, \dots, v_k\}$ is
+    achieved at one of the vertices, that is
+    \[
+        \sup_{x \in \mathcal{P}} f(x) = \max_{i=1,2,\dots,k} f(v_i).
+    \]
+    In particular, let $f(x)=x_1^2+2 x_1 x_2+3 x_2^2$, and let $v_1=(1,1)^T$, $v_2=(1,-1)^T$, $v_3=(1-, 1)^T$, and $v_4=(-1,-1)^T$. Compute its maximum over the polyhedron. \\
+
+    \solution
+
+    hey
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 3 —————— %
+\begin{homeworkProblem}
+    Suppose
+    \[
+        f(x) = h(g_1(x),g_2(x)),
+    \]
+    where $g_1(x) = \norm{x}_2^2$, $g_2(x) = \norm{x}_1$, and $h(u, v) = \log(e^u + e^v)$.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2.5pt]
+        \item Show $f(x)$ is convex by applying the correct composition rule.
+        \item Give another $h$ that keeps $f$ convex but is non-logarithmic, and explain why.
+    \end{enumerate} \vspace{1\baselineskip}
+
+    \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 4 —————— %
+\begin{homeworkProblem}
+    Let $f_1, f_2, \dots, f_m$ be convex function on $\R[n]$. Define
+    \[
+        f(x)=\inf \left\{f_1\left(x_1\right)+f_2\left(x_2\right)+\ldots+f_m\left(x_m\right) \mid x_i \in \R[n], x_1+x_2+\ldots+x_m=x\right\} .
+    \]
+    Show $f(x)$ is convex on $\R[n]$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 5 —————— %
+\begin{homeworkProblem}
+    The $r$-separation function $\Delta_r(x)$ of the vector $x \in \R[n]$, where $r \leq n$, is defined as the difference between the sum
+    of the $r$ largest components of the vector $x$ and the sum of the $r$ smallest components.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2.5pt]
+        \item Is the function $\Delta_r(x)$ convex? Prove your answer.
+        \item Let $r = 1$ and $n = 2$. Sketch the function $\Delta_1(x)$ in the positive quadrant.
+    \end{enumerate} \vspace{1\baselineskip}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 6 —————— %
+\begin{homeworkProblem}
+    Suppose $f : \R[m] \rightarrow \R$ is convex, and $A \in \R[m\times n]$, $b \in \R[m]$, $c \in \R[n]$, and $d \in \R$. Show that the function
+    that $g : \R[n] \rightarrow \R$ is convex, where
+    \[
+        g(x) = (c^T x + d) f\left(\frac{Ax + b}{c^T x + d}\right), \quad \dom g = \{x \mid c^T x + d > 0\}.
+    \]
+    Provide a clear argument which rules you are applying, and the exact manner of function composition. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 7 —————— %
+\begin{homeworkProblem}
+    A vector-valued function $f : \R[n] \rightarrow \R[n]$ is called monotone if $\left< f(x) - f(y), x - y\right> \geq 0$. Show that
+    the gradient of a convex function is monotone. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 8 —————— %
+\begin{homeworkProblem}
+    The proximal operator of a function $f : \R[n] \rightarrow \R \cup \{\infty\}$ is defined by
+    \[
+        \prox_{\lambda f}(v) = \argmin[x] \left(f(x) + \frac{1}{2\lambda} \norm{x - v}_2^2\right).
+    \]
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2.5pt]
+        \item Is the proximal operator a convex function?
+        \item Derive the proximal operator for $f(x) = \norm{x}_1$.
+        \item Solve explicitly for $v = (3, -2, 0.5)^T$ and $\lambda = 1$ when $f(x) = \norm{x}_1$.
+    \end{enumerate} \vspace{1\baselineskip}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ——————— PROBLEM 9 —————— %
+\begin{homeworkProblem}
+    Given a norm $\norm{\, \cdot \, }$ on $\R[n]$, the dual norm is defined as
+    \[
+        \norm{y}_* = \sup_{\norm{x} \leq 1} y^T x.
+    \]
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=2.5pt]
+        \item Show that $\norm{\, \cdot \, }_*$ is indeed a norm.
+        \item Compute the dual norm of $\norm{x}_1$ and $\norm{x}_\infty$.
+        \item For $x = (1, 2)^T$, compute $\norm{x}_2^*$.
+    \end{enumerate} \vspace{1\baselineskip}
+
+    \solution
+
+
+\end{homeworkProblem}
+\end{document}

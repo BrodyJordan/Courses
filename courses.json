@@ -62,6 +62,14 @@
                 "file": "ECEN-629 - Homework 1 - Brody Jordan.tex",
                 "id": "1757046343720",
                 "completed": true
+            },
+            {
+                "name": "Homework 2",
+                "dueDate": "09/30/2025",
+                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 2",
+                "file": "ECEN-629 - Homework 2 - Brody Jordan.tex",
+                "id": "1758480596157",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
