@@ -14,6 +14,14 @@
                 "file": "CSCE-636 - Homework 1 - Brody Jordan.tex",
                 "id": "1758056290354",
                 "completed": true
+            },
+            {
+                "name": "Homework 2",
+                "dueDate": "09/24/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 2",
+                "file": "CSCE-636 - Homework 2 - Brody Jordan.tex",
+                "id": "1758577606890",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
@@ -42,6 +50,14 @@
                 "file": "ECEN-601 - Homework 2 - Brody Jordan.tex",
                 "id": "1757725239829",
                 "completed": true
+            },
+            {
+                "name": "Homework 3",
+                "dueDate": "09/26/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 3",
+                "file": "ECEN-601 - Homework 3 - Brody Jordan.tex",
+                "id": "1758577913315",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
