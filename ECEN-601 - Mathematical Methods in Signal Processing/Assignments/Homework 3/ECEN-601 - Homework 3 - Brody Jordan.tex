@@ -6,6 +6,8 @@
     assignmentDueDate={September 26, 2025 at 11:59 pm}
 ]{C:/Users/bljor/Sync/Courses/assignment}
 \newcommand\op{\mathop{\circ}\nolimits}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\RealNumbers}{\mathbb{R}}
 
 \begin{document}
 \makeAssignmentTitle
@@ -18,6 +20,15 @@
 
     \solution
 
+    In a metric space, a sequence $x_n \in X$ is Cauchy if $\forall \varepsilon > 0$, $\exists N \in \mathbb{Z}$, such
+    that for all $m,n > N$, $d(x_m, x_n) < \varepsilon$. \\
+
+    In order for $x$ to be a limit point of $\{x_n\}$, there must exist some $\varepsilon > 0$, such that for all $m > N$, $d(x_m, x) < \varepsilon$.
+    Since a Cauchy sequence requires a convergence of $x_m$ and $x_n$, then that same convergence must also apply to $x_m$ and $x$. Thus,
+    if a Cauchy sequence has a limit point, then it must also have a limit.
+
+
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -29,6 +40,20 @@
     that $x_n \to x$ in the $d_1$-metric if and only if $x_n \to x$ in the $d_2$-metric, if $d_1$ and $d_2$ are equivalent. \\
 
     \solution
+
+    If $x_n \to x$ in $d_1$, then $\forall \varepsilon_1 > 0$, $\exists N \in \mathbb{Z}$, such that for all
+    $n > N$, $d_1(x_n, x) < \varepsilon_1$ and if $x_n \to x$ in $d_2$, then $\forall \varepsilon_2 > 0$, $\exists N \in \mathbb{Z}$,
+    such that for all $n > N$, $d_2(x_n, x) < \varepsilon_2$. By the metric equivalence,
+    \[
+        d_2(x_n, x) \leq c_1 d_1(x_n, x) \leq c_1 \varepsilon_1
+    \]
+    If $\varepsilon_1 = \varepsilon_2 / c_1$, then
+    \[
+        d_2(x_n, x) \leq \varepsilon_2
+    \]
+    Therefore, $x_n \to x$ in $d_2$ when $x_n \to x$ in $d_1$. \\
+
+    Since the reverse argument also holds, $x_n \to x$ in $d_1$ if $x_n \to x$ in $d_2$. Thus, $x_n \to x$ in the $d_1$-metric if and only if $x_n \to x$ in the $d_2$-metric.
 \end{homeworkProblem}
 
 \pagebreak
@@ -39,6 +64,21 @@
     example where $g \hspace{0.05em} \circ \hspace{0.05em} f$ is continuous but $g$ and $f$ are not. \\
 
     \solution
+
+    By the properties of function composition, the composition of two continuous functions is also continuous. \\
+
+    \textbf{Example:}
+    I will construct a sine wave from two discontinuous functions. Let $f(x) = x \pmod{2\pi}$. \\
+
+    Then, we define some $g(x)$ as,
+    \[
+        g(x) = \begin{cases}
+            \sin(x) & 0 \leq x \leq 2\pi \\
+            a       & \text{otherwise}
+        \end{cases}
+    \] which is discontinuous for any $a \neq 0$. \\
+
+    Then, simply $g \circ f = \sin(x)$, which is continuous.
 \end{homeworkProblem}
 
 \pagebreak
@@ -50,6 +90,35 @@
     the fixed point? \\
 
     \solution
+
+    If $f$ satisfies the hypotheses of the contractive mapping principle, then $\exists c \in [0, 1)$, such that $\forall x, y \in M$,
+    \[
+        d(f(x), f(y)) \leq c \cdot d(x, y)
+    \]
+    Here, our function is defined as
+    \[
+        f(x) = \frac{x}{2} + \frac{a}{2x}
+    \]
+    Then, we have
+    \begin{align*}
+        d(f(x), f(y)) & = \left| \left( \frac{x}{2} + \frac{a}{2x} \right) - \left( \frac{y}{2} + \frac{a}{2y} \right) \right| \\
+                      & = \left| \frac{x - y}{2} + \frac{a(y - x)}{2xy} \right|                                                \\
+                      & = \left| (x - y) \left( \frac{1}{2} - \frac{a}{2xy} \right) \right|
+    \end{align*}
+    Here $|(x-y)| = d(x, y)$, so we can write
+    \[
+        d(f(x), f(y)) = \underbrace{\left| \frac{1}{2} - \frac{a}{2xy} \right|}_{c} \cdot d(x, y) \leq c \cdot d(x, y)
+    \]
+
+    The fixed point occurs when $f(x) = x$, thus
+    \begin{align*}
+        x    & = \frac{x}{2} + \frac{a}{2x} \\
+        2x^2 & = x^2 + a                    \\
+        x^2  & = a                          \\
+        x    & = \pm \sqrt{a}               \\
+    \end{align*}
+    We know $1 < a < 3$, so $x = \sqrt{a}$ is the fixed point. \\
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -62,5 +131,24 @@
     1 for this to be a good estimate). \\
 
     \solution
+
+    By the triangle inequality, we have
+    \[
+        d(x_1, x_0) \leq d(x_1, f(x_1)) + d(f(x_1), x_0)
+    \]
+    Since $x_0$ is the fixed point, $f(x_0) = x_0$, thus
+    \[
+        d(x_1, x_0) \leq d(x_1, f(x_1)) + d(f(x_1), f(x_0))
+    \]
+    Then, by the contractive mapping principle, we have
+    \[
+        d(x_1, x_0) \leq d(x_1, f(x_1)) + r \cdot d(x_1, x_0)
+    \]
+    Rearranging, we get
+    \begin{align*}
+        d(x_1, x_0) - r \cdot d(x_1, x_0) \leq d(x_1, f(x_1)) \\
+        (1 - r) \cdot d(x_1, x_0) \leq d(x_1, f(x_1))         \\
+        d(x_1, x_0) \leq \frac{d(x_1, f(x_1))}{1 - r}
+    \end{align*}
 \end{homeworkProblem}
 \end{document}
