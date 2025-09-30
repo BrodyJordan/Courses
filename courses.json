@@ -30,6 +30,14 @@
                 "file": "CSCE-636 - Project 1 - Brody Jordan.tex",
                 "id": "1759008003474",
                 "completed": false
+            },
+            {
+                "name": "Homework 3",
+                "dueDate": "10/01/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 3",
+                "file": "CSCE-636 - Homework 3 - Brody Jordan.tex",
+                "id": "1759252599559",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
@@ -93,7 +101,7 @@
                 "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 2",
                 "file": "ECEN-629 - Homework 2 - Brody Jordan.tex",
                 "id": "1758480596157",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
