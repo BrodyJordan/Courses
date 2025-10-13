@@ -1,0 +1,221 @@
+% !TEX root = ./ECEN-629 - Homework 3 - Brody Jordan.tex
+
+\documentclass[11pt]{article}
+
+\usepackage[
+    assignmentDueDate={October 21, 2025 at 11:59 pm}
+]{C:/Users/bljor/Sync/Courses/assignment}
+
+\DeclareMathOperator{\minimize}{minimize:}
+\DeclareMathOperator{\subjectto}{subject\ to:}
+
+\begin{document}
+\makeAssignmentTitle
+
+% ----- PROBLEM 1 ------ %
+\begin{homeworkProblem}
+    Suppose $f : \R[n] \to \R$ is convex, and define
+    \[
+        g(x, t) = f(x/t), \quad \dom g = \{(x, t) \mid x/t \in \dom f, \ t > 0\}.
+    \]
+    Show that $g$ is quasiconvex, and then write down the optimization procedure similarly to that on page 17
+    of the slides of Chapter 7, specialized to this problem. \\
+
+    Hint: consider the function $t \cdot f(x/t)$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 2 ------ %
+\begin{homeworkProblem}
+    Some non-convex problems can also bea easy to solve. Find the optimal solution for the following problems
+    in closed form.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item For $x \in \R[n]$
+              \begin{align*}
+                  \minimize  & \quad  \norm{x}_2                 \\
+                  \subjectto & \quad  10 \geq \norm{x}_1 \geq 1.
+              \end{align*}
+        \item Let $x = (x_1, x_2) \in \R[2]$
+              \begin{align*}
+                  \minimize  & \quad  x_1 + x_2                          \\
+                  \subjectto & \quad  x_1 + 3x_2 = 5;                    \\
+                             & \quad  (x_1 - 3)^2 + (x_2 - 4)^2 \geq 25. \\
+              \end{align*}
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 3 ------ %
+\begin{homeworkProblem}
+    Huber's penalty function is defined as
+    \[
+        \phi(u) =
+        \begin{cases}
+            u^2,         & |u| \leq M, \\
+            M(2|u| - M), & |u| > M.
+        \end{cases}
+    \]
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Is the function $\phi(u)$ convex in general?
+        \item Show that the minimization problem
+              \[
+                  \minimize \quad \sum_{i=1}^{n} \phi(a_i^T x - b_i)
+              \]
+              is equivalent to the following problem
+              \begin{align*}
+                  \minimize  & \quad  \sum_{i=1}^{n} (u_i^2 + 2M v_i)     \\
+                  \subjectto & \quad  -u - v \preceq Ax - b \preceq u + v \\
+                             & \quad  0 \preceq u \preceq M\mathbf{1}     \\
+                             & \quad  v \succeq 0.
+              \end{align*}
+        \item A general form of Huber's penalty function with parameters $(\alpha, \beta, \gamma)$ is
+              \[
+                  \phi(u) = \begin{cases}
+                      \alpha \cdot u^2,         & |u| \leq M, \\
+                      \beta M (\gamma |u| - M), & |u| > M .
+                  \end{cases}
+              \]
+              For any fixed value of $\alpha > 0$, find the valid assignment of $(\beta, \gamma)$ in terms of $\alpha$
+              such that the penalty function is convex. \\
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 4 ------ %
+\begin{homeworkProblem}
+    Write the following problems as equivalent LPs:
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item \begin{align*}
+                  \minimize  & \quad \norm{x}_\infty        \\
+                  \subjectto & \quad \norm{Ax - b}_1 \leq 1
+              \end{align*} where $A \in \R[m \times n]$ and $b \in \R[m]$.
+        \item \begin{align*}
+                  \minimize  & \quad \norm{x}_\infty             \\
+                  \subjectto & \quad \norm{Ax - b}_\infty \leq 1
+              \end{align*} where $A \in \R[m \times n]$ and $b \in \R[m]$.
+        \item \begin{align*}
+                  \minimize  & \quad \norm{x}_1                  \\
+                  \subjectto & \quad \norm{Ax - b}_\infty \leq 1
+              \end{align*} where $A \in \R[m \times n]$ and $b \in \R[m]$.
+        \item \begin{align*}
+                  \minimize  & \quad \norm{x}_1             \\
+                  \subjectto & \quad \norm{Ax - b}_2 \leq 1
+              \end{align*} where $A \in \R[m \times n]$ and $b \in \R[m]$.
+    \end{enumerate}
+    For the problems above, what if we exchange the objective function and the constraint, can you still write down the problems as LPs? \\
+
+    \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 5 ------ %
+\begin{homeworkProblem}
+    Consider the optimization problem in $\R[2]$
+    \begin{align*}
+        \minimize  & \quad  f_0(x_1, x_2)                    \\
+        \subjectto & \quad  (x_1 - 1)^2 + (x_2 - 2)^2 \leq 2 \\
+                   & \quad  2x_1 + x_2 \geq 3                \\
+                   & \quad  x_1 \geq 0, \ x_2 \geq 0.
+    \end{align*}
+    First make a sketch of the feasible set. For each of the following objective functions, give
+    the optimal set and the optimal value, using two methods: geometrically and the first-order
+    optimality condition. Note that you should not use KKT directly here, but the first-order
+    condition in Chapter 4.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item $f_0(x_1, x_2) = x_1 + x_2$;
+        \item $f_0(x_1, x_2) = x_1^2 + x_2^2$. \newline
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 6 ------ %
+\begin{homeworkProblem}
+    Consider the optimization problem
+    \begin{align*}
+        \minimize  & \quad  f_0(x_1, x_2)             \\
+        \subjectto & \quad  x_1 + x_2 \geq 2          \\
+                   & \quad  2x_1 + x_2 \geq 3         \\
+                   & \quad  x_1 \geq 0, \ x_2 \geq 0.
+    \end{align*}
+    First make a sketch of the feasible set. For each of the following objective functions, give
+    the optimal set and the optimal value, using two methods: geometrically and the first-order
+    optimality condition.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item $f_0(x_1, x_2) = 3x_1 + 2x_2$;
+        \item $f_0(x_1, x_2) = \max\{x_1, x_2\}$. \newline
+    \end{enumerate}
+
+    \solution
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 7 ------ %
+\begin{homeworkProblem}
+    Give explicit solutions for the following LP problems over $\R[n]$
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item \begin{align*}
+                  \minimize  & \quad  c^T x         \\
+                  \subjectto & \quad  a^T x \leq b,
+              \end{align*} where $a \neq 0$.
+        \item \begin{align*}
+                  \minimize  & \quad  c^T x                                                      \\
+                  \subjectto & \quad  \mathbf{1}^T x \leq \alpha                                 \\
+                             & \quad  0 \cdot \mathbf{1} \preceq l \preceq x \preceq u. \newline
+              \end{align*}
+    \end{enumerate}
+
+    \solution
+\end{homeworkProblem}
+
+\pagebreak
+
+% ----- PROBLEM 8 ------ %
+\begin{homeworkProblem}
+    Find the dual optimization problems for the following optimization problems
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item \begin{align*}
+                  \minimize  & \quad  c^T x                  \\
+                  \subjectto & \quad  Ax = b                 \\
+                             & \quad  l \preceq x \preceq u,
+              \end{align*} where $x \in \R[n]$ is the variable, and $l, u \in \R[n]$
+        \item Recall last time you wrote the following problem as an equivalent LP:
+              \begin{align*}
+                  \minimize  & \quad  \norm{x}_\infty              \\
+                  \subjectto & \quad  \norm{Ax - b}_\infty \leq 1.
+              \end{align*} where $A \in \R[m \times n]$ and $b \in \R[m]$. Find the dual problem for the equivalent LP.
+        \item \begin{align*}
+                  \minimize  & \quad \sum_{i=1}^n x_i \log x_i \\
+                  \subjectto & \quad Ax \succeq b,             \\
+                             & \quad c^T x = d,
+              \end{align*} whose domain is $\R[n]_+$, i.e., $x_i > 0$ for all $i = 1, 2, \ldots, n$. Assume $c \succeq 0$.
+        \item \begin{align*}
+                  \minimize  & \quad  x^T Q x \\
+                  \subjectto & \quad  Ax = b,
+              \end{align*} where $Q$ is a positive definite matrix. \newline
+    \end{enumerate}
+
+    \solution
+\end{homeworkProblem}
+
+
+\end{document}
