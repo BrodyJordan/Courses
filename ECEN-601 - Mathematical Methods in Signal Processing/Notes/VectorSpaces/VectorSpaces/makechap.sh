@@ -1,0 +1,11 @@
+pdfjam -o notes_ch0.pdf book.pdf 1-6
+pdfjam -o notes_ch1.pdf book.pdf 7-28
+pdfjam -o notes_ch2.pdf book.pdf 29-52
+pdfjam -o notes_ch3.pdf book.pdf 53-88
+pdfjam -o notes_ch4.pdf book.pdf 89-114
+pdfjam -o notes_ch5.pdf book.pdf 115-132
+pdfjam -o notes_ch6.pdf book.pdf 133-150
+pdfjam -o notes_ch7.pdf book.pdf 151-160
+pdfjam -o notes_ch8.pdf book.pdf 161-172
+pdfjam -o notes_ch9.pdf book.pdf 173-178
+pdfjam -o notes_chI.pdf book.pdf 179-188
