@@ -3,11 +3,15 @@
 \documentclass[11pt]{article}
 
 \usepackage[
-    assignmentDueDate={October 21, 2025 at 11:59 pm}
+    assignmentDueDate={October 21, 2025 at 12:45 pm}
 ]{C:/Users/bljor/Sync/Courses/assignment}
 
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \DeclareMathOperator{\minimize}{minimize:}
 \DeclareMathOperator{\subjectto}{subject\ to:}
+\usetikzlibrary{arrows,intersections,math,patterns,fillbetween}
+\usepgfplotslibrary{fillbetween}
 
 \begin{document}
 \makeAssignmentTitle
@@ -25,14 +29,45 @@
 
     \solution
 
+    From Chapter 3, we know that $f : \R[n] \to \R$ is quasiconvex if $\dom f$ is convex and the sublevel sets
+    \[
+        S_\alpha = \{x \in \dom f \mid f(x) \leq \alpha \}
+    \] are convex for all $\alpha$. For $g$:
+    \[
+        S_\alpha = \{(x, t) \in \dom g \mid g(x, t) \leq \alpha \} = \{(x, t) \mid f(x/t) \leq \alpha, \ t > 0\}.
+    \]
+    Since $t > 0$, the sublevel sets of $g$ are scaled sublevel sets of $f$, which are convex.
+    Thus, $g$ is quasiconvex. \\
+
+    \begin{algorithm}[H]
+        \caption{Quasiconvex Optimization}
+        \begin{algorithmic}[1]
+            \Require $l \le p^\star$, $u \ge p^\star$, tolerance $\varepsilon > 0$
+            \Repeat
+            \State $t \gets (l + u)/2$
+            \State Solve the convex feasibility problem:
+            \[
+                f(x/t) \leq \alpha, \quad t > 0
+            \]
+            \If{feasible}
+            \State $u \gets t$
+            \Else
+            \State $l \gets t$
+            \EndIf
+            \Until{$u - l \le \varepsilon$}
+            \State \Return $t^\star \approx u$
+        \end{algorithmic}
+    \end{algorithm}
+
+
 \end{homeworkProblem}
 
 \pagebreak
 
 % ----- PROBLEM 2 ------ %
 \begin{homeworkProblem}
-    Some non-convex problems can also bea easy to solve. Find the optimal solution for the following problems
-    in closed form.
+    Some non-convex problems can also be easy to solve. Find the optimal solution for the
+    following problems in closed form.
     \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
         \item For $x \in \R[n]$
               \begin{align*}
@@ -48,6 +83,13 @@
     \end{enumerate}
 
     \solution
+
+    \textbf{Part (a):} The objective function $f_0(x) = \sqrt{\sum_{i=1}^{n} |x_i|^2}$.
+    Choosing the lower bound of the inequality constraint requires $\norm{x}_1 = 1$.
+    The $\ell_2$ norm is minimal when each component of $x_i \leq 1$. Thus we aim for
+    each component to be minimal, but sum to 1. Thus, $x_i^* = 1/n \text{ for } i = 1, 2, \dots, n$.\\
+
+    \textbf{Part (b):} This problem is unbounded below, so the optimal solution is $-\infty$.
 
 \end{homeworkProblem}
 
@@ -89,6 +131,22 @@
 
     \solution
 
+    \textbf{Part (a):} Yes, $\phi(u)$ is convex. Quadratic functions are convex, and $M(2|u| - M)$ is also convex. \\
+
+    \textbf{Part (b):} Here, expanding the objective function gives
+    \[
+        \phi(a_i^T x - b_i) = \begin{cases}
+            (a_i^T x - b_i)^2,       & |a_i^T x - b_i| \leq M, \\
+            M(2|a_i^T x - b_i| - M), & |a_i^T x - b_i| > M.
+        \end{cases}
+    \] where the constraints become
+    \[
+        -u - v \preceq Ax - b \preceq u + v, \quad 0 \preceq u \preceq M\mathbf{1}, \quad v \succeq 0.
+    \]
+    \textbf{Part (c):} By continuity, we require \[
+        \alpha \cdot M^2 = \beta M (\gamma M - M) \implies \beta = \frac{\alpha M^2}{M(\gamma M - M)} = \frac{\alpha}{\gamma - 1}.
+    \]
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -118,6 +176,39 @@
 
     \solution
 
+    \textbf{Part (a):}
+    \begin{align*}
+        \minimize  & \quad t                                                  \\
+        \subjectto & \quad \mathbf{1} \cdot -t  \preceq x \preceq \mathbf{1}t \\
+                   & \quad -\mathbf{1}a \preceq Ax - b \preceq \mathbf{1}a    \\
+                   & \quad \mathbf{1}^T a \preceq 1, \, \quad a \succeq 0.
+    \end{align*}
+
+    \pagebreak
+
+    \textbf{Part (b):}
+    \begin{align*}
+        \minimize  & \quad t                                                  \\
+        \subjectto & \quad \mathbf{1} \cdot -t  \preceq x \preceq \mathbf{1}t \\
+                   & \quad -\mathbf{1} \preceq Ax - b \preceq \mathbf{1}.     \\
+    \end{align*}
+
+    \textbf{Part (c):}
+    \begin{align*}
+        \minimize  & \quad \mathbf{1} t                                   \\
+        \subjectto & \quad -t \preceq x \preceq t                         \\
+                   & \quad -\mathbf{1} \preceq Ax - b \preceq \mathbf{1}. \\
+    \end{align*}
+
+    \textbf{Part (d):}
+    \begin{align*}
+        \minimize  & \quad \mathbf{1} t                                      \\
+        \subjectto & \quad -t \preceq x \preceq t                            \\
+                   & \quad -\mathbf{1} a \preceq Ax - b \preceq \mathbf{1} a \\
+                   & \quad \mathbf{1}^T a \preceq 1, \, \quad a \succeq 0.   \\
+    \end{align*}
+
+
 
 \end{homeworkProblem}
 
@@ -142,7 +233,45 @@
     \end{enumerate}
 
     \solution
+    \begin{figure}[hbpt!]
+        \centering
 
+        \begin{tikzpicture}[scale=1.5]
+            % Axes
+            \draw[->, thick] (0,0) -- (4,0) node[right] {$x_1$};
+            \draw[->, thick] (0,0) -- (0,4) node[above] {$x_2$};
+            % draw axis ticks
+            \foreach \x in {1,2,3}
+            \draw (\x,0.1) -- (\x,-0.1) node[below] {\x};
+            \foreach \y in {1,2,3}
+            \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+            \draw(3/2, 0.1) -- (3/2, -0.1) node[below] {$\frac{3}{2}$};
+
+
+            \begin{scope}
+                % Clip to the circle centered at (1,2) with radius sqrt(2) ≈ 1.414
+                \clip (1,2) circle (1.414);
+                % Clip to the region above the line 2x_1 + x_2 = 3
+                % To represent 2x_1 + x_2 > 3, use a large rectangle above the line
+                \clip (0,3) -- (3/2,0) -- (4,0) -- (4,4) -- (0,4) -- cycle;
+                % Fill the clipped region
+                \fill[color=green!60, opacity=0.6] (0,0) rectangle (4,4);
+            \end{scope}
+            % Lines
+            \draw[thick,blue]  (0,3) -- (3/2,0) node[right] {};
+
+            % Vertices (extreme points)
+            \filldraw[color=black!60, opacity=0.3, fill=red!5, very thick,](1,2) circle (1.414);
+            \filldraw[black] (1.2,0.6) circle (1pt) node[right] {$(1.2, 0.6)$};
+
+        \end{tikzpicture}
+
+    \end{figure}
+
+    \textbf{Part (a):} Geometrically, the optimal solution lies at the lower intersection, which is $x^* = (1.2, 0.6)$, $f(x^*) = 1.2 + 0.6 = 1.8$. \\
+
+    \textbf{Part (b):} Geometrically, the optimal solution lies at the point closest to the origin, with preference for values less than $1$.
+    In this case that point is also $x^* = (1.2, 0.6)$, $f(x^*) = 1.2^2 + 0.6^2 = 1.8$.
 \end{homeworkProblem}
 
 \pagebreak
@@ -165,6 +294,37 @@
     \end{enumerate}
 
     \solution
+
+    \begin{figure}[hbpt!]
+        \centering
+        \begin{tikzpicture}[scale=1.5]
+            % Axes
+            \draw[->, thick] (0,0) -- (4,0) node[right] {$x_1$};
+            \draw[->, thick] (0,0) -- (0,4) node[above] {$x_2$};
+
+            % Lines
+            \draw[thick,blue]  (0,2) -- (2,0) node[right] {};
+            \draw[thick,red]   (0,3) -- (1.5,0) node[right] {};
+
+            % Feasible region shading
+            \fill[green!20]
+            (0,3) -- (1,1) -- (2,0) -- (3.5,0) -- (3.5,3.5) -- (0,3.5) -- cycle;
+
+            % Feasible region boundary (thicker)
+            \draw[thick,green!60!black] (0,3) -- (1,1) -- (2,0);
+
+            % Vertices (extreme points)
+            \filldraw[black] (0,3) circle (1pt) node[above left] {$(0,3)$};
+            \filldraw[black] (1,1) circle (1pt) node[above right] {$(1,1)$};
+            \filldraw[black] (2,0) circle (1pt) node[below right] {$(2,0)$};
+        \end{tikzpicture}
+
+    \end{figure}
+
+    \textbf{Part (a):} Geometrically, it is clear that the optimal solution is $x = (1, 1)$, $f(x) = 3(1) + 2(1) = 5$. \\
+
+    \textbf{Part (b):} Geometrically, it is clear that the optimal solution is also $x = (1, 1)$, $f(x) = \max\{1, 1\} = 1$.
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -185,6 +345,17 @@
     \end{enumerate}
 
     \solution
+
+    \textbf{Part (a):} Because of the half-space constraint, this problem is unbounded below, so the optimal solution is $-\infty$. \\
+
+    \textbf{Part (b):} Splitting by components gives $c_i x_i$ subject to $0 \leq l_i \leq x_i \leq u_i$ for each $i = 1, 2, \ldots, n$.
+    \[
+        x_i^* =
+        \begin{cases}
+            l_i, & c_i > 0, \\
+            u_i, & c_i < 0, \\
+        \end{cases}
+    \] where $\sum x_i^* \leq \alpha$.
 \end{homeworkProblem}
 
 \pagebreak
@@ -215,6 +386,38 @@
     \end{enumerate}
 
     \solution
+
+    \textbf{Part (a):}
+    \begin{align*}
+        g(\nu, \lambda_1, \lambda_2) & = \inf_{x \in \mathcal{D}} L (x, \nu, \lambda_1, \lambda_2)                                                                \\
+                                     & = \inf_{x \in \mathcal{D}} \left( c^T x + \nu^T (Ax - b) + \lambda_1^T (x-u) + \lambda_2^T (l-x) \right)                   \\
+                                     & = \inf_{x \in \mathcal{D}} \left(\lambda_2^T l - \lambda_1^T u - v^T b + (c^T + v^T A + \lambda_1^T - \lambda_2^T)x\right) \\
+                                     & = \lambda_2^T l - \lambda_1^T u - v^T b
+    \end{align*} where we maximize $g(\lambda, \nu_1, \nu_2)$ subject to $\lambda \succeq 0$.
+
+    \pagebreak
+
+    \textbf{Part (b):}
+    \begin{align*}
+        g(\lambda_1, \lambda_2, \lambda_3, \lambda_4) & = \inf_{t \in \mathcal{D}} L(t, \lambda_1, \lambda_2, \lambda_3, \lambda_4)                                                          \\
+                                                      & = \inf_{t \in \mathcal{D}} \left( t + \lambda_1^T ( x- t) + \lambda_2^T (-t-x) + \lambda_3^T(Ax-b-t) + \lambda_4^T(-t -Ax+b) \right) \\
+                                                      & = t(1 - \lambda_1^T - \lambda_2^T - \lambda_3^T - \lambda_4^T) + b^T(\lambda_3 - \lambda_4)
+    \end{align*} where we maximize $g(\lambda_1, \lambda_2, \lambda_3, \lambda_4)$ subject to $\lambda \succeq 0$. \\
+
+    \textbf{Part (c):}
+    \begin{align*}
+        g(\lambda, \nu) & = \inf_{x \in \mathcal{D}} L (x, \lambda, \nu)                                                             \\
+                        & = \inf_{x \in \mathcal{D}} \left( \sum_{i=1}^n x_i \log x_i + \lambda^T (b - Ax) + \nu (c^T x - d) \right)
+    \end{align*} where we maximize $g(\lambda, \nu)$. \\
+
+    \textbf{Part (d):}
+    \begin{align*}
+        g(\nu) & = \inf_{x} L (x, \nu)                                                                     \\
+               & = \inf_{x} \left( x^T Q x + \nu^T (Ax - b) \right)                                        \\
+               & = (-\frac{1}{2} A^T \nu)^T Q (-\frac{1}{2} A^T \nu) + \nu^T (A(-\frac{1}{2} A^T \nu) - b)
+    \end{align*} where we maximize $g(\nu)$.
+
+
 \end{homeworkProblem}
 
 
