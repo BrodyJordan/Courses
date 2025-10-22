@@ -6,6 +6,15 @@
     assignmentDueDate={October 21, 2025 at 11:59 pm}
 ]{C:/Users/bljor/Sync/Courses/assignment}
 
+\usepackage{nicematrix}
+\usepackage{xfrac} % for \sfrac
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
 \begin{document}
 \makeAssignmentTitle
 
@@ -22,6 +31,69 @@
     Find a row-reduced echelon matrix $R$ which is row-equivalent to $A$ and an invertible $3 \times 3$ matrix $P$ such that $R = PA$. \\
 
     \solution
+    \[
+        \left[
+            \begin{array}{cccc|ccc}
+                1  & 2  & 1 & 0 & 1 & 0 & 0 \\
+                -1 & 0  & 3 & 5 & 0 & 1 & 0 \\
+                1  & -2 & 1 & 1 & 0 & 0 & 1
+            \end{array}
+            \right]
+        \rightarrow
+        \left[
+            \begin{array}{cccc|ccc}
+                1 & 2  & 1 & 0 & 1  & 0 & 0 \\
+                0 & 2  & 4 & 5 & 1  & 1 & 0 \\
+                0 & -4 & 0 & 1 & -1 & 0 & 1
+            \end{array}
+            \right]
+        \rightarrow
+        \left[
+            \begin{array}{cccc|ccc}
+                1 & 2 & 1 & 0  & 1  & 0 & 0 \\
+                0 & 2 & 4 & 5  & 1  & 1 & 0 \\
+                0 & 0 & 8 & 11 & -1 & 0 & 1
+            \end{array}
+            \right]
+    \]
+    \[
+        \left[
+            \begin{array}{cccc|ccc}
+                1 & 2 & 1 & 0  & 1 & 0 & 0 \\
+                0 & 2 & 4 & 5  & 1 & 1 & 0 \\
+                0 & 0 & 8 & 11 & 1 & 2 & 1
+            \end{array}
+            \right]
+        \rightarrow
+        \left[
+            \begin{array}{cccc|ccc}
+                1 & 2 & 1 & 0             & 1            & 0            & 0            \\
+                0 & 1 & 2 & \sfrac{5}{2}  & \sfrac{1}{2} & \sfrac{1}{2} & 0            \\
+                0 & 0 & 1 & \sfrac{11}{8} & \sfrac{1}{8} & \sfrac{2}{8} & \sfrac{1}{8}
+            \end{array}
+            \right] \quad (\text{REF})
+    \]
+    \[
+        \left[
+            \begin{array}{cccc|ccc}
+                1 & 2 & 1 & 0             & 1            & 0            & 0            \\
+                0 & 1 & 2 & \sfrac{5}{2}  & \sfrac{1}{2} & \sfrac{1}{2} & 0            \\
+                0 & 0 & 1 & \sfrac{11}{8} & \sfrac{1}{8} & \sfrac{2}{8} & \sfrac{1}{8}
+            \end{array}
+            \right]
+        \rightarrow
+        \left[
+            \begin{array}{cccc|ccc}
+                1 & 0 & 0 & \sfrac{-7}{8} & \sfrac{3}{8} & \sfrac{-1}{4} & \sfrac{3}{8}  \\
+                0 & 1 & 0 & \sfrac{-1}{4} & \sfrac{1}{4} & 0             & \sfrac{-1}{4} \\
+                0 & 0 & 1 & \sfrac{11}{8} & \sfrac{1}{8} & \sfrac{1}{4}  & \sfrac{1}{8}
+            \end{array}
+            \right] \quad (\text{RREF})
+    \] \\
+
+    The final augmented matrix corresponds to the matrices $[R \mid P]$.
+
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -43,6 +115,18 @@
 
     \solution
 
+    Starting with the first operation:
+    \begin{align*}
+        (f + g)(-t) & = f(-t) + g(-t) = \overline{f(t)} + \overline{g(t)} \\
+                    & = \overline{f(t) + g(t)}                            \\
+                    & = \overline{(f + g)(t)}
+    \end{align*}
+    Now the second operation:
+    \begin{align*}
+        (cf)(-t) & = c f(-t)  = c \overline{f(t)}           \\
+                 & = \overline{c f(t)} = \overline{(cf)(t)}
+    \end{align*}
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -60,6 +144,24 @@
     \end{enumerate}
     \solution
 
+    \textbf{Part (a):} The set of all invertible matrices $A$ is not a subspace of $V$ since $0A$ is not invertible. \\
+
+    \textbf{Part (b):} There exist non-invertible matrices whose sum is invertible.
+    Therefore, the set of all non-invertible matrices $A$ is not a subspace of $V$. \\
+
+    \textbf{Part (c):} Say we have two matrices $A$ and $A'$ are in the set such that
+    $AB = BA$. Then,
+    \[
+        (A + A')B = AB + A'B = BA + BA' = B(A + A').
+    \]
+    Therefore, the set of all matrices $A$ such that $AB = BA$ is a subspace of $V$. \\
+
+    \textbf{Part (d):} Here $A$ and $A'$ are in the set such that $A^2 = A$. Then,
+    \[
+        (A + A')^2 = A^2 + AA' + A'A + A'^2 = A + AA' + A'A + A' \neq A + A'.
+    \]
+    Therefore, this set of matrices is not a subspace of $V$.
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -70,6 +172,16 @@
     $W_2$ is also a subspace. Prove that one of the spaces $W_i$ is contained in the other. \\
 
     \solution
+
+    The union of $W_1$ and $W_2$, $W_1 \cup W_2$, is a subspace of a vector space $V$. \\
+
+    If $u \in W_1$ and $u \notin W_2$, and $v \in W_2$ and $v \notin W_1$,
+    then the sum $u + v$ is necessarily in the union of $W_1$ and $W_2$. \\
+
+    This contradicts the idea that $u \in W_1$ but $v \notin W_1$, and vice versa.
+    Therefore, if $u$ is in one subspace, it must also be in the other. \\
+
+    Thus, one of the spaces $W_i$ must be contained in the other.
 
 \end{homeworkProblem}
 
@@ -85,17 +197,27 @@
     \[
         \alpha_1 + \alpha_2 + \cdots + \alpha_k
     \]
-    or vectors $\alpha_i$ in $S_i$ is called the sum of the subsets $S_1, S_2, \ldots, S_k$ and is denoted by
+    of vectors $\alpha_i$ in $S_i$ is called the sum of the subsets $S_1, S_2, \ldots, S_k$ and is denoted by
     \[
         S_1 + S_2 + \cdots + S_k
     \]
-    of by
+    or by
     \[
         \sum_{i=1}^k S_i.
     \] \vspace*{1\baselineskip}
 
     \solution
 
+    We have $\alpha_1 + \cdots + \alpha_k \in W_1 + \cdots + W_k$ and some $\alpha'_1 + \cdots + \alpha'_k \in W_1 + \cdots + W_k$. \\
+
+    If the components of $\alpha$ are unique, then
+    \[
+        \alpha_1 + \alpha_2 = \alpha'_1 + \alpha'_2 \quad \implies \quad \underbrace{\alpha_1 - \alpha'_1}_{\in W_1} = \underbrace{\alpha'_2 - \alpha_2}_{\in W_2}.
+    \]
+
+    This vector is in both $W_1$ and $W_2$, so it must be the zero vector condition $W_1 \cap W_2 = \{\underbar{0}\}$.
+    Therefore, $\alpha_1 = \alpha'_1$ and $\alpha_2 = \alpha'_2$, which means there are unique vectors $\alpha_1$ in $W_1$ and $\alpha_2$ in $W_2$ such that
+    $\alpha = \alpha_1 + \alpha_2$.
 \end{homeworkProblem}
 
 \pagebreak
@@ -106,6 +228,55 @@
     Prove that $(\alpha + \beta)$, $(\beta + \gamma)$, and $(\gamma + \alpha)$ are linearly independent. \\
 
     \solution
+
+    If $(\alpha + \beta)$, $(\beta + \gamma)$, and $(\gamma + \alpha)$ are linearly independent, then
+    \[
+        a_1 (\alpha + \beta) + a_2 (\beta + \gamma) + a_3 (\gamma + \alpha) = 0
+    \]
+    has only the trivial solution $a_1 = a_2 = a_3 = 0$. \\
+
+    Checking by row reduction with
+    \[
+        a_1 \begin{pmatrix}
+            1 \\ 1 \\ 0
+        \end{pmatrix} + a_2 \begin{pmatrix}
+            0 \\ 1 \\ 1
+        \end{pmatrix} + a_3 \begin{pmatrix}
+            1 \\ 0 \\ 1
+        \end{pmatrix} = \begin{pmatrix}
+            0 \\ 0 \\ 0
+        \end{pmatrix},
+    \]
+    Equivalently,
+    \[
+        \begin{bmatrix}
+            1 & 0 & 1 \\
+            1 & 1 & 0 \\
+            0 & 1 & 1
+        \end{bmatrix} \rightarrow
+        \begin{bmatrix}
+            1 & 0 & 1  \\
+            0 & 1 & -1 \\
+            0 & 1 & 1
+        \end{bmatrix} \rightarrow
+        \begin{bmatrix}
+            1 & 0 & 1  \\
+            0 & 1 & -1 \\
+            0 & 0 & 2
+        \end{bmatrix} \rightarrow
+        \begin{bmatrix}
+            1 & 0 & 1  \\
+            0 & 1 & -1 \\
+            0 & 0 & 1
+        \end{bmatrix} \rightarrow
+        \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+        \end{bmatrix}.
+    \]
+    Therefore the vectors $(\alpha + \beta)$, $(\beta + \gamma)$, and $(\gamma + \alpha)$ are linearly independent.
+
 
 \end{homeworkProblem}
 
