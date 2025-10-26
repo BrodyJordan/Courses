@@ -1,0 +1,100 @@
+% !TEX root = ./ECEN-601 - Homework 5 - Brody Jordan.tex
+
+\documentclass[11pt]{article}
+
+\usepackage[
+    assignmentDueDate={October 28, 2025 at 11:59 pm}
+]{C:/Users/bljor/Sync/Courses/assignment}
+
+\begin{document}
+\makeAssignmentTitle
+
+% ------ PROBLEM 1 ------ %
+\begin{homeworkProblem}
+
+    Let $V$ be a vector space over $F$. Show that the sum of two inner products on $V$ is an inner
+    product on $V$. Is the difference of two inner products an inner product? Show that a positive
+    multiple of an inner product is an inner product. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 2 ------ %
+\begin{homeworkProblem}
+
+    Let $V$ be a real or complex vector space with an inner product. Show that the quadratic form
+    determined by the inner product satisfies the \textit{parallelogram law}
+    \[
+        \norm{\alpha + \beta}^2 + \norm{\alpha - \beta}^2 = 2\norm{\alpha}^2 + 2\norm{\beta}^2.
+    \]
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 3 ------ %
+\begin{homeworkProblem}
+
+    Show that the formula
+    \[
+        \left\langle\sum_j a_j x^j \mid \sum_k b_k x^k\right\rangle=\sum_{j, k} \frac{a_j b_k}{j+k+1}
+    \]
+    defines an inner product on the space $R[x]$ of polynomials with real coefficients. Let $W$ be the
+    subspace of polynomials of degree less than or equal to $n$. Find the weight matrix associated
+    with this inner product on $W$, relative to the ordered basis $1$, $x$, $x^2$, $\dots$, $x^n$.
+    (\textit{Hint}: To show that the formula defines an inner product, observe that
+    \[
+        \langle f \mid g \rangle = \int_{0}^{1} f(t) g(t) \, dt
+    \]
+    and work with the integral.) \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 4 ------ %
+\begin{homeworkProblem}
+
+    Let $V$ be the vector space of real polynomials with degree at most 3. Equip $V$ with the inner product
+    \[
+        \langle f \mid g \rangle = \int_{0}^{1} f(t) g(t) \, dt.
+    \]
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Find the orthogonal complement of the subspace of constant polynomials.
+        \item Apply the Gram-Schmidt process to the basis $\{1, x, x^2, x^3\}$. \newline
+    \end{enumerate}
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 5 ------ %
+\begin{homeworkProblem}
+
+    Let $V$ be the vector space of all $n \times n$ matrices over $C$, with the inner product $(A|B) = \tr(AB^H)$.
+    Find the orthogonal complement of the subspace of diagonal matrices. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 6 ------ %
+\begin{homeworkProblem}
+
+    Let $W$ be a finite-dimensional subspace of an inner product space $V$, and let $E$ be the orthogonal projection
+    of $V$ in $W$. Prove that $\langle E\alpha | \beta \rangle = \langle \alpha | E \beta \rangle$ for all $\alpha$, $\beta$ in $V$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\end{document}

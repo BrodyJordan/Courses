@@ -29,7 +29,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Project 1",
                 "file": "CSCE-636 - Project 1 - Brody Jordan.tex",
                 "id": "1759008003474",
-                "completed": false
+                "completed": true
             },
             {
                 "name": "Homework 3",
@@ -98,6 +98,14 @@
                 "file": "ECEN-601 - Homework 4 - Brody Jordan.tex",
                 "id": "1761063699200",
                 "completed": true
+            },
+            {
+                "name": "Homework 5",
+                "dueDate": "10/28/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 5",
+                "file": "ECEN-601 - Homework 5 - Brody Jordan.tex",
+                "id": "1761499674595",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
