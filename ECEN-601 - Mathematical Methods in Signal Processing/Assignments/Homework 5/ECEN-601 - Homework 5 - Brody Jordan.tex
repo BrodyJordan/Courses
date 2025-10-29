@@ -18,6 +18,20 @@
 
     \solution
 
+    We have two inner products \(\langle \cdot , \cdot \rangle^{\prime} \) and \(\langle \cdot , \cdot \rangle^{\prime\prime}\) on \(V\). A new inner product
+    \[
+        \langle \cdot, \cdot \rangle = \langle \cdot , \cdot \rangle^{\prime} + \langle \cdot , \cdot \rangle^{\prime\prime}
+    \]
+    Since both inner products are inner products on $V$, the sum or difference of them retains the properties of linearity. \\
+
+    Additionally, conjugate symmetry is preserved:
+    \begin{align*}
+        \langle x, y \rangle & = \langle x , y \rangle^{\prime} + \langle x , y \rangle^{\prime\prime}                       \\
+                             & = \overline{\langle y , x \rangle^{\prime}} + \overline{\langle y , x \rangle^{\prime\prime}} \\
+                             & = \overline{\langle y , x \rangle^{\prime} + \langle y , x \rangle^{\prime\prime}}            \\
+                             & = \overline{\langle y , x \rangle}
+    \end{align*}
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -31,6 +45,14 @@
         \norm{\alpha + \beta}^2 + \norm{\alpha - \beta}^2 = 2\norm{\alpha}^2 + 2\norm{\beta}^2.
     \]
     \solution
+
+    We know \(\norm{\mathbf{x}}^2 = \langle \mathbf{x}, \mathbf{x} \rangle\). Thus,
+    \begin{align*}
+        \norm{\alpha + \beta}^2 + \norm{\alpha - \beta}^2 & = \langle \alpha + \beta, \alpha + \beta \rangle + \langle \alpha - \beta, \alpha - \beta \rangle                                                                                                                                                               \\
+                                                          & = \langle \alpha, \alpha \rangle + \langle \alpha, \beta \rangle + \langle \beta, \alpha \rangle + \langle \beta, \beta \rangle + \langle \alpha, \alpha \rangle - \langle \alpha, \beta \rangle - \langle \beta, \alpha \rangle + \langle \beta, \beta \rangle \\
+                                                          & = 2\langle \alpha, \alpha \rangle + 2\langle \beta, \beta \rangle                                                                                                                                                                                               \\
+                                                          & = 2\norm{\alpha}^2 + 2\norm{\beta}^2 \quad \text{(by above mentioned definition)}
+    \end{align*}
 
 \end{homeworkProblem}
 
@@ -54,6 +76,15 @@
 
     \solution
 
+    If \(f(t) = \sum_{j} a_j t^j\) and \(g(t) = \sum_{k} b_k t^k\), then
+    \begin{align*}
+        \langle f \mid g \rangle & = \int_{0}^{1} \left( \sum_{j} a_j t^j \right) \left( \sum_{k} b_k t^k \right) dt \\
+                                 & = \int_{0}^{1} \sum_{j, k} a_j b_k t^{j+k} dt                                     \\
+                                 & = \sum_{j, k} a_j b_k \int_{0}^{1} t^{j+k} dt                                     \\
+                                 & = \sum_{j, k} \frac{a_j b_k}{j+k+1}
+    \end{align*}
+    For a weight matrix $G$, $g_{ij}= \langle w_i, w_j \rangle$ where $w_i$ is the $i$th basis vector.
+    Thus, $g_{ij} = \sum_{k, l} \frac{a_k b_l}{k+l+1}$
 \end{homeworkProblem}
 
 \pagebreak
@@ -71,6 +102,16 @@
     \end{enumerate}
     \solution
 
+    \textbf{Part (a):}
+    \[
+        V^{\perp} = \{ v \in V \mid \langle v, w \rangle = 0 \,\, \forall w \in W\}.
+    \]
+    \textbf{Part (b):} Gram-Schmidt process:
+    \begin{align*}
+        u_1 & = 1                                                                                                                                                                                                                                                          \\
+        u_2 & = x - \frac{\langle x, u_1 \rangle}{\langle u_1, u_1 \rangle} u_1                                                                      = x - \frac{\int_{0}^{1} x \cdot 1 \, dt}{\int_{0}^{1} 1 \cdot 1 \, dt} \cdot 1 = x - \frac{1/2}{1} = x - \frac{1}{2} \\
+        u_3 & = x^2 - \frac{\langle x^2, u_1 \rangle}{\langle u_1, u_1 \rangle} u_1 - \frac{\langle x^2, u_2 \rangle}{\langle u_2, u_2 \rangle} u_2 = \dots                                                                                                                \\
+    \end{align*}
 \end{homeworkProblem}
 
 \pagebreak
@@ -83,6 +124,14 @@
 
     \solution
 
+    If $V$ is the set of all \(n \times n\) matrices over \(C\), then the orthogonal complement of $V$ is defined as
+    \[
+        V^{\perp} = \{  v \in V \mid \langle v, w \rangle = 0 \,\, \forall w \in W\}.
+    \]
+    But now the inner product is given as \((A|B) = \tr(AB^H)\). Thus,
+    \[
+        V^{\perp} = \{ A \in V \mid \tr(AB^H) = 0 \,\, \forall B \in W\}.
+    \]
 \end{homeworkProblem}
 
 \pagebreak
@@ -94,6 +143,21 @@
     of $V$ in $W$. Prove that $\langle E\alpha | \beta \rangle = \langle \alpha | E \beta \rangle$ for all $\alpha$, $\beta$ in $V$. \\
 
     \solution
+
+    Scaling, by the definition of the inner product, we have
+    \[
+        \langle E\alpha \mid \beta \rangle = E \langle \alpha \mid \beta \rangle
+    \]
+    and since
+    \[
+        \langle x, x^{\prime} \rangle = \langle x^{\prime} , x \rangle
+    \]
+    we have
+    \begin{align*}
+        \langle E\alpha \mid \beta \rangle & = E \langle \alpha \mid \beta \rangle  \\
+                                           & = E \langle \beta  \mid \alpha \rangle \\
+                                           & = \langle \alpha \mid E \beta \rangle
+    \end{align*}
 
 \end{homeworkProblem}
 
