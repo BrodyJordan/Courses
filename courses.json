@@ -150,6 +150,14 @@
                 "file": "ECEN-629 - Homework 3 - Brody Jordan.tex",
                 "id": "1760385078712",
                 "completed": true
+            },
+            {
+                "name": "Homework 4",
+                "dueDate": "11/08/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 4",
+                "file": "ECEN-629 - Homework 4 - Brody Jordan.tex",
+                "id": "1762047478759",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
@@ -193,7 +201,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 6",
                 "file": "ECEN-635 - Homework 6 - Brody Jordan.tex",
                 "id": "1761950380968",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",

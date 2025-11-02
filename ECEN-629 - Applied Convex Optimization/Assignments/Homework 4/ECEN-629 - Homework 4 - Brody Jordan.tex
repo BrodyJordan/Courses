@@ -1,0 +1,176 @@
+% !TEX root = ./ECEN-629 - Homework 4 - Brody Jordan.tex
+
+\documentclass[11pt]{article}
+
+\usepackage[
+    assignmentDueDate={November 8, 2025 at 11:59 pm}
+]{C:/Users/bljor/Sync/Courses/assignment}
+
+\begin{document}
+\makeAssignmentTitle
+
+% ------ PROBLEM 1 ------ %
+\begin{homeworkProblem}
+
+    Consider the problem
+    \begin{align*}
+        \text{minimize:} \quad   & x_1^2 + x_2^2                    \\
+        \text{subject to:} \quad & (x_1 - 1)^2 + (x_2 - 2)^2 \leq 2 \\
+                                 & 2x_1 + x_2 \geq 3                \\
+                                 & x_1 \geq 0, \, x_2 \geq 0.
+    \end{align*}
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Derive the KKT conditions. Find a solution for these conditions. Is this the optimal solution?
+        \item Does the strong duality hold?
+        \item Compare the solution to the one you obtained last time using geometry. Are they the same?
+        \item Consider the problem
+              \begin{align*}
+                  \text{minimize:} \quad   & x_1^2 + x_2^2                            \\
+                  \text{subject to:} \quad & (x_1 - 1)^2 + (x_2 - 2)^2 \leq 2 + \mu_1 \\
+                                           & 2x_1 + x_2 \geq 3 + \mu_2                \\
+                                           & x_1 \geq 0, \, x_2 \geq 0.
+              \end{align*}
+              The optimal value is a function of $\mu_1$ and $\mu_2$, i.e., $p^*(\mu_1, \mu_2)$. Compute
+              \[
+                  \frac{\partial p^*(\mu_1, \mu_2)}{\partial \mu_1} \bigg{|}_{(0, 0)}
+              \]
+              \[
+                  \frac{\partial p^*(\mu_1, \mu_2)}{\partial \mu_2} \bigg{|}_{(0, 0)}
+              \] \newline
+    \end{enumerate}
+
+    \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 2 ------ %
+\begin{homeworkProblem}
+
+    Consider the following optimization problem:
+    \begin{align*}
+        \text{minimize:} \quad   & \sum_{i=1}^n \alpha_{i} \max \left\{ \ln \frac{\sigma_i^2}{x_i}, 0 \right\} \\
+        \text{subject to:} \quad & \sum_{i=1}^n \beta_{i} x_{i} \leq D,
+    \end{align*}
+    where $x = (x_1, x_2, \ldots, x_n) \succ 0$ are the decision variables. Assume $\sigma^2 \succ 0$, $\alpha \succeq 0$, and $\beta \succ 0$.
+
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Argue that this problem is convex;
+        \item Write down the KKT conditions;
+        \item Provide an explicit solution for this problem (in terms of certain intermediate variable), by providing a solution to the KKT conditions;
+        \item Show that equivalently, the inequality constraint can be replaced by an equality constraint for any $0 < D \leq \sum_{i=1}^n \beta_{i} \sigma_{i}^2$;
+        \item Let $n=3$, $(\sigma_1^2, \sigma_2^2, \sigma_3^2) = (1, 4, 25)$, $\alpha = (1,1,2)$, and $\beta = (2, 1, 1).$ Consider the optimal value $p^*$ as a function of the parameter $D$. Find this function in a closed form.
+        \item Design an algorithm to compute the optimal solution for any given $\sigma^2 \succ 0$, $\alpha \succeq 0$, and $\beta \succ 0$, with a computation complexity at most $O(n)$. \newline
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 3 ------ %
+\begin{homeworkProblem}
+
+    Strong duality holds for the problem
+    \begin{align*}
+        \text{minimize:} \quad   & -4x_1^2 + x_2^2 + x_3^2 + 2(x_1 + x_2 + x_3) \\
+        \text{subject to:} \quad & x_1^2 - 2x_2^2 + x_3^2 \leq 1,
+    \end{align*}
+
+    although the problem is not convex (see Appendix B.1). Derive the KKT conditions. Find all
+    solutions for the KKT conditions. Which one is the optimal value (assuming primal and dual
+    optimal values both attained)? You may need to use a program (Matlab, Mathematica, or
+    Python package) to plot and solve a non-linear equation; approximate solution is acceptable. \\
+
+    \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 4 ------ %
+\begin{homeworkProblem}
+
+    Download the CVX package (with either the Python or Matlab interface), read the user
+    manual, and then answer the following questions. The following constraints will cause an
+    error in CVX as they will not be recognized as valid constraints in a convex optimization
+    problem. Convert them to valid forms, and explain your answer. You may need to read part
+    of the user guide of CVX.
+
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item \texttt{norm([x + 2*y, x - y])==0;}
+        \item \texttt{norm([max(x,1), max(y,2)]) <= 3*x + y;}
+        \item \texttt{xˆ3 + yˆ3 <= 1; x >= 0; y >= 0;}
+        \item \texttt{x*y >= 1; x >= 0; y >= 0.} \newline
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 5 ------ %
+\begin{homeworkProblem}
+
+    The gap function $\phi_r(x)$ measures the gap between the largest $r$ component and smallest $r$
+    component of the vector $x \in \R[n]$, where $1 \leq r \leq n$. Consider the optimization problem
+
+    \begin{align*}
+        \text{minimize:} \quad   & \norm{Ax-b}            \\
+        \text{subject to:} \quad & \phi_r(x) \leq \alpha.
+    \end{align*}
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Find an equivalent LP formulation of the problem when the norm is $\ell_1$.
+        \item With the same $\ell_1$ norm, set
+              \[
+                  A = \begin{bmatrix}
+                      1 & 2 & 3 & 6 & 9 \\
+                      2 & 3 & 7 & 2 & 4 \\
+                      4 & 2 & 2 & 5 & 1 \\
+                  \end{bmatrix}
+              \]
+              and $b = [8, -20, 9]^T$. Use CVX to solve this problem with $\alpha =0.1$, $1$, $10$, and $100$, respectively for $r = 1$, $r = 2$, and $r = 3$, respectively.
+        \item Consider the same problem with the difference that the norm is $\ell_3$ norm. With the same
+              matrix $A$ and vector $b$ above, solve the problem with CVX for various $\alpha$ values, and plot
+              the optimal value $p^*$ as a function of $\alpha$, for $r = 1$, $2$, and $3$. \newline
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 6 ------ %
+\begin{homeworkProblem}
+
+    Consider the following problem
+    \begin{align*}
+        \text{minimize:} \quad   & \sum_{i=1}^k \phi(|r|_{[i]}) \\
+        \text{subject to:} \quad & r = Ax - b,
+    \end{align*}
+    where $|r|_{[1]} \geq |r|_{[2]} \geq \ldots \geq |r|_{[m]}$ are the numbers $|r_1|, |r_2|, \ldots, |r_m|$ sorted in decreasing order. Here matrix $A$ is $m\times n$.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item When $\phi(u)=u$, reformulate the problem into an LP. The problem with this penalty function minimizes the sum of the largest $k$ residuals. (\textit{Hint}: you need the formulation in exercise 5.19.)
+        \item When $\phi(u)$ is the deadzone-linear penalty function
+              \[
+                  \phi(u) = \begin{dcases}
+                      0,       & |u| \leq a; \\
+                      |u| - a, & |u| > a;    \\
+                  \end{dcases}
+              \]
+              where $a > 0$, reformulate the problem into an LP. This penalty function minimizes the
+              sum of the largest $k$ residuals, but with a deadzone. Recall we have discussed a problem
+              similar to this in class. \newline
+    \end{enumerate}
+
+    \solution
+
+\end{homeworkProblem}
+
+\end{document}
