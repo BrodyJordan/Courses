@@ -62,6 +62,14 @@
                 "file": "CSCE-636 - Homework 6 - Brody Jordan.tex",
                 "id": "1761937801190",
                 "completed": true
+            },
+            {
+                "name": "Project 2",
+                "dueDate": "11/14/2025",
+                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Project 2",
+                "file": "CSCE-636 - Project 2 - Brody Jordan.tex",
+                "id": "1763066290286",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
@@ -157,7 +165,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 4",
                 "file": "ECEN-629 - Homework 4 - Brody Jordan.tex",
                 "id": "1762047478759",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
@@ -209,7 +217,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 7",
                 "file": "ECEN-635 - Homework 7 - Brody Jordan.tex",
                 "id": "1762287630478",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
