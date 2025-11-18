@@ -20,6 +20,26 @@
     $W$. \\
 
     \solution
+    We want to find the set of vectors $x = (x_1, x_2, x_3, x_4)$ such that $\langle x, \alpha \rangle = 0$ and $\langle x, \beta \rangle = 0$.
+    This gives us the system of equations:
+    \begin{align*}
+        x_1 - x_3 + x_4 &= 0 \\
+        2x_1 + 3x_2 - x_3 + 2x_4 &= 0
+    \end{align*}
+    From the first equation, we have $x_3 = x_1 + x_4$. Substituting this into the second equation:
+    \begin{align*}
+        2x_1 + 3x_2 - (x_1 + x_4) + 2x_4 &= 0 \\
+        x_1 + 3x_2 + x_4 &= 0 \implies x_1 = -3x_2 - x_4
+    \end{align*}
+    Substituting back into the expression for $x_3$:
+    \[
+        x_3 = (-3x_2 - x_4) + x_4 = -3x_2
+    \]
+    So the general solution is:
+    \[
+        x = \begin{bmatrix} -3x_2 - x_4 \\ x_2 \\ -3x_2 \\ x_4 \end{bmatrix} = x_2 \begin{bmatrix} -3 \\ 1 \\ -3 \\ 0 \end{bmatrix} + x_4 \begin{bmatrix} -1 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+    \]
+    Thus, a basis for $W$ is $\{(-3, 1, -3, 0), (-1, 0, 0, 1)\}$.
 
 \end{homeworkProblem}
 
