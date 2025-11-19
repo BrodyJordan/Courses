@@ -8,6 +8,10 @@
 
 % make span a math command
 \DeclareMathOperator{\spn}{span}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\renewcommand{\vec}[1]{\underline{#1}}
+\newcommand\inner[2]{\langle #1, #2 \rangle}
 
 \begin{document}
 \makeAssignmentTitle
@@ -20,26 +24,63 @@
     $W$. \\
 
     \solution
-    We want to find the set of vectors $x = (x_1, x_2, x_3, x_4)$ such that $\langle x, \alpha \rangle = 0$ and $\langle x, \beta \rangle = 0$.
-    This gives us the system of equations:
-    \begin{align*}
-        x_1 - x_3 + x_4 &= 0 \\
-        2x_1 + 3x_2 - x_3 + 2x_4 &= 0
-    \end{align*}
-    From the first equation, we have $x_3 = x_1 + x_4$. Substituting this into the second equation:
-    \begin{align*}
-        2x_1 + 3x_2 - (x_1 + x_4) + 2x_4 &= 0 \\
-        x_1 + 3x_2 + x_4 &= 0 \implies x_1 = -3x_2 - x_4
-    \end{align*}
-    Substituting back into the expression for $x_3$:
+
+    Constructing a matrix from these vectors:
     \[
-        x_3 = (-3x_2 - x_4) + x_4 = -3x_2
+        \begin{bmatrix}
+            1 & 0 & -1 & 1 \\
+            2 & 3 & -1 & 2 \\
+        \end{bmatrix} \quad\to\quad
+        \begin{bmatrix}
+            1 & 0 & -1 & 1 \\
+            0 & 3 & 1  & 0 \\
+        \end{bmatrix} \quad\to\quad
+        \begin{bmatrix}
+            1 & 0 & -1           & 1 \\
+            0 & 1 & \sfrac{1}{3} & 0 \\
+        \end{bmatrix}
     \]
-    So the general solution is:
+
+    From these pivot values, $x_1 = x_3 - x_4$ and $3x_2 = -x_3$.
     \[
-        x = \begin{bmatrix} -3x_2 - x_4 \\ x_2 \\ -3x_2 \\ x_4 \end{bmatrix} = x_2 \begin{bmatrix} -3 \\ 1 \\ -3 \\ 0 \end{bmatrix} + x_4 \begin{bmatrix} -1 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+        \begin{bmatrix}
+            x_3 - x_4 \\
+            -x_3/3    \\
+            x_3       \\
+            x_4
+        \end{bmatrix} \quad\to\quad
+        x_3
+        \begin{bmatrix}
+            1             \\
+            -\sfrac{1}{3} \\
+            1             \\
+            0             \\
+        \end{bmatrix} +
+        x_4
+        \begin{bmatrix}
+            -1 \\
+            0  \\
+            0  \\
+            1  \\
+        \end{bmatrix}
     \]
-    Thus, a basis for $W$ is $\{(-3, 1, -3, 0), (-1, 0, 0, 1)\}$.
+    Thus, a basis for $W$ is
+    \[
+        \left\{
+        \begin{bmatrix}
+            1             \\
+            -\sfrac{1}{3} \\
+            1             \\
+            0             \\
+        \end{bmatrix},
+        \begin{bmatrix}
+            -1 \\
+            0  \\
+            0  \\
+            1  \\
+        \end{bmatrix}
+        \right\}
+    \]
 
 \end{homeworkProblem}
 
@@ -52,6 +93,13 @@
     only if $\langle\alpha \mid \gamma\rangle = \langle\beta \mid \gamma\rangle$ for every $\gamma$ in $V$. \\
 
     \solution
+
+    By the definition of inner product, we know $\langle u + v, w \rangle = \langle u, w \rangle + \langle v, w \rangle$. Then, if we have $\alpha = \beta$, then
+    \begin{align*}
+        \langle \alpha \mid \gamma \rangle = \langle \beta \mid \gamma \rangle \implies \langle \alpha \mid \gamma \rangle - \langle \beta \mid \gamma \rangle & = 0 \\
+        \langle \alpha - \beta \mid \gamma \rangle                                                                                                             & = 0
+    \end{align*}
+    Inner product orthogonality requires $\gamma = \alpha - \beta$, and since $0$-equivalence means two vectors are equivalent, $\alpha = \beta$.
 
 \end{homeworkProblem}
 
@@ -98,6 +146,58 @@
 
     \solution
 
+    We have matrix $A$
+    \[
+        \begin{bmatrix}
+            1 & 4  & 3  \\
+            2 & -2 & 4  \\
+            3 & -6 & -2 \\
+            4 & -7 & 1  \\
+        \end{bmatrix}
+    \]
+
+    Finding the Gramian matrix, $G$ (also $A^H A$):
+    \[
+        \begin{bmatrix}
+            \inner{\mathbf{p}_1}{\mathbf{p}_1} & \inner{\mathbf{p}_1}{\mathbf{p}_2} & \inner{\mathbf{p}_1}{\mathbf{p}_3} \\
+            \inner{\mathbf{p}_2}{\mathbf{p}_1} & \inner{\mathbf{p}_2}{\mathbf{p}_2} & \inner{\mathbf{p}_2}{\mathbf{p}_3} \\
+            \inner{\mathbf{p}_3}{\mathbf{p}_1} & \inner{\mathbf{p}_3}{\mathbf{p}_2} & \inner{\mathbf{p}_3}{\mathbf{p}_3}
+        \end{bmatrix} =
+        \begin{bmatrix}
+            30  & -46 & 9  \\
+            -46 & 105 & 9  \\
+            9   & 9   & 30 \\
+        \end{bmatrix}
+    \]
+    Then the best approximation is $\hat{\mathbf{x}} = AG^{-1}A^T \mathbf{x}$.
+    \[
+        \hat{\mathbf{x}} =
+        \begin{bmatrix}
+            1 & 4  & 3  \\
+            2 & -2 & 4  \\
+            3 & -6 & -2 \\
+            4 & -7 & 1  \\
+        \end{bmatrix}
+        \begin{bmatrix}
+            30  & -46 & 9  \\
+            -46 & 105 & 9  \\
+            9   & 9   & 30 \\
+        \end{bmatrix}^{-1}
+        \begin{bmatrix}
+            1 & 4  & 3  \\
+            2 & -2 & 4  \\
+            3 & -6 & -2 \\
+            4 & -7 & 1  \\
+        \end{bmatrix}^T
+        \begin{bmatrix}
+            1 \\
+            2 \\
+            3 \\
+            7 \\
+        \end{bmatrix}
+    \]
+    By WolframAlpha, $\hat{\mathbf{x}} \approx (0.89, 2.97, 4.12, 5.70)^T$.
+
 
 \end{homeworkProblem}
 
@@ -110,6 +210,11 @@
     spanned by $S$. When $V$ is finite-dimensional, show that $(S^\perp)^\perp$ is the subspace spanned by $S$. \\
 
     \solution
+
+    We know that $S^\perp = \{\vec{v} \in V \mid \langle \vec{v} \mid \vec{s} \rangle = 0, \forall \vec{s} \in S\}$. Then $(S^\perp)^\perp = \{\vec{v} \in V \mid \langle \vec{v} \mid \vec{w} \rangle = 0, \forall \vec{w} \in S^\perp\}$.
+    By these definitions, every vector in $S$ is orthogonal to every vector in $S^\perp$. \\
+
+    This is equivalent to saying $s \in (S^\perp)^\perp, \forall s \in S$. Thus, the span of $S$ is contained in $(S^\perp)^\perp$. \\
 
 \end{homeworkProblem}
 
@@ -127,6 +232,23 @@
 
     \solution
 
+    With orthonormal basis $\mathcal{B} = (\alpha_1, \ldots, \alpha_n)$, we have
+    \[
+        \vec{v} = \sum_{k=1}^n \langle \vec{v} \mid \alpha_k \rangle \alpha_k
+    \]
+    Applying the transformation shows us that
+    \[
+        T \alpha_j = \sum_{k=1}^n A_{kj} \alpha_k
+    \]
+    but since
+    \[
+        T \alpha_j = \sum_{k=1}^n \langle T \alpha_j \mid \alpha_k \rangle \alpha_k
+    \]
+    we have that
+    \[
+        A_{ij} = \langle T \alpha_j \mid \alpha_i \rangle
+    \]
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -142,6 +264,17 @@
     \end{enumerate}
 
     \solution
+
+    With $V = W_1 \oplus W_2$, we have $\forall v \in V$, $v = w_1 + w_2$ with $w_1 \in W_1$ and $w_2 \in W_2$. \\
+
+    We have $f(\alpha_1, \beta_1) = f_1(\alpha_1, \beta_1)$ for $\alpha_1, \beta_1 \in W_1$ and $f(\alpha_2, \beta_2) = f_2(\alpha_2, \beta_2)$ for $\alpha_2, \beta_2 \in W_2$. \\
+
+    By linearity of inner products, we have
+    \begin{align*}
+        f(\alpha_1 + \alpha_2, \beta_1 + \beta_2) & = f(\alpha_1, \beta_1) + f(\alpha_1, \beta_2) + f(\alpha_2, \beta_1) + f(\alpha_2, \beta_2) \\
+                                                  & = f_1(\alpha_1, \beta_1) + 0 + 0 + f_2(\alpha_2, \beta_2)                                   \\
+                                                  & = f_1(\alpha_1, \beta_1) + f_2(\alpha_2, \beta_2)
+    \end{align*}
 
 \end{homeworkProblem}
 
