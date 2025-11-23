@@ -130,6 +130,14 @@
                 "file": "ECEN-601 - Homework 6 - Brody Jordan.tex",
                 "id": "1763416540478",
                 "completed": true
+            },
+            {
+                "name": "Homework 7",
+                "dueDate": "11/26/2025",
+                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 7",
+                "file": "ECEN-601 - Homework 7 - Brody Jordan.tex",
+                "id": "1763942311276",
+                "completed": false
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
@@ -233,7 +241,7 @@
                 "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 9",
                 "file": "ECEN-635 - Homework 9 - Brody Jordan.tex",
                 "id": "1763494143552",
-                "completed": false
+                "completed": true
             }
         ],
         "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
