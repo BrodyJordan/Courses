@@ -9,7 +9,95 @@
 \begin{document}
 \makeAssignmentTitle
 
+% ------ PROBLEM 1 ------ %
 \begin{homeworkProblem}
+
+    Let $V$ be a finite-dimensional inner product space and $T$ a linear operator on $V$. Show that
+    the range of the adjoint $T^\star$ is the orthogonal complement of the null space of $T$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 2 ------ %
+\begin{homeworkProblem}
+
+    If $P$ is an orthogonal projection matrix, show that $I - P$ is a orthogonal projection matrix.
+    Determine the range and nullspace of $I - P$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 3 ------ %
+\begin{homeworkProblem}
+
+    Show that, if A has linearly independent columns, then
+    \[
+        B = I - A(A^H A)^{-1} A^H
+    \]
+    is positive semidefinite, and hence that the minimum error $\mathbf{e}_\text{min} = \mathbf{x} - P_A \mathbf{x} = B \mathbf{x}$ has an
+    equal or smaller norm than the original vector $\mathbf{x}$. Hint: Consider $\norm{\mathbf{e}_\text{min}}^2 \geq 0$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 4 ------ %
+\begin{homeworkProblem}
+
+    Formulate and solve the abstract least-squares regression problem
+    \[
+        \min_{a_0, a_1, a_2} \sum_{i=1}^{n} |y_i - a_0 - a_1 x_i - a_2 x_i^2 |^2
+    \]
+    in its linear form based on $\vec{e} = A\vec{c} - \vec{y}$. Use this to fit a parabola to the $(x_i, y_i)$ data points
+    $(-2, 2)(-1, -10)(0, 0)(1, 2)(2, 1)$. Make a plot showing the data on top of the fitted curve. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 5 ------ %
+\begin{homeworkProblem}
+
+    Define an inner product between matrices $X, Y \in \mathbb{C}^{l \times n}$ as
+    \[
+        \langle X, Y \rangle = \tr(XY^H),
+    \]
+    where $\tr(\cdot)$ is the sum of the diagonal elements (see section C.3). We want to approximate
+    the matrix $Y$ by the scalar linear combination of matrices $X_1, X_2, \dots, X_m$, as
+    \[
+        Y = c_1 X_1 + c_2 X_2 + \cdots + c_m X_m + E.
+    \]
+    Using the orthogonality principle, determine a set of normal equations that can be used to
+    find $c_1, c_2, \dots, c_m$ that minimize the induced norm of $E$. \\
+
+    \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 6 ------ %
+\begin{homeworkProblem}
+
+    Using the dual approximation theorem, solve the finite dimensional problem
+    \begin{align*}
+        \text{minimize:} \quad   & \mathbf{x}^H Q \mathbf{x}  \\
+        \text{subject to:} \quad & A \mathbf{x} = \mathbf{b},
+    \end{align*}
+    where $\mathbf{x} \in \mathbb{C}^n$, $Q$ is a positive-definite symmetric matrix, and $A$ is an $m \times n$ matrix with
+    $m < n$. \\
+
+    \solution
 
 \end{homeworkProblem}
 
