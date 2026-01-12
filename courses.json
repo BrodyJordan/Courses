@@ -1,266 +1,41 @@
 {
-    "CSCE-636": {
-        "name": "Deep Learning",
-        "description": "Basic concepts in neural computing; functional equivalence and convergence properties of neural network models; associative memory models; associative, competitive and adaptive resonance models of adaptation and learning; selective applications of neural networks to vision, speech, motor control and planning; neural network modeling environments.",
-        "instructor": "Dr. Anxiao Jiang",
-        "semester": "Fall 2025",
-        "lectureTime": "ONLINE",
-        "lectureLocation": "ONLINE",
-        "assignments": [
-            {
-                "name": "Homework 1",
-                "dueDate": "09/17/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 1",
-                "file": "CSCE-636 - Homework 1 - Brody Jordan.tex",
-                "id": "1758056290354",
-                "completed": true
-            },
-            {
-                "name": "Homework 2",
-                "dueDate": "09/24/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 2",
-                "file": "CSCE-636 - Homework 2 - Brody Jordan.tex",
-                "id": "1758577606890",
-                "completed": true
-            },
-            {
-                "name": "Project 1",
-                "dueDate": "10/24/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Project 1",
-                "file": "CSCE-636 - Project 1 - Brody Jordan.tex",
-                "id": "1759008003474",
-                "completed": true
-            },
-            {
-                "name": "Homework 3",
-                "dueDate": "10/01/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 3",
-                "file": "CSCE-636 - Homework 3 - Brody Jordan.tex",
-                "id": "1759252599559",
-                "completed": true
-            },
-            {
-                "name": "Homework 4",
-                "dueDate": "10/08/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 4",
-                "file": "CSCE-636 - Homework 4 - Brody Jordan.tex",
-                "id": "1759949672084",
-                "completed": true
-            },
-            {
-                "name": "Homework 5",
-                "dueDate": "10/17/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 5",
-                "file": "CSCE-636 - Homework 5 - Brody Jordan.tex",
-                "id": "1760660800787",
-                "completed": true
-            },
-            {
-                "name": "Homework 6",
-                "dueDate": "10/31/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Homework 6",
-                "file": "CSCE-636 - Homework 6 - Brody Jordan.tex",
-                "id": "1761937801190",
-                "completed": true
-            },
-            {
-                "name": "Project 2",
-                "dueDate": "11/14/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Project 2",
-                "file": "CSCE-636 - Project 2 - Brody Jordan.tex",
-                "id": "1763066290286",
-                "completed": true
-            },
-            {
-                "name": "Project 3",
-                "dueDate": "12/05/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\Assignments\\Project 3",
-                "file": "CSCE-636 - Project 3 - Brody Jordan.tex",
-                "id": "1764969646722",
-                "completed": true
-            }
+    "ECEN-662": {
+        "name": "",
+        "description": "",
+        "instructor": "",
+        "semester": "",
+        "lectureTime": ""
+        "lectureLocation": "",
+        "assigments": [
+
         ],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\CSCE-636 - Deep Learning\\",
-        "noteFile": "DeepLearning.tex"
+        "fullPath": "",
+        "noteFile": ""
     },
-    "ECEN-601": {
-        "name": "Mathematical Methods in Signal Processing",
-        "description": "Representations and algorithms for signal processing; linear algebra, vector spaces, normed and inner product spaces; projection, orthogonalization, rank-nullity theorem; matrix representations, singular value decomposition; sampling, Fourier analysis, spectral methods; statistical signal processing and linear estimation.",
-        "instructor": "Dr. Jean-François Chamberland",
-        "semester": "Fall 2025",
-        "lectureTime": "TTh 2:20pm - 3:35pm",
-        "lectureLocation": "ETB 1003",
-        "assignments": [
-            {
-                "name": "Homework 1",
-                "dueDate": "09/12/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 1",
-                "file": "ECEN-601 - Homework 1 - Brody Jordan.tex",
-                "id": "1757548271453",
-                "completed": true
-            },
-            {
-                "name": "Homework 2",
-                "dueDate": "09/19/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 2",
-                "file": "ECEN-601 - Homework 2 - Brody Jordan.tex",
-                "id": "1757725239829",
-                "completed": true
-            },
-            {
-                "name": "Homework 3",
-                "dueDate": "09/26/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 3",
-                "file": "ECEN-601 - Homework 3 - Brody Jordan.tex",
-                "id": "1758577913315",
-                "completed": true
-            },
-            {
-                "name": "Homework 4",
-                "dueDate": "10/21/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 4",
-                "file": "ECEN-601 - Homework 4 - Brody Jordan.tex",
-                "id": "1761063699200",
-                "completed": true
-            },
-            {
-                "name": "Homework 5",
-                "dueDate": "10/28/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 5",
-                "file": "ECEN-601 - Homework 5 - Brody Jordan.tex",
-                "id": "1761499674595",
-                "completed": true
-            },
-            {
-                "name": "Homework 6",
-                "dueDate": "11/18/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 6",
-                "file": "ECEN-601 - Homework 6 - Brody Jordan.tex",
-                "id": "1763416540478",
-                "completed": true
-            },
-            {
-                "name": "Homework 7",
-                "dueDate": "11/26/2025",
-                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\Assignments\\Homework 7",
-                "file": "ECEN-601 - Homework 7 - Brody Jordan.tex",
-                "id": "1763942311276",
-                "completed": true
-            }
+    "ECEN-689": {
+        "name": "",
+        "description": "",
+        "instructor": "",
+        "semester": "",
+        "lectureTime": ""
+        "lectureLocation": "",
+        "assigments": [
+
         ],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-601 - Mathematical Methods in Signal Processing\\",
-        "noteFile": "MathMethods.tex"
+        "fullPath": "",
+        "noteFile": ""
     },
-    "ECEN-629": {
-        "name": "Applied Convex Optimization",
-        "description": "Introduction to convex optimization including convex set, convex functions, convex optimization problems, KKT conditions and duality, unconstrained optimization, and interior-point methods for constrained optimization; applications in information science, digital systems, networks and learning.",
-        "instructor": "Dr. Chao Tian",
-        "semester": "Fall 2025",
-        "lectureTime": "TTh 12:45pm - 2:00pm",
-        "lectureLocation": "ETB 1003",
-        "assignments": [
-            {
-                "name": "Homework 1",
-                "dueDate": "09/15/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 1",
-                "file": "ECEN-629 - Homework 1 - Brody Jordan.tex",
-                "id": "1757046343720",
-                "completed": true
-            },
-            {
-                "name": "Homework 2",
-                "dueDate": "09/30/2025",
-                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 2",
-                "file": "ECEN-629 - Homework 2 - Brody Jordan.tex",
-                "id": "1758480596157",
-                "completed": true
-            },
-            {
-                "name": "Homework 3",
-                "dueDate": "10/21/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 3",
-                "file": "ECEN-629 - Homework 3 - Brody Jordan.tex",
-                "id": "1760385078712",
-                "completed": true
-            },
-            {
-                "name": "Homework 4",
-                "dueDate": "11/08/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 4",
-                "file": "ECEN-629 - Homework 4 - Brody Jordan.tex",
-                "id": "1762047478759",
-                "completed": true
-            },
-            {
-                "name": "Homework 5",
-                "dueDate": "12/01/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\Assignments\\Homework 5",
-                "file": "ECEN-629 - Homework 5 - Brody Jordan.tex",
-                "id": "1763942404151",
-                "completed": true
-            }
+    "ECEN-743": {
+        "name": "",
+        "description": "",
+        "instructor": "",
+        "semester": "",
+        "lectureTime": ""
+        "lectureLocation": "",
+        "assigments": [
+
         ],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-629 - Applied Convex Optimization\\",
-        "noteFile": "ConvexOptimization.tex"
-    },
-    "ECEN-635": {
-        "name": "Electromagnetic Theory",
-        "description": "Maxwells equations, boundary conditions, Poyntings theorem, electromagnetic potentials, Greens functions, Helmholtzs equation, field equivalence theorems; applications to problems involving transmission scattering and diffraction of electromagnetic waves.",
-        "instructor": "Dr. Robert Nevels",
-        "semester": "Fall 2025",
-        "lectureTime": "ONLINE",
-        "lectureLocation": "ONLINE",
-        "assignments": [
-            {
-                "name": "Quiz 1 - Greek Letters",
-                "dueDate": "09/04/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Quiz 1 - Greek Letters",
-                "file": "ECEN-635 - Quiz 1 - Greek Letters - Brody Jordan.tex",
-                "id": "1757020362003",
-                "completed": true
-            },
-            {
-                "name": "Homework 1",
-                "dueDate": "09/12/2025",
-                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 1",
-                "file": "ECEN-635 - Homework 1 - Brody Jordan.tex",
-                "id": "1757361178513",
-                "completed": true
-            },
-            {
-                "name": "Homework 3",
-                "dueDate": "09/19/2025",
-                "path": "c:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 3",
-                "file": "ECEN-635 - Homework 3 - Brody Jordan.tex",
-                "id": "1757920514333",
-                "completed": true
-            },
-            {
-                "name": "Homework 6",
-                "dueDate": "10/31/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 6",
-                "file": "ECEN-635 - Homework 6 - Brody Jordan.tex",
-                "id": "1761950380968",
-                "completed": true
-            },
-            {
-                "name": "Homework 7",
-                "dueDate": "11/07/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 7",
-                "file": "ECEN-635 - Homework 7 - Brody Jordan.tex",
-                "id": "1762287630478",
-                "completed": true
-            },
-            {
-                "name": "Homework 9",
-                "dueDate": "11/22/2025",
-                "path": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\Assignments\\Homework 9",
-                "file": "ECEN-635 - Homework 9 - Brody Jordan.tex",
-                "id": "1763494143552",
-                "completed": true
-            }
-        ],
-        "fullPath": "C:\\Users\\bljor\\Sync\\Courses\\ECEN-635 - Electromagnetic Theory\\",
-        "noteFile": "ElectromagneticTheory.tex"
+        "fullPath": "",
+        "noteFile": ""
     }
-}
+} 
