@@ -26,12 +26,12 @@
         "noteFile": ""
     },
     "ECEN-743": {
-        "name": "",
-        "description": "",
-        "instructor": "",
-        "semester": "",
-        "lectureTime": ""
-        "lectureLocation": "",
+        "name": "Reinforcement Learning",
+        "description": "Introduction to the theory and practice of reinforcement learning; Topics include Markov decision processes; dynamic programming; Q-Learning; policy gradient algorithms; deep reinforcement learning; imitation learning; meta learning; multi-agent learning.",
+        "instructor": "Dr. Dileep Kalathil",
+        "semester": "Spring 2026",
+        "lectureTime": "MW 4:10 PM - 5:25 PM"
+        "lectureLocation": "BLOC 113",
         "assigments": [
 
         ],
