@@ -13,12 +13,16 @@
         "noteFile": ""
     },
     "ECEN-689": {
-        "name": "",
-        "description": "",
-        "instructor": "",
-        "semester": "",
-        "lectureTime": ""
-        "lectureLocation": "",
+        "name": "Multimodal Computer Vision - Principles and Applications",
+        "description": "Motivations, algorithms, and models for multimodal computer vision; integration of images, text, and LiDAR;
+                        image formation and camera models; 3D vision and multi-view geometry; representation learning and self-
+                        supervised methods; generative AI and diffusion processes; applications in robotics, autonomous driving, and
+                        AR/VR; hands-on labs to build, fine-tune, and deploy multimodal vision models; tasks include text-to-image
+                        generation, 3D generation and reconstruction, and robotic perception.",
+        "instructor": "Zhiwen Fan",
+        "semester": "Spring 2026",
+        "lectureTime": "TTh 9:35 AM - 10:50 AM"
+        "lectureLocation": "AIEN M113",
         "assigments": [
 
         ],
