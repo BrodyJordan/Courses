@@ -1,11 +1,15 @@
 {
     "ECEN-662": {
-        "name": "",
-        "description": "",
-        "instructor": "",
-        "semester": "",
-        "lectureTime": ""
-        "lectureLocation": "",
+        "name": "Estimation & Detection Theory",
+        "description": "This course covers the fundamentals of statistical
+                        inference, including both statistical principles and
+                        computational techniques such as variational
+                        inference and sampling methods. This course is the
+                        natural continuation of the graduate-level probability/random-process class and is designed to prepare students to take advanced machine learning classes.",
+        "instructor": "Dr. Tie Liu",
+        "semester": "Spring 2026",
+        "lectureTime": "TTh 2:20 PM - 3:35 PM"
+        "lectureLocation": "ETB 1003",
         "assigments": [
 
         ],
