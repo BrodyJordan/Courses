@@ -92,5 +92,21 @@ for any $x_i \geq 0$, hence
 \]
 Therefore $T(X) = \max_{i \in [n]} X_i$ is a sufficient statistic
 
+A sufficient statistc is minial if it is a function of any other sufficient statistics
+
+\subsection{Certification of minimality}
+
+The minimality of a sufficient statistic can be verified based on the following proposition: a sufficient statistic $T$ is minimal if for any $x, y \in \mathcal{X}$,
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} \text{is independent of } \theta \implies T(x) = T(y)
+\]
+if the ratio of their likelihoods is independent of $\theta$, then need to check if it implies $T(x) = T(y)$. Only a sufficient condition.
+
+Note that
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} = \left( \frac{\theta}{1-\theta}\right)^{T(x)-T(y)}
+\]
+Clearly, the ratio does not depend on $\theta$ iff $T(x)=T(y)$.
+
 \end{document}
 
