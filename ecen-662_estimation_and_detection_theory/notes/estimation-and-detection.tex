@@ -108,5 +108,108 @@ Note that
 \]
 Clearly, the ratio does not depend on $\theta$ iff $T(x)=T(y)$.
 
+\section{Lecture week 2 -- Jan 20}
+
+Any function of the observation that preserves all the information is a sufficient statistic.
+
+\subsubsection{Minimal sufficient statistic}
+
+A sufficient statistic is \textit{minimal} if it is a function of any other sufficient statistics.
+This is the "optimal" data compression.
+
+A sufficient condition for minimality given sufficiency:
+
+The minimality of a sufficient statistic can be verified based on the following proposition:
+A sufficient statistic $T$ is minimal for any $x, y \in \mathcal{X}$,
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} \text{ is independent of} \theta \implies T(x) = T(y)
+\]
+
+(Proof) Let $T$ be a sufficient statistic that staisfies the above property. To show that $T$
+is minimal, we must show that for any other statistic $T'$, $T$ is a function of $T'$.
+
+Now suppose that $T'(x) = T'(y)$. We have
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} = \frac{g_\theta'(T'(x))h'(x)}{g_\theta'(T'(y))h'(y)} = \frac{h'(x)}{h'(y)}
+\]
+which is independent of $\theta$
+
+Previously, we assume $T$ is a sufficient statistic and then provides a sufficient confition for the minimality.
+
+Let $T=T(X)$ be a stat. It can be shown that $T$ is a sufficient statistic if for any $x, y \in \mathcal{X}$,
+\[
+    T(x)=T(y) \implies \frac{f_\theta(x)}{f_\theta(y)} \text{ is independent of } \theta.
+\]
+Proof based on Fisher-Neyman...
+
+Combined with the previous proposition, a statistic $T=T(X)$ is a minimal sufficient statistic 
+if for any $x, y, \in \mathcal{X}$,
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} \text{ is independent of } \theta \bidir T(x) = T(y)
+\]
+
+\begin{example}[Bernoulli trials]
+    Consider the statistic
+    \[
+        T = \sum_{i=1}^{n} X_i   
+    \]
+    Note that
+    \[
+        \frac{f_\theta(x)}{f_\theta(y)} = \left(\frac{\theta}{1-\theta}\right)^{T(x)-T(y)}
+    \]
+    Clearly, the ratio $\frac{f_\theta(x)}{f_\theta(y)}$ does not dpeend on $\theta$ iff $T(x) = T(y)$.
+\end{example}
+
+\subsubsection{Complete sufficient statistic}
+
+A statistic $T=T(X)$ is complete if for any real-valued function $\phi$,
+\[
+    \mathbb{E}_\theta [\phi(T)] = 0, \forall \theta \in \Theta \implies \mathbb{P}_\theta(\phi(T)=0) = 0, \forall 0 \in \Theta   
+\]
+
+
+\begin{example}[Bernoullie trials]
+    Recall
+    \[
+        T = \sum_{i=1}^{n} X_i
+    \]
+    is a sufficient statistic for $\theta$.
+
+    If for some real-valued function $\phi$ we have
+    \[
+        \mathbb{E}_\theta[\phi(T)] = \sum_{t=0}^{n} \phi(t) \nchoosek{n, t} \theta^t (1-\theta)^{n-t} = 0   
+    \]
+    we must have
+    \[
+        \sum_{t=0}^{n} \phi(t) \nchoosek{n, t} \left( \frac{\theta}{1-\theta} \right)^t = 0
+    \]
+    for all $theta \in (0, 1)$.
+
+\end{example}
+
+\begin{example}[Uniform with unknwon support]
+    Recall that for uniform random variables over an unknown support $[0, \theta]$.
+    \[
+        T = \max_{i \in [n]} X_i   
+    \]
+    is a sufficient statistic for $\theta$.
+    The pdf of $T$ can be calculated as
+    \[
+        f_\theta(t) = n t^{n-1} \theta^{-n} 1_{0 < t \leq \theta}
+    \]
+    If for some real-valued function $\phi$ we have
+    \[
+        \mathbb{E}_\theta[\phi(T)] = n \theta^{-n} \int_0^\theta \phi(t) t^{n-1} dt = 0
+    \]
+    for all $\theta > 0$, we must have
+    \[
+        g(\theta) = \int_0^\theta \phi(t) t^{n-1} dt = 0, \quad \forall \theta > 0
+    \]
+    Taking the derivative, $g'(\theta)=\phi(\theta)\theta^{n-1}$.
+
+\end{example}
+
+
+
 \end{document}
 
