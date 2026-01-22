@@ -1,5 +1,13 @@
 \documentclass[11pt, oneside]{book}
 
+\usepackage{geometry}[letterpaper,11pt]
+\usepackage{amsmath}
+\usepackage{amsfonts, amssymb}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+
 \begin{document}
 
 \chapter{Lecture 1}
@@ -13,11 +21,11 @@ ETB 1003
 
 $p_\theta (x_i) = \theta^{x_i} (1-\theta)^{1- x_i}$ piecewise trick.
 
-$p_\theta = \frac{1}{\nchoosek{n, t}}$ not dependent on x
+$p_\theta = \frac{1}{{n \choose t}}$ not dependent on x
 
 \section{Introduction - 1/15}
 
-Model $x \parto f(x)$ distribution unknown, parameterized by unknown $\theta$.
+Model $x \propto f(x)$ distribution unknown, parameterized by unknown $\theta$.
 By looking at x, make inference $\theta$. Dependency of $x$ on $\theta$ is only on the distribution.
 
 Statistic: $T = T(x)$ function of random variable; does not depend on $\theta$.
@@ -118,7 +126,6 @@ A sufficient statistic is \textit{minimal} if it is a function of any other suff
 This is the "optimal" data compression.
 
 A sufficient condition for minimality given sufficiency:
-
 The minimality of a sufficient statistic can be verified based on the following proposition:
 A sufficient statistic $T$ is minimal for any $x, y \in \mathcal{X}$,
 \[
@@ -145,10 +152,11 @@ Proof based on Fisher-Neyman...
 Combined with the previous proposition, a statistic $T=T(X)$ is a minimal sufficient statistic 
 if for any $x, y, \in \mathcal{X}$,
 \[
-    \frac{f_\theta(x)}{f_\theta(y)} \text{ is independent of } \theta \bidir T(x) = T(y)
+    \frac{f_\theta(x)}{f_\theta(y)} \text{is independent of} \theta \leftrightarrow T(x) = T(y)
 \]
 
-\begin{example}[Bernoulli trials]
+\begin{exmp}
+    [Bernoulli trials]
     Consider the statistic
     \[
         T = \sum_{i=1}^{n} X_i   
@@ -158,7 +166,7 @@ if for any $x, y, \in \mathcal{X}$,
         \frac{f_\theta(x)}{f_\theta(y)} = \left(\frac{\theta}{1-\theta}\right)^{T(x)-T(y)}
     \]
     Clearly, the ratio $\frac{f_\theta(x)}{f_\theta(y)}$ does not dpeend on $\theta$ iff $T(x) = T(y)$.
-\end{example}
+\end{exmp}
 
 \subsubsection{Complete sufficient statistic}
 
@@ -168,7 +176,8 @@ A statistic $T=T(X)$ is complete if for any real-valued function $\phi$,
 \]
 
 
-\begin{example}[Bernoullie trials]
+\begin{exmp}
+    [Bernoullie trials]
     Recall
     \[
         T = \sum_{i=1}^{n} X_i
@@ -177,17 +186,18 @@ A statistic $T=T(X)$ is complete if for any real-valued function $\phi$,
 
     If for some real-valued function $\phi$ we have
     \[
-        \mathbb{E}_\theta[\phi(T)] = \sum_{t=0}^{n} \phi(t) \nchoosek{n, t} \theta^t (1-\theta)^{n-t} = 0   
+        \mathbb{E}_\theta[\phi(T)] = \sum_{t=0}^{n} \phi(t) {n \choose t} \theta^t (1-\theta)^{n-t} = 0   
     \]
     we must have
     \[
-        \sum_{t=0}^{n} \phi(t) \nchoosek{n, t} \left( \frac{\theta}{1-\theta} \right)^t = 0
+        \sum_{t=0}^{n} \phi(t) {n \choose t} \left( \frac{\theta}{1-\theta} \right)^t = 0
     \]
-    for all $theta \in (0, 1)$.
+    for all $\theta \in (0, 1)$.
 
-\end{example}
+\end{exmp}
 
-\begin{example}[Uniform with unknwon support]
+\begin{exmp} 
+    [Uniform with unknwon support]
     Recall that for uniform random variables over an unknown support $[0, \theta]$.
     \[
         T = \max_{i \in [n]} X_i   
@@ -207,9 +217,6 @@ A statistic $T=T(X)$ is complete if for any real-valued function $\phi$,
     \]
     Taking the derivative, $g'(\theta)=\phi(\theta)\theta^{n-1}$.
 
-\end{example}
-
-
+\end{exmp}
 
 \end{document}
-
