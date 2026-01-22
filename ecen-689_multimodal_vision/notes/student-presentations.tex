@@ -1,0 +1,61 @@
+\section{Week 2 -- Jan 22}
+
+% student one
+\subsection{Student 1}
+\subsubsection{BEVFormer}
+In autonomous driving, car needs to understand the whole scene around it, using cameras that each see only part of the world.
+
+Need a unified, ego-centric representation that puts everything into one shared view.
+
+BEV Queries, grid where we want to know what is present.
+
+BEV architecture: two key architectures: spatial cross-attention and temporal self-attention.
+
+Sparse cross attention: full BEV-to-image cross-attention is too expensive. BEVFormer proposes sparse spatial cross-attention. Each BEV query efficient uses most relevant camera.
+
+Temporal self-attention: fuses history in a recurrent way, since pure memory would be too costly
+
+BEVFormer builds a unified BEV representation from multi-camera images with a query-based transformer. Directly contructs BEV. 
+
+\subsubsection{VoxFormer}
+Model needs to predict voxel grid in 3D space. If object is identified, needs to predict semantic class. Model infers in visible surface and occluded space as well so 3D volume is complete, model has to reason occluded geometry. \\
+
+Compared to BEV-based detection. Natively apply BEV feature, still much heavier, use sparse voxel representation. Use important elements of query proposals to reduce computational cost. Result is improved performance over MonoScene since only relevant query proposals is sent to transformer, helps model focus on important 3D locations. \\
+
+2D features are extracted by ResNet50 from RGB images, amd depth is estimated by depth predictor. \\
+
+VoxFormer targets camera-based 3D semantics scene completion and makes 3D reasoning feasible via sparse voxle tokens. Key design: depth/occupancy-guided query proposal + deformable attention, then mask-token completion in voxel space.
+
+% student two
+\subsection{Student 2 -- Dayou Li -- Latent Action}
+
+Bottleneck in robot learning: large-scale robot datasets are expensive to collect, require robot hardware, but contain robot action. Internet-scale video data is widely available, but there is a human to robot gap, and no included robot information.
+
+\subsubsection{LAPA -- Latent action pretraining from video}
+Latent action quantization: change in current to observation to predict latent action (VLM) LAPA determines action. 1. latent action quantization. 2. latent pretraining 3. LAPA $\righarrow$ action.
+
+Latent action encoding: input of current and next frame, patch embed, spatial transformer, causal transformer which outputs transition of two embeddings.
+\[
+    z_1 = \arg \min_{z_k} |d_1 - z_k|^2
+\]
+\[
+    L = ||\norm{x_2 - \hat{x}_2}||^2
+\]
+This model is compared to OpenVLA, ActionVLA, outperformed them. \\
+
+Reconstruction loss is supervisation. Want latent actions to predict.
+
+\subsubsection{CLAP model}
+Supervised in both reconstruction in visualization and action space. \\
+
+Pipeline: Act-VAE action trajector $\rightarrow$ codebook $\rightarrow$ decode action \\
+
+VD-VAE: visual feature of the current frame and another frame, encoded by Dyno (can use another pretraining encoder), outputs two branches $z_{q, a}$ and $z_{q, i}$, these two branches go to encoder with first frame and outputs last frame as the supervisation. \\
+
+CLAP-NTP: VLM to turn obs and instr to subtack and action tokens \\ 
+
+CLAP-RF: uses VLM backbones that encode current vision and language context \\
+
+Conclusions: latent actions provide a scalable token interface for learning from videos, which is valuable for cross-embodiment learning. LAPA shows that video-only tokenization can work and can leverage human videos, but tokens many be visually entangled and require action finetuning for executability. CLAP strengthens grounding by aligning video latents to robot actions latents and adds a planner-controller style.
+
+
