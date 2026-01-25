@@ -1,0 +1,100 @@
+\documentclass[11pt, oneside]{book}
+
+\usepackage{geometry}[letterpaper]
+\usepackage{amsmath, amssymb, amsthm}
+
+\begin{document}
+
+\chapter{Weeks 1}
+
+ECEN-689
+Dr. Zhiwen Fan
+TTh 9:35 AM - 10:50 AM
+AIEN M113
+
+\section{Introduction -- 1/13}
+
+Geometry, semantics, affordance, actionable information
+
+\section{Introduction \& Guest Lectuer - 1/15}
+
+Hezhen Hu
+performance drops for users and contexts in the long tail
+inclusion: how to build models that generalize to diverse humans across bodies, context
+core: human foundational models
+embodiment -> inclusive; understanding -> context-aware
+general visual benchmark million=level (datacomp, panda)
+human-centric datasets: thousand-level (CSL-daily-21k; dymvhuman)
+training human foundation model (web data - vast scale, low quality)
+BERT success in MLP; can this pretraining strategy work for human video
+
+words: rich semantics, discrete, high-level
+video: low info densit, continuous, redundant
+
+three key components: visual token; pretraing strat; human prior
+visual token: compact human pose (input -> visual token -> GCN -> input embedding)
+    filters irrelevant information
+    reduces redundancy (reduce input dimension by 2,000+ times)
+    multi-level masking (randomly mask joints; randomly mask frames; randomly mask frames)
+prelim: MANO: parametric hand model
+    MANO is pre-learned from large hand scans (provide mapping)
+    MPL -> MANO ()& proj) -> projection -> hand reconstruction
+SignBERT shows versatile capability on multiple sign language understanding tasks
+
+EVA: expressive human modeling from in-the-wild video
+    #1 expressive animatable avatar
+    #2 simple rbg video input (no human mesh annotation required)
+
+monocular rgb video -> smpl-x alignment -> gaussian avatar modeling -> animate avatar
+multi esimators: 2d pose (dwpose) & 3d body (smpler-x) & 3d hand (hamer)
+all goes to iterative fitting to extract each models complimentary strengths
+
+HumanNOVA: efficient avatar modeling from a single image
+    data: scalable data generation pipeline
+    model: scalable transformer backbone
+
+data: synthetic data generation (rigged human mesh -> (smpl-x pose) -> animated mesh & render)
+      real-world data generation (multi-view captured data -> (3dgs fitting) -> 3dgs assets & render)
+
+model: multi-modal encoding; incorporate human coarse mesh as human prior
+       2d-to-3d mapping: triplane as 3d representation; updated from multi-modal encoding via cross-attn
+
+MMHU: scalable data annomation pipeline
+    * large-scale video collection (paid/collected; YouTube video; Waymo video)
+        * into low-level context (pose & description) goes into
+            * high-level semantics (behavior & intent)
+
+Future:
+    * human-centric 3d foundation model: current foundation model only sees people;
+            desired model understands people in 3d and context
+        1. scalable data infrastructure -> human-centric 3d foundation model -> diverse downstream tasks
+        2. human-centric 3d foundation model (unified model): structured human encoder -> unified latent space (geo, contact, motion, context, intent)
+        3. 3d human understanding & gen, interaction & intent prediction, ...
+
+    * embodied active reasoning (from passive perception to active human understanding)
+        passive vision model (static camera) leads to unsafe action
+        active agent (dynamic interactives) leads to SAFE action 
+            observe, reason: belief-aware human state representation -> active reasoning
+
+    * embodied social affordance learning: enable agents to support effective and inclusive multi-person collaboration
+        agent needs to understand role of each person and their reactions
+        read social cues in (understanding) -> reason & react with social knowledge (reason) -> output predictions in more socially-suitable way!
+
+---------------------
+
+main lecture:
+
+current state of the art: many less than 5 years
+    * cv still active research area, rapidly changing
+    * deep learning and generative methods powering many modern applications
+
+    why is cv difficult $\rightarrow$ viewpoint variation, illumination, scale
+    * also intra-class vision (concepts), motion, background clutter, occlusion
+    * perception is an inherently ambiguous problem; must often use prior knowledge about the world's structure 
+
+\pagebreak
+
+\section{Week 2 -- Jan 22}
+
+\input{student-presentations.tex}
+\end{document}

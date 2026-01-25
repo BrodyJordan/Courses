@@ -1,0 +1,368 @@
+\documentclass[11pt, oneside]{book}
+
+\usepackage{geometry}[letterpaper,11pt]
+\usepackage{amsmath}
+\usepackage{amsfonts, amssymb}
+\usepackage{amsthm}
+
+\DeclareMathOperator{\Var}{Var}
+
+\newcommand{\E}{\mathbb{E}}
+
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+
+\begin{document}
+
+\chapter{Lecture 1}
+
+ECEN-662
+Dr. Tie Liu
+TTh 2:20 PM - 3:35 PM
+ETB 1003
+
+\section{Introduction -- 1/13}
+
+$p_\theta (x_i) = \theta^{x_i} (1-\theta)^{1- x_i}$ piecewise trick.
+
+$p_\theta = \frac{1}{{n \choose t}}$ not dependent on x
+
+\section{Introduction - 1/15}
+
+Model $x \propto f(x)$ distribution unknown, parameterized by unknown $\theta$.
+By looking at x, make inference $\theta$. Dependency of $x$ on $\theta$ is only on the distribution.
+
+Statistic: $T = T(x)$ function of random variable; does not depend on $\theta$.
+
+$ T ~ f_\theta(t)$ potentially not as accurate as the inference made from $x$.
+When mapping $T$ is invertible, there is no difference between $x$ and $t$. 
+
+If information is sacrificed ($T$ loses information on $\theta$).
+
+Sufficient statistic;
+
+In case where mapping does not lose any information, that statistic is called a `sufficient` statistic.
+Invertible mapping preserves all data.
+
+Want sufficient statistic that compresses data and preserves information...
+
+Sufficient: If conditional distribution does not depend on $\theta$, $f_\theta (x | t)$
+$p_\theta (x | t) = \frac{p_\theta (x)}{p_\theta(t)}$
+
+% thm
+Fisher-Neyman factorization theorem:
+    allows us to identify sufficient statistics direclty from the likelihood function $f_\theta(x)$.
+    can be taken as a working definion of sufficiency
+    THM: let $f_\theta(x)$ be a pdf or pmf of $X$. Stat $T = T(X)$ is sufficient for $\theta$ iff $\exists$ $g_\theta(t)$ and $h(x)$ s.t.: $f_\theta(x) = g_\theta(T(x))h(x)$
+        where $h(x)$ does NOT depend on $\theta$
+        
+Bernoulli-trials revisited: PMF of X $p_\theta(x) = \theta^{T(x)} (1 - \theta)^{n - T(x)}$
+    here $x$ only shows up as part of $T(x)$
+    therefore by the Fisher-Neyman thm, $T = \sum_{i=1}^n X_i$ is a sufficient statistic for $\theta$.
+
+$X$ is discrete, so 
+\[
+    p_\theta = \sum_{y:T(y)=t} p_\theta(y)
+\]
+thus for any $(x, t)$ such that $T(x)=t$, we have
+\[
+    p_\theta(x | t) = \frac{h(x)}{\sum_{y:T(y)=t}h(y)}
+\]
+now ratio does not depend on $\theta$, so by definition $T=T(x)$ is a sufficient statistic for $\theta$.
+
+If $p_\theta(x) = h(x) g_\theta(T(x))$...
+
+Example: Gaussian with unknown mean. Suppose we observe $X = [X_1, \dots, X_n]^t$, where
+\[
+    X_i \overset{iid}{~} \mathcal{N}(\mu, \sigma^2)
+\]
+where $\sigma^2$ is a known constant and $\mu$ unknown parameter
+
+We have $f_\mu(x_i) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left(- \frac{(x_i - \mu)^2}{2\sigma^2}\right)$ and hence,
+
+$f_\mu = \frac{1}{(2\pi \sigma^2)^{n/2}} \exp \left( \frac{\mu}{}... \right) = g_\mu(T(x)h(x)$
+
+Example: both $\mu$ and $\sigma^2$ unknown and $\theta = [\mu, \sigma^2]^t$ is a two-dimensional vector
+
+    We have $f_\theta(x) = \frac{1}{(2\pi \sigma^2)^{n/2}} \exp \left( ... \right)$
+
+    with $T(x) = [\sum_{i=1}^n x_i, \sum_{i=1}^n x_i^2]$
+
+Example: Uniform with unknown parameter
+\[
+    X_i \overset{iid}{~} \mathcal{U}(0, \theta)
+\]
+with $\theta > 0$ unknown parameter, want to make inference on upper-bound
+
+We have 
+\[
+    f_\theta(x_i) = \frac{1}{\theta} 1_{x_i \leq \theta}
+\]
+for any $x_i \geq 0$, hence
+\[
+    f_\theta(x) = \frac{1}{\theta^n} \Pi_{i=1}^n 1_{x_i \leq \theta} = \frac{1}{\theta^n}1_{\max_{i \in [n]} x_i \leq \theta}
+\]
+Therefore $T(X) = \max_{i \in [n]} X_i$ is a sufficient statistic
+
+A sufficient statistc is minial if it is a function of any other sufficient statistics
+
+\subsection{Certification of minimality}
+
+The minimality of a sufficient statistic can be verified based on the following proposition: a sufficient statistic $T$ is minimal if for any $x, y \in \mathcal{X}$,
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} \text{is independent of } \theta \implies T(x) = T(y)
+\]
+if the ratio of their likelihoods is independent of $\theta$, then need to check if it implies $T(x) = T(y)$. Only a sufficient condition.
+
+Note that
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} = \left( \frac{\theta}{1-\theta}\right)^{T(x)-T(y)}
+\]
+Clearly, the ratio does not depend on $\theta$ iff $T(x)=T(y)$.
+
+\section{Lecture week 2 -- Jan 20}
+
+Any function of the observation that preserves all the information is a sufficient statistic.
+
+\subsubsection{Minimal sufficient statistic}
+
+A sufficient statistic is \textit{minimal} if it is a function of any other sufficient statistics.
+This is the "optimal" data compression.
+
+A sufficient condition for minimality given sufficiency:
+The minimality of a sufficient statistic can be verified based on the following proposition:
+A sufficient statistic $T$ is minimal for any $x, y \in \mathcal{X}$,
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} \text{ is independent of} \theta \implies T(x) = T(y)
+\]
+
+(Proof) Let $T$ be a sufficient statistic that staisfies the above property. To show that $T$
+is minimal, we must show that for any other statistic $T'$, $T$ is a function of $T'$.
+
+Now suppose that $T'(x) = T'(y)$. We have
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} = \frac{g_\theta'(T'(x))h'(x)}{g_\theta'(T'(y))h'(y)} = \frac{h'(x)}{h'(y)}
+\]
+which is independent of $\theta$
+
+Previously, we assume $T$ is a sufficient statistic and then provides a sufficient confition for the minimality.
+
+Let $T=T(X)$ be a stat. It can be shown that $T$ is a sufficient statistic if for any $x, y \in \mathcal{X}$,
+\[
+    T(x)=T(y) \implies \frac{f_\theta(x)}{f_\theta(y)} \text{ is independent of } \theta.
+\]
+Proof based on Fisher-Neyman...
+
+Combined with the previous proposition, a statistic $T=T(X)$ is a minimal sufficient statistic 
+if for any $x, y, \in \mathcal{X}$,
+\[
+    \frac{f_\theta(x)}{f_\theta(y)} \text{is independent of} \theta \leftrightarrow T(x) = T(y)
+\]
+
+\begin{exmp}
+    [Bernoulli trials]
+    Consider the statistic
+    \[
+        T = \sum_{i=1}^{n} X_i   
+    \]
+    Note that
+    \[
+        \frac{f_\theta(x)}{f_\theta(y)} = \left(\frac{\theta}{1-\theta}\right)^{T(x)-T(y)}
+    \]
+    Clearly, the ratio $\frac{f_\theta(x)}{f_\theta(y)}$ does not dpeend on $\theta$ iff $T(x) = T(y)$.
+\end{exmp}
+
+\subsubsection{Complete sufficient statistic}
+
+A statistic $T=T(X)$ is complete if for any real-valued function $\phi$,
+\[
+    \mathbb{E}_\theta [\phi(T)] = 0, \forall \theta \in \Theta \implies \mathbb{P}_\theta(\phi(T)=0) = 0, \forall 0 \in \Theta   
+\]
+
+
+\begin{exmp}
+    [Bernoullie trials]
+    Recall
+    \[
+        T = \sum_{i=1}^{n} X_i
+    \]
+    is a sufficient statistic for $\theta$.
+
+    If for some real-valued function $\phi$ we have
+    \[
+        \mathbb{E}_\theta[\phi(T)] = \sum_{t=0}^{n} \phi(t) {n \choose t} \theta^t (1-\theta)^{n-t} = 0   
+    \]
+    we must have
+    \[
+        \sum_{t=0}^{n} \phi(t) {n \choose t} \left( \frac{\theta}{1-\theta} \right)^t = 0
+    \]
+    for all $\theta \in (0, 1)$.
+
+\end{exmp}
+
+\begin{exmp} 
+    [Uniform with unknwon support]
+    Recall that for uniform random variables over an unknown support $[0, \theta]$.
+    \[
+        T = \max_{i \in [n]} X_i   
+    \]
+    is a sufficient statistic for $\theta$.
+    The pdf of $T$ can be calculated as
+    \[
+        f_\theta(t) = n t^{n-1} \theta^{-n} 1_{0 < t \leq \theta}
+    \]
+    If for some real-valued function $\phi$ we have
+    \[
+        \mathbb{E}_\theta[\phi(T)] = n \theta^{-n} \int_0^\theta \phi(t) t^{n-1} dt = 0
+    \]
+    for all $\theta > 0$, we must have
+    \[
+        g(\theta) = \int_0^\theta \phi(t) t^{n-1} dt = 0, \quad \forall \theta > 0
+    \]
+    Taking the derivative, $g'(\theta)=\phi(\theta)\theta^{n-1}$.
+
+  \end{exmp}]
+
+\section{January 22, 2026 Lecture}
+
+\subsection{Complete sufficient statistic}
+Under mild conditions, it can be shown that if a sufficient statistic is complete, it is also minimal. \\
+
+Let $T$ be a complete sufficient statistic and $T'$ be another sufficient statistic. We need to show that $T$ is a function of $T'$. \\
+
+Let 
+\begin{align*}
+  \psi(t') & := \mathbb{E}_\theta [T | T' = t'] \\
+  \rho(t) & := \mathbb{E}_\theta[\psi(T') | T=t]
+\end{align*}
+By law of total expectation,
+\begin{align*}
+  \mathbb{E}_\theta &= \mathbb{E}_\theta[\mathbb{E}_\theta[T|T']] \\
+                    &= \mathbb{E}_\theta[\psi(T')] \\
+                    &= \mathbb{E}_\theta[\mathbb{E}_\theta[\psi(T')|T]] \\
+                    &= \mathbb{E}_\theta[\rho(T)]
+\end{align*}
+for any $\theta \in \Theta$. By the completeness of $T$, we have $\mathbb{P}_\theta(T=\rho(T)) = 1$. \\
+
+\noindent Recall the law of total variance: $\Var[Y] = \E[\Var[Y|Z]]+\Var[\E[Y|Z]]$. Now we have 
+\begin{align*}
+  \Var_\theta[\rho_i(T)] &= \E_\theta[\Var_\theta[\rho_i(T)|T']] + \E_\theta[\Var_\theta[\psi_i(T')|T]] + ...
+\end{align*}
+
+%% Lecture 3
+\section{Lecture 3: Exponential Family of Distributions}
+A model $f_\theta(x)$ is called an exponential family of distributions if it can be written as 
+\[
+  f_\theta(x) = h(x) \exp (\eta^t T - A(\eta))
+\]
+where $\eta = \eta(\theta)$ is an $s$-dimensional function of the model parameter $\theta$; $T=T(x)$ is an $s$-dimensional function of the observation $x$; $h(x)$ is a one-dimensional function of the observation $x$ known as the base measure; $A(\eta)$ is the normalization factor known as the log-partition function and can be computed as:
+\[ 
+  A(\eta) = \log \left( \int_{\mathcal{X}} h(x) \exp (\eta^t T(x)) \, dx \right)
+\]
+In addition, it is required that the support set $\{x : f_\theta(x) > 0 \}$ does not depend on $\theta$. Note that the likelihood function $f_\theta$ depends on the model parameter $\theta$ only through $\eta = \eta(\theta)$. Therefore, $\eta$ is known as the natural parameter of the model, and any representation of the aforementioned form is known as canonical representation of the expoential family. Note that for any given expoential family of distributions, canonical presentations are not unique. For example, if $(\eta, T, h, A(\eta))$ is a canonical representation, then 
+\[
+  (\eta' = B\eta, \, T' = B^{-1}T, \, h'=h, \, A'(\eta') = A(B^{-1} \eta'))
+\]
+is also a canonical representation for any invertible matrix B. A canonical representation is called irreducible if neither $(\eta_i(\theta) : i \in [s])$ nor $(T_i(x) : x \in [s])$ satisfies a linear-equality constraint; otherwise, we can find an alternative canonical representation with a natural parameter of a reduced dimension.
+
+\subsection{Full-ranked and curved families}
+Without loss generality, we shall assume all canonical representations of an expoential family are irreducible. Let $\Theta$ be the space of the model parameter $\theta$ and let $\eta(\Theta) := \{\eta(\theta) : \theta \in \Theta\}$ be the space of the natural parameter $\eta$ induced by $\eta = \eta(\theta)$. 
+
+We say that an (irreducible) $s$-parameter expoential family is full-ranked if the space of the natural parameter $\eta(\Theta)$ contains an $s$-dimensional rectangle; otherwise, it is called a curved family. Note that by the Fisher-Neyman factorization theorem, $T(X)$ is a sufficient statistic for $\theta$ for any expoential family. In addition, if the expoential family is full-ranked then $T(X)$ is also complete for $\theta$.
+
+\subsubsection{Multiple independent measurements}
+Let $X = [X_1, \dots, X_n]^t$, where
+\[
+  X_i \overset{iid}{\sim} f_\theta(x_i)
+\]
+and
+\[
+  f_\theta(x_i) = h(x_i) \exp (\eta^t T(x_i) - A(\eta))
+\]
+we thus have
+\[
+  f_\theta(x) = \prod_{i=1}^{n} f_\theta(x_i) = \left(\prod_{i=1} h(x_i) \right) \exp \left( \eta^t \sum_{i=1} T(x_i) - \eta A(\eta) \right)
+\]
+For Bernoulli trials, we have 
+\begin{align*}
+  p_\theta (x_i) &= \theta^{x_i} (1-\theta)^{1-x_i} \\
+                 &= \exp \left(x_i \log \frac{\theta}{1-\theta} - \log \frac{1}{1 - \theta}\right)
+\end{align*}
+Thus, 
+\[
+  p_\theta(x) = \prod_{i=1}^{n} p_\theta(x_i)
+\]
+is also a one-parameter expoential family of distributions with
+\[
+  \eta(\theta) = \log \frac{\theta}{1 - \theta}, \quad T(x) = \sum{i=1}^{n} x_i, \quad h(x) = 1, \quad \text{and} \quad A(\eta) = n \log (1 + e^\eta)
+\]
+Note that the space of the model parameter $\theta$ is $(0, 1)$, the space space of the natural parameter is $\mathbb{R}_{++}$. Therefore, this expoential family is full-ranked, and the sufficient statistic $T(X) = \sum_{i=1}^n X_i$. \\
+
+\begin{exmp}
+  For Gaussian with unknown mean, we have 
+  \[
+    f_\mu(x_i) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp \left( - \frac{x_i^2}{2\sigma^2} \right) \exp \left(...\right)
+  \]
+  Thus,
+  \[
+    f_\mu(x) = \prod_{i=1}^n f_\mu(x_i) 
+  \]
+  is also a one-parameter expoential family of distributions with
+  \begin{align*}
+    ...
+  \end{align*}
+  
+\end{exmp}
+
+% TODO: complete 
+\begin{exmp}
+For Gaussian with unknown mean and variance, we have
+\[
+  f_\theta(x_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp \left( \frac{\mu x_i}{\sigma^2} - \frac{x_i^2}{2\sigma^2} - \frac{\mu^2}{2\sigma^2} \right)
+\]
+which is a two-paremeter exponential family of distributions.
+...
+with
+\[
+  \eta(\theta) = \left(\frac{\mu}{\sigma^2},  -\frac{1}{2\sigma^2} \right), \quad T(x) = \left(\sum_{i=1}^n x_i, \sum_{i=1}^n x_i^2 \right), \quad h(x) = \left( \frac{1}{\sqrt{\pi}}\right)^n
+\]
+
+\end{exmp}
+
+% TODO: finish above examples
+
+\begin{exmp}
+  $X_i \sim \mathcal{N}$
+  Also a two-parameter exponential family of distributions with
+  \[ 
+    \eta(\theta) = \left( \frac{1}{\theta}, -\frac{1}{2\theta^2} \right), T(x) = \left( \sum_{i=1}^n x_i, \sum_{x=1}^n x_i^2 \right), h(x) = \left( \frac{1}{\sqrt{2\pi}}\right)^n
+  \]
+  and log-partition function
+  \[
+    A(\eta) = \frac{n}{2} - \frac{n}{2} \log(-\eta 2)
+  \]
+  As discussed, in this case the two-dimensional sufficient statistic
+  \[
+    T(X) = \left( \sum_{i=1}^n X_i, \sum_{i=1} X_i^2 \right)
+  \]
+  is not complete for any $n \geq 1$.
+
+\end{exmp}
+
+\begin{exmp}
+  Uniform with unknown support. Recall that for each $i \in [n]$, the likelihood function
+  \[
+    f_\theta(x_i) = \frac{1}{\theta} 1_{\{x_i \leq 0\}}
+  \]
+  If the support depends on $\theta$, then it is not an exponential family. In this case, the sum is not a sufficient statistic, but the max is.
+  \[
+    T(X) = \max_{i \in [n]} X_i
+  \]
+  rather than 
+  \[
+    T(X) = \sum_{i=1}^n X_i 
+  \]
+\end{exmp}
+\noindent Distributions and moments of $T(X)$
+
+\end{document}

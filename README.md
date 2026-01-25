@@ -1,37 +1,52 @@
-## Courses
+# Courses
 
-### Includes active course directory, with course information, lecture notes, and assignments.
+Includes active course directory, with course information, lecture notes, and assignments.
 
-General structure of my courses:
+## Directory Structure
 
 ```
-.
+~/courses
 |
-|-- courses.json
-|-- assignment.sty
-|-- coursetemplate.sty
-|--
-|-- Course X/
-|   |-- Syllabus.pdf
-|   |-- Notes/
-|   |   |-- Course X.tex
-|   |   |-- Course X.pdf
-|   |   |-- Assets/
+|-- styles/
+|	|-- assignment.sty
+|   `-- notes.sty
+|-- crse-xxx_course_name/
+|   |-- syllabus.pdf
+|   `-- course-info.tex
+|   |-- notes/
+|   |   |-- course-name.tex
+|   |   |-- course-name.pdf
+|   |   |-- assets/
 |   |   |   `-- cover.svg
-|   |   `-- Chapters/
+|   |   `-- chapters/
 |   |       |-- acknowledgement.tex
 |   |       `-- *.tex
-|   `-- Assignments/
-|       |-- Homework X/
-|       `-- Project X/
-`-- Course Y/
+|   `-- assignments/
+|       |-- homework-X/
+|       `-- project-X/
+`-- crse-yyy_course_name/
     ...
 ```
 
-~~I admit I have committed some LaTeX sins here (specifically to do with my use of \input{template.tex}). I don't care. It works, and I will come up with a better solution in the future.~~ **FIXED:** now using .sty files! :)
-
 Each .tex document is built using pdfTeX in a .tmp directory (hidden in .gitignore), then the PDF is moved to the root directory of the .tex file.
 
-## To Do
-1. ~~Improve .tex templates by converting them to .sty files~~
-2. ~~Fetch color information from courses.json~~
+## Assignments
+
+Assignments follow this basic structure, where `course-info.tex` is imported alongside `styles/assignment.sty`.
+```
+\documentclass{article}
+
+\input{../../course-info}
+\usepackage[
+	AssignmentName={Homework 1},
+	DueDate={January 27, 2026 at 11:59 PM}
+]{../../../styles/assignment}
+
+\begin{document}
+\MakeAssignmentTitle
+\end{document}
+```
+
+## Notes
+
+Similar to above, update this later.

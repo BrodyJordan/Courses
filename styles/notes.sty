@@ -1,0 +1,56 @@
+\ProvidesPackage{notes}
+
+% ---------- basic packages ----------
+\RequirePackage{amsmath, amssymb}
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\RequirePackage{hyperref}
+
+% ---------- page layout ----------
+\geometry{
+  margin=1in
+}
+
+\setstretch{1.1}
+
+% ---------- metadata defaults ----------
+% (safe even if course.tex forgets something)
+\providecommand{\CourseCode}{}
+\providecommand{\CourseName}{}
+\providecommand{\Instructor}{}
+\providecommand{\Semester}{}
+
+% ---------- title helper ----------
+\newcommand{\CourseTitle}{
+  \begin{center}
+    {\Large\bfseries \CourseName}\\[0.5em]
+    {\CourseCode}\\[0.25em]
+    {\Instructor}\\
+    {\Semester}
+  \end{center}
+  \vspace{1em}
+}
+
+% ---------- section styling ----------
+\RequirePackage{titlesec}
+\titleformat{\section}
+  {\normalfont\large\bfseries}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{1em}{}
+
+% ---------- math shortcuts ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+% ---------- hyperlink setup ----------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
