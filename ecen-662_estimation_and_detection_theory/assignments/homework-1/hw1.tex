@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+
+\begin{document}
+ 
+\[
+\begin{cases}
+  1 - \theta, x = 0 \\
+  \frac{\theta}{2}, x = \pm 1
+\end{cases}
+\] 
+write as exponential family, show family is full-ranked, shows that sufficient statistic is also complete...
+
+$\mathbb{P} [\phi(x) = 0] < 1$ expectation is zero, but random variable itself is not always zero
+
+% Problem 2
+Let $X = (X_1, \dots, X_n)$, where $X_i$'s are i.i.d. $\mathcal{N}(\theta, \theta)$, and $\theta > 0$ is an unknown parameter. Determine a complete sufficient statistic for $\theta$ and carefully justify your answer.
+\solution 
+start by checking whether this is an expoential family or not...
+
+% Problem 3 
+Let $X = (X_1, \dots, X_n)$, where $X_i$'s are i.i.d. $\mathcal{N}(\theta, \theta^2)$, and $\theta > 0$ is an unknown parameter.
+\begin{enumerate}
+  \item For $n=1$, show that $T=X$ is a minimum sufficient statistic but is not a complete sufficient statistic.
+  \item Show that the sufficient statistic
+    \[
+      T = \left( \sum_{i=1}^{n} X_i, \sum_{i=1}^{n} X_{i}^2 \right)
+    \]
+    is not complete for any $n \geq 2$.
+\end{enumerate}
+able to compute $\E_\theta[(2x_i)^2]$
+$\E_\theta[\sum X_i^2$
+
+
+\end{document}
