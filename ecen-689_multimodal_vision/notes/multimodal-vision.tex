@@ -3,6 +3,9 @@
 \usepackage{geometry}[letterpaper]
 \usepackage{amsmath, amssymb, amsthm}
 
+\newcommand{\R}{\mathbb{R}}
+\usepackage{graphicx}
+
 \begin{document}
 
 \chapter{Weeks 1}
@@ -33,68 +36,140 @@ video: low info densit, continuous, redundant
 
 three key components: visual token; pretraing strat; human prior
 visual token: compact human pose (input -> visual token -> GCN -> input embedding)
-    filters irrelevant information
-    reduces redundancy (reduce input dimension by 2,000+ times)
-    multi-level masking (randomly mask joints; randomly mask frames; randomly mask frames)
+filters irrelevant information
+reduces redundancy (reduce input dimension by 2,000+ times)
+multi-level masking (randomly mask joints; randomly mask frames; randomly mask frames)
 prelim: MANO: parametric hand model
-    MANO is pre-learned from large hand scans (provide mapping)
-    MPL -> MANO ()& proj) -> projection -> hand reconstruction
+MANO is pre-learned from large hand scans (provide mapping)
+MPL -> MANO ()\& proj) -> projection -> hand reconstruction
 SignBERT shows versatile capability on multiple sign language understanding tasks
 
 EVA: expressive human modeling from in-the-wild video
-    #1 expressive animatable avatar
-    #2 simple rbg video input (no human mesh annotation required)
+\#1 expressive animatable avatar
+\#2 simple rbg video input (no human mesh annotation required)
 
 monocular rgb video -> smpl-x alignment -> gaussian avatar modeling -> animate avatar
-multi esimators: 2d pose (dwpose) & 3d body (smpler-x) & 3d hand (hamer)
+multi esimators: 2d pose (dwpose) \& 3d body (smpler-x) \& 3d hand (hamer)
 all goes to iterative fitting to extract each models complimentary strengths
 
 HumanNOVA: efficient avatar modeling from a single image
-    data: scalable data generation pipeline
-    model: scalable transformer backbone
+data: scalable data generation pipeline
+model: scalable transformer backbone
 
-data: synthetic data generation (rigged human mesh -> (smpl-x pose) -> animated mesh & render)
-      real-world data generation (multi-view captured data -> (3dgs fitting) -> 3dgs assets & render)
+data: synthetic data generation (rigged human mesh -> (smpl-x pose) -> animated mesh \& render)
+real-world data generation (multi-view captured data -> (3dgs fitting) -> 3dgs assets \& render)
 
 model: multi-modal encoding; incorporate human coarse mesh as human prior
-       2d-to-3d mapping: triplane as 3d representation; updated from multi-modal encoding via cross-attn
+2d-to-3d mapping: triplane as 3d representation; updated from multi-modal encoding via cross-attn
 
 MMHU: scalable data annomation pipeline
-    * large-scale video collection (paid/collected; YouTube video; Waymo video)
-        * into low-level context (pose & description) goes into
-            * high-level semantics (behavior & intent)
+* large-scale video collection (paid/collected; YouTube video; Waymo video)
+* into low-level context (pose \& description) goes into
+* high-level semantics (behavior \& intent)
 
 Future:
-    * human-centric 3d foundation model: current foundation model only sees people;
-            desired model understands people in 3d and context
-        1. scalable data infrastructure -> human-centric 3d foundation model -> diverse downstream tasks
-        2. human-centric 3d foundation model (unified model): structured human encoder -> unified latent space (geo, contact, motion, context, intent)
-        3. 3d human understanding & gen, interaction & intent prediction, ...
+* human-centric 3d foundation model: current foundation model only sees people;
+desired model understands people in 3d and context
+1. scalable data infrastructure -> human-centric 3d foundation model -> diverse downstream tasks
+2. human-centric 3d foundation model (unified model): structured human encoder -> unified latent space (geo, contact, motion, context, intent)
+3. 3d human understanding \& gen, interaction \& intent prediction, ...
 
-    * embodied active reasoning (from passive perception to active human understanding)
-        passive vision model (static camera) leads to unsafe action
-        active agent (dynamic interactives) leads to SAFE action 
-            observe, reason: belief-aware human state representation -> active reasoning
+* embodied active reasoning (from passive perception to active human understanding)
+passive vision model (static camera) leads to unsafe action
+active agent (dynamic interactives) leads to SAFE action
+observe, reason: belief-aware human state representation -> active reasoning
 
-    * embodied social affordance learning: enable agents to support effective and inclusive multi-person collaboration
-        agent needs to understand role of each person and their reactions
-        read social cues in (understanding) -> reason & react with social knowledge (reason) -> output predictions in more socially-suitable way!
+* embodied social affordance learning: enable agents to support effective and inclusive multi-person collaboration
+agent needs to understand role of each person and their reactions
+read social cues in (understanding) -> reason \& react with social knowledge (reason) -> output predictions in more socially-suitable way!
 
 ---------------------
 
 main lecture:
 
 current state of the art: many less than 5 years
-    * cv still active research area, rapidly changing
-    * deep learning and generative methods powering many modern applications
+* cv still active research area, rapidly changing
+* deep learning and generative methods powering many modern applications
 
-    why is cv difficult $\rightarrow$ viewpoint variation, illumination, scale
-    * also intra-class vision (concepts), motion, background clutter, occlusion
-    * perception is an inherently ambiguous problem; must often use prior knowledge about the world's structure 
+why is cv difficult $\rightarrow$ viewpoint variation, illumination, scale
+* also intra-class vision (concepts), motion, background clutter, occlusion
+* perception is an inherently ambiguous problem; must often use prior knowledge about the world's structure
 
 \pagebreak
 
 \section{Week 2 -- Jan 22}
 
 \input{student-presentations.tex}
+
+\section{Week 3 -- Jan 27}
+Text-to-image generation; DALL-E 2;
+
+Textual token: turn input text into tokens, encoder needs to be fully well-trained with web-scale data. CLIP objective is the go between to the image encoder.
+
+DALL-E 3;
+
+GPT-4;
+
+Segment Anything Model (SAM), large image model, very high-scale segmentation.
+
+\subsection{Neural networks -- the original linear classifier}
+(Before) Linear score function: $f = Wx$.
+(Now): 2-layer neural network: $f = W_2 \max(0, W_1 x)$.
+where $x \in \R^D$, $W_1 \in \R^{H \times D}$, $W_2 \in \R^{C \times H}$.
+
+ReLU still used commonly as activation function, good default choice for most problems.
+Leaky ReLU has small weight on left side. \\
+
+Forward processing is done at inference time. Backward processing is done at training time. \\
+
+\subsubsection{Computing gradients}
+$ s = f(x; W_1, W_2) = W_2 \max(0, W_1 x) $ nonlinear score function; \\
+
+$ L_i = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + 1) $ hinge loss on predictions; \\
+
+$ R(W) = \sum_{k} W_k ^2 $ regularization; \\
+
+$ L = \frac{1}{N} \sum_i L_i + \lambda R(W) $ total loss: data loss + regularization
+
+\subsubsection{Backpropagation in Neutral Networks}
+$ f(x, y, z) = (x + y)z $ \\
+$ q = x + y $ \\
+$ f = qz $ \\
+Then, by chain rule,
+\[
+    \frac{\partial f}{\partial x} = \frac{\partial f}{\partial q} \frac{\partial q}{\partial x} = z \cdot 1 = z
+\]
+\[
+    \frac{\partial f}{\partial y} = \frac{\partial f}{\partial q} \frac{\partial q}{\partial y} = z \cdot 1 = z
+\]
+\[    \frac{\partial f}{\partial z} = \frac{\partial f}{\partial q} \frac{\partial q}{\partial z} = q \cdot 1 = x + y
+\]
+
+\subsubsection{Regularization intuition: prefer simpler models}
+
+\begin{figure}[hbpt!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/regularization1.png}
+    \caption{Regularization prefers simpler models that generalize better.}
+\end{figure}
+
+When the model starts to overfit, training accuracy rises, but validation accuracy drops.
+
+\begin{figure}[hbpt!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/regularization2.png}
+    \caption{Regularization prefers simpler models that generalize better.}
+\end{figure}
+
+Regularization:
+\[
+    L(W) = \frac{1}{N} \sum_i \underbrace{L_i(f(x_i, W), y_i)}{data loss: model predictions should match training data} + \underset{regularization: prevent the model from doing too well on training data}{\lambda R(W)}
+\]
+
+\subsubsection{Components of CNNs}
+convolutional layers: normalization layers $\hat{x}_{i, j} = \frac{x_{i, j} - \mu_{j}}{\sqrt{\sigma_j^2 + \epsilon}}$;
+
+pooling layers; dropout (sometimes); fully-connected layers; activation functions (ReLU, sigmoid, tanh, softmax).
+
+
 \end{document}
