@@ -10,6 +10,17 @@
 \MakeAssignmentTitle
 
 % ------ PROBLEM 1 ------ %
+
+% \[
+% \begin{cases}
+%   1 - \theta, x = 0 \\
+%   \frac{\theta}{2}, x = \pm 1
+% \end{cases}
+% \] 
+% write as exponential family, show family is full-ranked, shows that sufficient statistic is also complete...
+
+% $\mathbb{P} [\phi(x) = 0] < 1$ expectation is zero, but random variable itself is not always zero
+
 \begin{homeworkProblem}
 
     Let $X \sim p_\theta(x)$, where
@@ -24,12 +35,17 @@
 
     \solution
 
-    \textbf{Part (i):} \\
+    \textbf{Part (i):} This pmf can be rewritten into a different form
+    \begin{align*}
+        p_\theta(x) & = \exp \left( \log \left( \left(\frac{\theta}{2}\right)^{|x|} (1 - \theta)^{1 - |x|} \right) \right)                            \\
+                    & = \exp \left( |x| \log \frac{\theta}{2} + \log (1 - \theta) - |x| \log (1 - \theta) \right)                                     \\
+                    & = \exp \left( \underbrace{|x|}_{T(x)} \underbrace{\log \frac{\theta}{2(1 - \theta)}}_{\eta(\theta)} + \log (1 - \theta) \right)
+    \end{align*}
+    Since the model $p_\theta(x)$ can be expressed in the form $f_\theta(x) = h(x) \exp(\eta^t T - A(\theta))$, it belongs to the exponential family. \\
 
-    \textbf{Part (ii):} \\
+    \textbf{Part (ii):} $T(X) = |X|$ is a complete sufficient statistic, since $\E_\theta[\phi(T)] = 0 ,\ \forall \theta \in (0, 1)$.  \\
 
-    \textbf{Part (iii):} \\
-
+    \textbf{Part (iii):} $X$ is not complete since $\E_\theta[\phi(T)] = 0, \ \forall \theta \in (0, 1)$ does not imply that $ \mathbb{P}_\theta(\phi(T) = 0) = 1, \ \forall \theta \in (0, 1)$.
 
 \end{homeworkProblem}
 
@@ -41,6 +57,14 @@
     Let $X = (X_1, \dots, X_n)$, where $X_i$'s are i.i.d. $\mathcal{N}(\theta, \theta)$, and $\theta > 0$ is an unknown parameter. Determine a complete sufficient statistic for $\theta$ and carefully justify your answer. \\
 
     \solution
+
+    The pdf of $\mathcal{N}(\theta, \theta)$ is given by
+    \begin{align*}
+        f_\theta(x_i) & = \frac{1}{\sqrt{2 \pi \theta}} \exp \left( -\frac{(x_i - \theta)^2}{2 \theta} \right)                                  \\
+                      & = \frac{1}{\sqrt{2 \pi \theta}} \exp \left( -\frac{x_i^2}{2 \theta} + x_i - \frac{\theta}{2} \right)                    \\
+                      & = \frac{1}{\sqrt{\pi}} \exp \left( -\frac{x_i^2}{2\theta} + x_{i} + \frac{\theta}{2} -\frac{1}{2} \log(2\theta) \right)
+    \end{align*}
+    thus $\eta(\theta) = \left( 1, -\frac{1}{2\theta}\right)$ and $T(x_i) = (x_i, x_i^2)$, which is a complete sufficient statistic for $\theta$.
 
 \end{homeworkProblem}
 
@@ -61,6 +85,15 @@
 
     \solution
 
+    \textbf{Part (i):} Here
+    \begin{align*}
+        f_\theta(x_i) & = \frac{1}{\sqrt{2 \pi \theta^2}} \exp \left( -\frac{(x_i - \theta)^2}{2 \theta^2} \right)          \\
+                      & = \frac{1}{\sqrt{2 \pi \theta^2}} \exp \left( -\frac{x_i^2}{2 \theta^2} + x_i - \frac{1}{2} \right)
+    \end{align*}
+    so $\eta(\theta) = \left( 1, -\frac{1}{2\theta^2} \right)$ and $T(x_i) = (x_i, x_i^2)$, the dimensionality difference implies that $T$ is not a complete sufficient statistic. \\
+
+    \textbf{Part (ii):} When $T = \left(\sum_{i=1}^{n} X_i, \sum_{i=1}^{n} X_{i}^2 \right)$, there exists a $\phi(T)$ such that $\E_\theta[\phi(T)] = 0$ but $\mathbb{P}_\theta(\phi(T)=0) = 1, \ \forall \theta \in \Theta$, which means $T$ is not a complete statistic when $n \geq 2$. \\
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -76,20 +109,22 @@
 
     \solution
 
+    Starting from the variance definition, and applying expectation and variance properties:
+    \begin{align*}
+        \Var[Y] & = \E[Y^2] - E[Y]^2                              \\
+                & = \E[\E[Y^2|Z]] - \E[\E[Y|Z]]^2                 \\
+                & = \E[\Var[Y|Z] + \E[Y|Z]^2] - \E[\E[Y|Z]]^2     \\
+                & = \E[\Var[Y|Z]] + \E[\E[Y|Z]^2] - \E[\E[Y|Z]]^2 \\
+                & = \E[\Var[Y|Z]] + \Var[\E[Y|Z]]
+    \end{align*}
+    Which is the law of total variance.
+
 \end{homeworkProblem}
 
 \end{document}
 
 
-% \[
-% \begin{cases}
-%   1 - \theta, x = 0 \\
-%   \frac{\theta}{2}, x = \pm 1
-% \end{cases}
-% \] 
-% write as exponential family, show family is full-ranked, shows that sufficient statistic is also complete...
 
-% $\mathbb{P} [\phi(x) = 0] < 1$ expectation is zero, but random variable itself is not always zero
 
 % % Problem 2
 % Let $X = (X_1, \dots, X_n)$, where $X_i$'s are i.i.d. $\mathcal{N}(\theta, \theta)$, and $\theta > 0$ is an unknown parameter. Determine a complete sufficient statistic for $\theta$ and carefully justify your answer.
