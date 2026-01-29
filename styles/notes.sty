@@ -1,7 +1,7 @@
 \ProvidesPackage{notes}
 
 % ---------- basic packages ----------
-\RequirePackage{amsmath, amssymb}
+\RequirePackage{amsmath, amssymb, amsthm}
 \RequirePackage{graphicx}
 \RequirePackage{geometry}
 \RequirePackage{setspace}
@@ -45,7 +45,7 @@
 % ---------- math shortcuts ----------
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\Var}{Var}
 
 % ---------- hyperlink setup ----------
 \hypersetup{
