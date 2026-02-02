@@ -6,6 +6,10 @@
 
 \newtheorem{thm}{Theorem}
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
 \begin{document}
 
 \chapter{Lecture 1}
@@ -58,10 +62,10 @@ this is the instantaneous reward for $(s,a)$ and the expected value of the next 
 \section{Value Policy Iteration}
 \subsubsection{Fixed point}
 %\def 
-Let $f : \mathcal{U} \to \mathcal{U}$. $u^*$ is a fixed point of $f(\dot)$ if $f(u^*) = u^*$.
+Let $f : \mathcal{U} \to \mathcal{U}$. $u^*$ is a fixed point of $f(\cdot)$ if $f(u^*) = u^*$.
 
 %\def 
-Let $f : \mathcal{U} \to \mathcal{U}$ and let $\norm{\dot}$ be a norm defined on $\mathcal{U}$. We say $f(\dot)$ is a contraction mapping (or simply, 
+Let $f : \mathcal{U} \to \mathcal{U}$ and let $\norm{\cdot}$ be a norm defined on $\mathcal{U}$. We say $f(\cdot)$ is a contraction mapping (or simply, 
 contraction) if $\norm{f(u) - f(v)} \leq \alpha\norm{u-v}$ for an $\alpha \in (0, 1)$ and for all $u, v \in \mathcal{U}$.
 
 %\thm
@@ -87,21 +91,21 @@ Let $V^*$ be the optimal value function. Then, $V^*$ satisfies the equation
 Suppose the current state is $s$ and we take action $a$. From the next state onwards, we follow the optimal policy $\pi^*$. What
 is the 'value' of state $s$ (expected cumulative discounted reward) under this procedure?
 \[
-  V(s) = r(s,a) + \gamma \E_{s' \sim P(\dot | s,a)} [V^*(s')]
+  V(s) = r(s,a) + \gamma \E_{s' \sim P(\cdot | s,a)} [V^*(s')]
 \]
 reward for $(s,a)$ plus $gamma$ times the expected value of the next state under the optimal policy $\pi^*$. The best action we can take 
 in the current state $s$ is the action which maximizes the value $V(s)$. The 'value' of state $s$ if we take this action is 
 \[
-  \max_{a} (r(s,a) + \gamma \E_{s\sim P(\dot | s,a)} [V^*(s')]) 
+  \max_{a} (r(s,a) + \gamma \E_{s\sim P(\cdot | s,a)} [V^*(s')]) 
 \]
 \section{Value Iteration}
 Bellman Operator $T: \R^{|\mathcal{S}|} \to \R^{|\mathcal{S}|}$ is defined as 
 \[
-  (TV)(s) = \max_{a} (r(s, a) + \gamma \E_{s' \sim P(\dot | s, a)}[V(s')])
+  (TV)(s) = \max_{a} (r(s, a) + \gamma \E_{s' \sim P(\cdot | s, a)}[V(s')])
 \]
 Aim to design feedback, with $V_{k+1} = TV_k$, for which we want to prove converge. 
 
-Proposition: Bellman operator $T$ is a contraction with respect to $\norm{\dot}_\infty$, i.e., for any $V_1, V_2 \in \mathcal{R}^{|S|}$, 
+Proposition: Bellman operator $T$ is a contraction with respect to $\norm{\cdot}_\infty$, i.e., for any $V_1, V_2 \in \mathcal{R}^{|S|}$, 
 $\norm{TV_1 - TV_2}_{\infty} \leq \gamma \norm{V_1 - V_2}_{\infty}$. 
 
 %\lemma
@@ -111,16 +115,15 @@ A useful result for the proof. Let $g,h$ be any two real-valued function. Then,
 \]
 Proof (of contraction property)
 \begin{align*}
-  |(TV_1)(s) - (TV_2)(s)| &= |\max_{a \in \mathcal{A}}(r(s,a) + \gamma \E_{s' \sim P(\dot | s, a)}[V_1(s')]) - \max_{a \in \mathcal{A}}(r(s,a) + \gamma \E_{s' \sim P(\dot | s, a)}[V_2(s')])|
-  &\leq \max_{a \in \mathcal{A}} |\gamma \E_{s' \sim P(\dot | s, a)}[V(s')]) - ||\gamma \E_{s' \sim P(\dot | s, a)}[V(s')])\gamma \E_{s' \sim P(\dot | s, a)}[V_2(s')])| 
-  &= \\ 
-  &\leq \max_{a \in \mathcal{A}} \gamma \E_{s' \sim P(\dot | s,a)} [|V_1(s') - V_2(s')|] \\
-  &\leq \max_{a \in \mathcal{A}} \gamma \E_{s' \sim P(\dot| s,a)} [\norm{V_1 - V_2}_{\infty}] = \gamma \norm{V_1 - V_2}_{\infty}
+  |(TV_1)(s) - (TV_2)(s)| &= |\max_{a \in \mathcal{A}}(r(s,a) + \gamma \E_{s' \sim P(\cdot | s, a)}[V_1(s')]) - \max_{a \in \mathcal{A}}(r(s,a) + \gamma \E_{s' \sim P(\cdot | s, a)}[V_2(s')])| \\
+  &\leq \max_{a \in \mathcal{A}} |\gamma \E_{s' \sim P(\cdot | s, a)}[V(s')]) - ||\gamma \E_{s' \sim P(\cdot | s, a)}[V(s')])\gamma \E_{s' \sim P(\cdot | s, a)}[V_2(s')])|  \\ 
+   &\leq \max_{a \in \mathcal{A}} \gamma \E_{s' \sim P(\cdot | s,a)} [|V_1(s') - V_2(s')|] \\
+  &\leq \max_{a \in \mathcal{A}} \gamma \E_{s' \sim P(\cdot| s,a)} [\norm{V_1 - V_2}_{\infty}] = \gamma \norm{V_1 - V_2}_{\infty}
 \end{align*}
 this implies 
 \[
   \norm{TV_1 - TV_2}_{\infty} \leq \gamma ...
+\] 
+
 
 \end{document}
-
-
