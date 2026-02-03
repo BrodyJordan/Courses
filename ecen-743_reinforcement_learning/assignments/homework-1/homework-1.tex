@@ -5,8 +5,7 @@
     AssignmentName={Homework 1},
     DueDate={February 8, 2026 at 6:00 PM}
 ]{assignment}
-% \usepackage[
-% ]{../../../styles/math}
+
 
 \begin{document}
 \MakeAssignmentTitle
@@ -29,7 +28,7 @@
 
     Consider an MDP with discount factor $\gamma \in (0, 1)$. Show that
     \[
-        \sup_{\pi} \norm{V_\pi}_\infty \leq \frac{\max_{s, a} |r(s,a)|}{(1-\gamma)}
+        \sup_{\pi} \norm{V_\pi}_\infty \leq \frac{\max_{s, a} |r(s,a)|}{(1-\gamma)}.
     \]
 
     \solution
@@ -53,7 +52,7 @@
 % ------ PROBLEM 4 ------ %
 \begin{homeworkProblem}
 
-    Consider the function $f : \R^n \to \R^n$, $f(u) = Au$, where $A \in \R^{n \times n}$. Assume that
+    Consider the function $f : \R^n \to \R^n$, $f(u) = Au$, where $A \in \R^{n} \times \R^{n}$. Assume that
     the row sums of $A$ is strictly less than 1, i.e., $\sum_j |a_{ij}| \leq \alpha < 1$. Show that $f(\cdot)$ is a
     contraction mapping with respect to $\norm{\cdot}_\infty$. \\
 
