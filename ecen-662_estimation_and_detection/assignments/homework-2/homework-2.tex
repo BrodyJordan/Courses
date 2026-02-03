@@ -4,46 +4,89 @@
 \usepackage[
     AssignmentName={Homework 2},
     DueDate={February 6, 2026 at 11:59 PM}
-]{../../../styles/assignment}
+]{assignment}
 
 \begin{document}
 \MakeAssignmentTitle
 
+% -- PROBLEM 1 -- %
 \begin{homeworkProblem}
 
-  Let 
-  \[
-    f_\theta(x) = h(x) \exp (\eta^t T - A(\eta))
-  \]
-  be an $s$-parameter exponential family of distributions. Show that if there exists 
-  \[ 
-    \{\theta_0, \theta_1, \dots, \theta_s \} \subset \Theta 
-  \]
-  such that the vectors 
-  \[
-    (\eta(\theta_i) - \eta(\theta_0) : i \in [s])
-  \]
-  are linearly independent in $\mathcal{R}^s$, then $T$ is a minimal sufficient statistic. 
+  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
+    \item Let
+          \[
+            f_\theta(x) = h(x) \exp (\eta^t T - A(\eta))
+          \]
+          be an $s$-parameter exponential family of distributions. Show that if there exists
+          \[
+            \{\theta_0, \theta_1, \dots, \theta_s \} \subseteq \Theta
+          \]
+          such that the vectors
+          \[
+            (\eta(\theta_i) - \eta(\theta_0) : i \in [s])
+          \]
+          are linearly independent in $\mathcal{R}^s$, then $T$ is a minimal sufficient statistic.
+    \item Let $X = (X_1, \dots, X_n)$, where $X_i$'s are i.i.d. $\mathcal{N}(\theta, \theta^2)$, and $\theta>0$ is the unknown parameter. Use the result of part i) to show that
+          \[
+            T = \left( \sum_{i=1}^n X_i, \sum_{i=1}^n X_i^2 \right)
+          \]
+          is a minimal sufficient statistic. \\
+  \end{enumerate}
+
+  \solution
 
 
 \end{homeworkProblem}
 
 \pagebreak
 
+% -- PROBLEM 2 -- %
 \begin{homeworkProblem}
 
-  Suppose that $T_1$ is sufficient and $T_2$ is minimally sufficient. Let $U$ be an unbiased 
-  estimator of $\theta$ and defined 
+  Suppose that $T_1$ is sufficient and $T_2$ is minimally sufficient. Let $U$ be an unbiased
+  estimator of $\theta$ and define
   \[
     U_1 = \E_\theta[U|T_1] \quad \text{and} \quad U_2 = \E_\theta[U|T_2]
   \]
-  Show that $U_2 = \E_\theta[U_1|T_2]$ and hence $\Var_\theta[U_2] \leq \Var_\theta[U_1]$.
+  Show that $U_2 = \E_\theta[U_1|T_2]$ and hence $\Var_\theta[U_2] \leq \Var_\theta[U_1]$. \\
+
+  \solution
+
+
 \end{homeworkProblem}
 
+\pagebreak
+
+% -- PROBLEM 3 -- %
 \begin{homeworkProblem}
+
+  Let $X = (X_1, \dots, X_n)$, where $X_i$'s are i.i.d. $\mathcal{U}([0, \theta])$, and $\theta > 0$ is
+  the unknown parameter. Suppose $g$ is a differentiable function on $\mathcal{R}_{++}$. Find an UMVUE of $g(\theta)$
+  in terms of the function $g$. \\
+
+  \solution
 \end{homeworkProblem}
 
+\pagebreak
+
+% -- PROBLEM 4 -- %
 \begin{homeworkProblem}
+
+  Let $X = [X_1, \dots, X_n]^t$, where
+  \[
+    X_i \iid Poisson(\lambda),
+  \]
+  and $\lambda > 0$ is the unknown parameter. Suppose we wish to estimate
+  \[
+    \theta = \exp(-\lambda) = \mathbb{P}_\lambda(X_i = 0).
+  \]
+  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
+    \item Show that $T = \sum_{i=1}^n X_i$ is a complete sufficient statistic for this likelihood family.
+    \item Show that $S_1 = 1_{\{ X_1 = 0 \} }$ and $S_2 = \frac{1}{n} \sum_{i=1}^n 1_{\{ X_i = 0 \} }$ are both unbiased estimate of $\theta$.
+    \item Compute the Rao-Blackwellized estimators $\tilde{S}_i = \E_\theta[S_i | T]$, $i = 1, 2$. What does your answer have to do with the completeness of $T$? \newline
+  \end{enumerate}
+
+  \solution
 \end{homeworkProblem}
 
 \end{document}
