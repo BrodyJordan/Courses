@@ -4,9 +4,9 @@
 \usepackage[
     AssignmentName={Homework 1},
     DueDate={February 8, 2026 at 6:00 PM}
-]{../../../styles/assignment}
-\usepackage[
-]{../../../styles/math}
+]{assignment}
+% \usepackage[
+% ]{../../../styles/math}
 
 \begin{document}
 \MakeAssignmentTitle
@@ -27,6 +27,11 @@
 % ------ PROBLEM 2 ------ %
 \begin{homeworkProblem}
 
+    Consider an MDP with discount factor $\gamma \in (0, 1)$. Show that
+    \[
+        \sup_{\pi} \norm{V_\pi}_\infty \leq \frac{\max_{s, a} |r(s,a)|}{(1-\gamma)}
+    \]
+
     \solution
 
 \end{homeworkProblem}
@@ -35,6 +40,9 @@
 
 % ------ PROBLEM 3 ------ %
 \begin{homeworkProblem}
+
+    Show that the Bellman operator $T$ is a monotone operator, i.e, for any $V_1, V_2 \in \R^{|\mathcal{S}|}$
+    with $V_1 \geq V_2$ (elementwise), $TV_1 \geq TV_2$. \\
 
     \solution
 
@@ -45,6 +53,10 @@
 % ------ PROBLEM 4 ------ %
 \begin{homeworkProblem}
 
+    Consider the function $f : \R^n \to \R^n$, $f(u) = Au$, where $A \in \R^{n \times n}$. Assume that
+    the row sums of $A$ is strictly less than 1, i.e., $\sum_j |a_{ij}| \leq \alpha < 1$. Show that $f(\cdot)$ is a
+    contraction mapping with respect to $\norm{\cdot}_\infty$. \\
+
     \solution
 
 \end{homeworkProblem}
@@ -54,6 +66,10 @@
 % ------ PROBLEM 5 ------ %
 \begin{homeworkProblem}
 
+    Let $\mathcal{U}$ be a given set, and $g_1 : \mathcal{U} \to \R$ and $g_2 : \mathcal{U} \to \R$ be two real-valued functions on $\mathcal{U}$. Also assume that both functions are bounded. Show that
+    \[
+        \vert \max_{u} g_1(u) - \max_{u} g_2(u) \vert \leq \max_{u} \vert g_1(u) - g_2(u) \vert
+    \]
     \solution
 
 \end{homeworkProblem}
@@ -63,6 +79,21 @@
 % ------ PROBLEM 6 ------ %
 \begin{homeworkProblem}
 
+    Consider the value iteration algorithm $V_{k+1} = TV_k$, with an arbitrary $V_0$, where $T$ is the Bellman operator.
+    \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+        \item Show that, for $n>m$
+              \[
+                  \norm{V_m - V_n}_\infty \leq \frac{\gamma^m}{(1-\gamma)} \norm{V_0 - V_1}_\infty
+              \]
+        \item Let $V^*$ be the optimal value function. Show that
+              \[
+                  \norm{V_m - V^*}_\infty \leq \frac{\gamma^m}{(1-\gamma)} \norm{V_0 - V_1}_\infty
+              \]
+        \item Show that
+              \[
+                  \norm{V_m - V^*}_\infty \leq \frac{\gamma}{(1-\gamma)} \norm{V_{m-1} - V_m}_\infty
+              \]
+    \end{enumerate}
     \solution
 
 \end{homeworkProblem}
@@ -72,6 +103,10 @@
 % ------ PROBLEM 7 ------ %
 \begin{homeworkProblem}
 
+    Let $\overline{Q}$ be such that $\norm{\overline{Q} - Q^*}_\infty \leq \epsilon$, where $Q^*$ is the optimal $Q$-value function. Let $\overline{\pi}$ be the greedy policy with respect to $\overline{Q}$, i.e., $\overline{\pi}(s) = \arg\max_{a} \overline{Q}(s,a)$. Show that
+    \[
+        \norm{V^* - V_{\overline{\pi}}}_\infty \leq \frac{2\epsilon}{(1-\gamma)}
+    \]
     \solution
 
 \end{homeworkProblem}
