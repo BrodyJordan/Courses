@@ -5,6 +5,9 @@
 
 \newcommand{\R}{\mathbb{R}}
 \usepackage{graphicx}
+\usepackage{math}
+\usepackage{notes}
+\usepackage{mathbbm}
 
 \begin{document}
 
@@ -170,6 +173,76 @@ Regularization:
 convolutional layers: normalization layers $\hat{x}_{i, j} = \frac{x_{i, j} - \mu_{j}}{\sqrt{\sigma_j^2 + \epsilon}}$;
 
 pooling layers; dropout (sometimes); fully-connected layers; activation functions (ReLU, sigmoid, tanh, softmax).
+
+\chapter{Full 3D Perception and Reconstruction Pipeline}
+Input images -> feature extraction -> feature matching -> estimate camera poses -> ... 
+
+\section{Capturing Reality -- in 3D Point Cloud}
+
+3D panning from just plain input images. Sparsely sampled input data can produce smooth views of the same scene. Use images to build neural 3D image representation. \\ 
+
+\noindent NeRF can render highly realistic images: input images $\to$ optimization $\to$ rendering.
+
+\section{Three key components}
+Neural volumetric 3D scene representation, differentiable volumetric rendering function, optimization via analysis-by-synthesis. \\ 
+
+\noindent MLP at initial layer to store information about the environment 
+\[
+  (x,y,z,\theta,\phi) \to F_{\Omega} \to (r,g,b,\sigma)
+\]
+$x,y,z$ are the spatial direction and $\theta$, $\phi$ the viewing direction. $F_\Omega$ has 9 layers, 256 channels. \\ 
+
+\noindent It's not a mesh, not a point cloud either it's continuous voxels made of shiny transparent cubes. \\ 
+
+\noindent Can use an MLP to represent your image. By using a small MLP, you can effectively compress your initial image. MLP results in a loss of sharpness as small MLPs cannot remember every detail, resulting in blur.
+
+\subsection{Cameras and rays}
+We need the mathematical mapping from (camera, pixel) $\to$ ray. Then we can abstract underlying problem as learing the function ray $\to$ color (the "plenoptic function").
+\subsubsection{Coordinate frames + transforms: world-to-camera}
+Extrinsics $(R,T)$ (rotation, translation) brings world coordinates to camera coordinates. Intrinsics $(K)$ bring camera coordinates to image coordinates. The reverse process is also possible for both of these steps. 
+\subsubsection{Neural volumetric rendering}
+Continuous, differentiable meaning.
+\subsubsection{Surface vs. volume rendering}
+We want to know how rays interact with scene. Surface rendering -- loop over geometry, check for ray intersection. Volume rendering -- loop over ray points, query geometry. \\ 
+
+\noindent Volume rendering: rendering model for ray $r(t) = o + td$:
+\[
+  C \approx \sum_{i=1}^N T_i \alpha_i c_i
+\]
+How much light is blocked along ray: 
+\[
+  T_i = \prod_{j=1}^{i-1}(1-\alpha_j)
+\]
+How much light is contributed by ray segment 
+\[
+  \alpha_i = 1 - e^{-\sigma_i \delta t_i}
+\]
+\section{Rendering: projecting 3D to 2D}
+Neural radiance field is a subset of neural rendering. Typically have 3 stages. Let the pixles find what features they need.
+\subsection{Neural radiance field (NeRF)}
+\[
+  \arg\min_{V} \sum_{i} \norm{\mathcal{R}(V; R^{(i)}, t^{(i)}, P^{(i)}) - y}_2^2 
+\]
+NeRF is too slow for real-time rendering. Instead, for every pixel, query all 3D points from MLP. Rendering 1 pixel, you'll have 10 or 100 queries. It is nearly impossible to have real-time even with powerful GPUs. Original NeRF rendering speed is 0.06 FPS, has been improved up to 15.0 FPS (DONeRF).
+
+\chapter{3D Gaussian splatting}
+Able to dratically improve render time. Up to 135.0 FPS from NeRF's 0.071 FPS.
+\section{Challenges with 3D-GS}
+Significant amount of disk spaces are required in the explicit representation. Excessive Gaussian number, often millions on each scene. Next idea: for every 3D point, we are not using just RGB, we are using spherical harmonics. These coefficients requires high dimensions. Last, using \texttt{float32} is very heavy. 
+\subsection{Excessive Gaussian number}
+Many 3D points have small opacity. If its opacity is very small, its contribution is small, so it can be ignored. So preserve those points with high opacity, and remove those with low opacity to improve performance.  
+\[
+  GS_j = \sum_{i=1}^{MHW} \mathbbm{1}(G(\mathbf{X}_j), r_i) \cdot \sigma_j \cdot \gamma_j (\Sigma),
+\]
+\[
+  \gamma(\Sigma) = (V_{\text{norm}})^\beta 
+\]
+\[
+  V_{\text{norm}} = \min \bp{\max{\bp{\frac{V(\Sigma)}{V_\text{max90}},1},1}}
+\] 
+
+
+
 
 
 \end{document}
