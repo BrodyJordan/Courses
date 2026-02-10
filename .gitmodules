@@ -1,0 +1,3 @@
+[submodule "ecen-689_multimodal_vision/assignments/homework-1/gaussian-splatting"]
+	path = ecen-689_multimodal_vision/assignments/homework-1/gaussian-splatting
+	url = https://github.com/graphdeco-inria/gaussian-splatting
