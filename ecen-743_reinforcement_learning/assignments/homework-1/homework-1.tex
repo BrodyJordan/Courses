@@ -18,6 +18,19 @@
 
     \solution
 
+    Starting with
+    \[
+        \norm{x+y} \leq \norm{x} + \norm{y}
+    \]
+    and setting $x = (x - y) + y$, we get
+    \[
+        \norm{(x - y) + y} \leq \norm{x - y} + \norm{y}
+    \]
+    and rearranging gives
+    \[
+        \norm{x - y} \geq \norm{(x - y) + y} - \norm{y} = \norm{x} - \norm{y}
+    \]
+
 
 \end{homeworkProblem}
 
@@ -33,6 +46,19 @@
 
     \solution
 
+    Value function $V_\pi$ is defined as
+    \[
+        V_\pi(s) = \E\left[ \sum_{t=0}^\infty \gamma^t r(s_t, a_t) \mid s_0 = s, \pi \right]
+    \]
+    and thus
+    \[
+        | V_\pi(s) | \leq \E\left[ \sum_{t=0}^\infty \gamma^t |r(s_t, a_t)| \mid s_0 = s, \pi \right] \leq \E\left[ \sum_{t=0}^\infty \gamma^t \max_{s,a} |r(s,a)| \mid s_0 = s, \pi \right] = \frac{\max_{s,a} |r(s,a)|}{(1-\gamma)}
+    \]
+    which implies that
+    \[
+        \sup_{\pi} \norm{V_\pi}_\infty = \sup_{\pi} \max_{s} |V_\pi(s)| \leq \frac{\max_{s,a} |r(s,a)|}{(1-\gamma)}.
+    \]
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -44,6 +70,16 @@
     with $V_1 \geq V_2$ (elementwise), $TV_1 \geq TV_2$. \\
 
     \solution
+
+    The Bellman operator is defined as
+    \[
+        (TV)(s) = \max_{a} (r(s,a) + \gamma \E_{s' \sim P(\cdot | s,a)} [V(s')])
+    \]
+    and since $V_1 \geq V_2$
+    \[
+        \max_{a} (r(s,a) + \gamma \E_{s' \sim P(\cdot | s,a)} [V_1(s')]) \geq \max_{a} (r(s,a) + \gamma \E_{s' \sim P(\cdot | s,a)} [V_2(s')])
+    \]
+    which is simply $TV_1 \geq TV_2$.
 
 \end{homeworkProblem}
 
@@ -58,6 +94,20 @@
 
     \solution
 
+    With respect to $\norm{\cdot}_\infty$, we have
+    \[
+        \norm{f(u) - f(v)}_\infty = \norm{A(u-v)}_\infty
+    \]
+    which must be less than or equal to $\alpha \norm{u-v}_\infty$ to be a contraction mapping. Rewriting this gives
+    \[
+        \max_i \left| (A(u-v))_{i} \right| = \max_{i} \left| \sum_{j=1}^n a_{ij} (u - v)_j \right| \leq \max_{i} \sum_{j=1}^n |a_{ij}| \cdot |(u-v)_j|
+    \]
+    which we can use to write
+    \[
+        \norm{f(u) - f(v)}_\infty \leq \alpha \norm{u-v}_\infty
+    \]
+    and thus, $f(\cdot)$ is a contraction mapping with respect to $\norm{\cdot}_\infty$.
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -70,6 +120,19 @@
         \vert \max_{u} g_1(u) - \max_{u} g_2(u) \vert \leq \max_{u} \vert g_1(u) - g_2(u) \vert
     \]
     \solution
+
+    Starting with
+    \[
+        g_1(u) = g_2(u) + (g_1(u) - g_2(u))
+    \]
+    and taking the maximum and abs on the RHS
+    \[
+        g_1(u) \leq g_2(u) + \max_{u} |g_1(u) - g_2(u)|
+    \]
+    then rearranging and taking the maximum on the LHS gives
+    \[
+        |\max_{u} g_1(u) - \max_{u} g_2(u)| \leq \max_{u} |g_1(u) - g_2(u)|
+    \]
 
 \end{homeworkProblem}
 
@@ -95,6 +158,29 @@
     \end{enumerate}
     \solution
 
+    \textbf{Part (a):} When $n > m$
+    \[
+        \norm{V_m - V_n}_\infty = \norm{ \sum_{k=m}^{n-1} (V_k - V_{k+1}) }_\infty \leq \sum_{k=m}^{n-1} \norm{V_k - V_{k+1}}_\infty
+    \]
+    which through factorization and evaluation of the sum we can write
+    \[
+        \norm{V_m - V_n}_\infty \leq \frac{\gamma^m}{(1-\gamma)} \norm{V_0 - V_1}_\infty
+    \]
+
+    \textbf{Part (b):} Using the properties of the Bellman operator, we have
+    \[
+        \lim_{n\to\infty} \norm{V_m - V_n}_\infty = \norm{V_m - V^*}_\infty \leq \frac{\gamma^m}{(1-\gamma)} \norm{V_0 - V_1}_\infty
+    \]
+
+    \textbf{Part (c):} Since $V_{k+1} = TV_k$,
+    \[
+        \norm{V_{m+1} - V^*}_\infty = \norm{TV_{m} - TV^*}_\infty \leq \gamma \norm{V_{m} - V^*}_\infty
+    \]
+    and thus
+    \[
+        \norm{V_{m} - V^*}_\infty \leq \frac{\gamma}{(1-\gamma)} \norm{V_{m-1} - V_m}_\infty
+    \]
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -108,6 +194,22 @@
     \]
     \solution
 
+    In this case we have
+    \[
+        V^*(s) - V_{\overline{\pi}}(s) = Q^*(s, \pi^*(s)) - Q^*(s, \overline{\pi}(s))
+    \]
+    and since $\overline{\pi}(s) = \arg\max_{a} \overline{Q}(s,a)$, we have
+    \[
+        Q^*(s, \pi^*(s)) - Q^*(s, \overline{\pi}(s)) \leq Q^*(s, \overline{\pi}(s)) - \overline{Q}(s, \overline{\pi}(s)) + \overline{Q}(s, \pi^*(s)) - Q^*(s, \pi^*(s))
+    \]
+    and thus
+    \[
+        V^*(s) - V_{\overline{\pi}}(s) \leq Q^*(s, \overline{\pi}(s)) - \overline{Q}(s, \overline{\pi}(s)) + \overline{Q}(s, \pi^*(s)) - Q^*(s, \pi^*(s)) \leq 2\epsilon
+    \]
+    which implies that
+    \[
+        \norm{V^* - V_{\overline{\pi}}}_\infty \leq \frac{2\epsilon}{(1-\gamma)}.
+    \]
 \end{homeworkProblem}
 
 \end{document}
