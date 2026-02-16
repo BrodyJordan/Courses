@@ -6,51 +6,72 @@
     DueDate={February 15, 2026 at 11:59 PM}
 ]{assignment}
 
+\usepackage{cancel}
+
 \begin{document}
 \MakeAssignmentTitle
 
 % -- PROBLEM 1 -- %
 \begin{homeworkProblem}
-  Let $X = (N, Y)$, where $N$ is a random variable taking values from $\mathbb{Z}_{++}$ with a fixed pmf $p(n)$. Having observed 
-  $N=n$, mother nature performs $n$ Bernoulli trials with success probability $\theta$, observing a total of $Y$ successes. 
-  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]   
+  Let $X = (N, Y)$, where $N$ is a random variable taking values from $\mathbb{Z}_{++}$ with a fixed pmf $p(n)$. Having observed
+  $N=n$, mother nature performs $n$ Bernoulli trials with success probability $\theta$, observing a total of $Y$ successes.
+  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
     \item Show that $X$ itself is a minimal sufficient statistic for $\theta$.
-    \item Show that $\hat{\theta}(X) = \frac{Y}{N}$ is an unbiased estimator of $\theta$ and 
-      \[
-        \Var_\theta[\hat{\theta}(X)] = \theta(1-\theta)\E \left[\frac{1}{n}\right]
-      \]
-      Hint: It may be useful to consider the law of total variance.
+    \item Show that $\hat{\theta}(X) = \frac{Y}{N}$ is an unbiased estimator of $\theta$ and
+          \[
+            \Var_\theta[\hat{\theta}(X)] = \theta(1-\theta)\E \left[\frac{1}{N}\right].
+          \]
+          Hint: It may be useful to consider the law of total variance. \\
   \end{enumerate}
+
+  \solution
+
+  \textbf{Part (i):} Since the ratio of $p(x)$ and $p(y)$ is independent of $\theta$ when $x=y$, $X$ is a minimal sufficient statistic for $\theta$. \\
+
+  \textbf{Part (ii):} First
+  \[
+    \E_\theta[\hat{\theta}(X)] = \E_\theta\left[\E_\theta\left[\frac{Y}{N}\Big|N\right]\right] = \E_\theta\left[\frac{N\theta}{N}\right] = \theta
+  \]
+  and
+  \[
+    \Var_\theta[\hat{\theta}(X)] = \E_\theta[\Var(\frac{Y}{N}|N)] + \Var_\theta[\E(\frac{Y}{N}|N)] = \E_\theta\left[\frac{N\theta(1-\theta)}{N^2}\right] + \Var_\theta[\theta] = \theta(1-\theta)\E \left[\frac{1}{N}\right].
+  \]
 \end{homeworkProblem}
 
 \pagebreak
 % -- PROBLEM 2 -- %
 \begin{homeworkProblem}
-Let $X \sim f_\theta(x)$, where $\theta \in \Theta$ is the unknown parameter. For any $\theta, \theta' \in \Theta$, let 
-\[
-  \psi_{\theta', \theta} (x) := \frac{f_{\theta'}(x)}{f_\theta(x)} - 1.
-\]
-\begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
-  \item Show that for any scalar statistic $T(x)$,
-    \[
-      \E_\theta[\psi_{\theta', \theta}(X)T(X)] = \E_{\theta'}[T(X)] - \E_\theta[T(X)], \quad \forall\theta,\theta' \in \Theta 
-    \]
-    In particular, we have 
-    \[
-      \E_\theta[\psi_{\theta',\theta}] = 0, \quad \forall\theta,\theta'\in\Theta 
-    \]
-  \item Use the Cauchy-Schwarz inequality to show that 
-    \[
-      \Var_\theta[\hat{g}(X)] \geq \sup_{\theta' \in \Theta} \frac{(\phi(\theta') - \phi(\theta))^2}{\E_\theta[\psi_{\theta',\theta}^2(X)]}, \quad \forall\theta\in\Theta 
-    \]
-    for any estimator $\hat{g}(X)$ of $g(\theta)$, where 
-    \[
-      \phi(\theta) := \E_\theta[\hat{g}(X)].
-    \] 
-\end{enumerate}
+  Let $X \sim f_\theta(x)$, where $\theta \in \Theta$ is the unknown parameter. For any $\theta, \theta' \in \Theta$, let
+  \[
+    \psi_{\theta', \theta} (x) := \frac{f_{\theta'}(x)}{f_\theta(x)} - 1.
+  \]
+  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
+    \item Show that for any scalar statistic $T(x)$,
+          \[
+            \E_\theta[\psi_{\theta', \theta}(X)T(X)] = \E_{\theta'}[T(X)] - \E_\theta[T(X)], \quad \forall\theta,\theta' \in \Theta
+          \]
+          In particular, we have
+          \[
+            \E_\theta[\psi_{\theta',\theta}] = 0, \quad \forall\theta,\theta'\in\Theta
+          \]
+    \item Use the Cauchy-Schwarz inequality to show that
+          \[
+            \Var_\theta[\hat{g}(X)] \geq \sup_{\theta' \in \Theta} \frac{(\phi(\theta') - \phi(\theta))^2}{\E_\theta[\psi_{\theta',\theta}^2(X)]}, \quad \forall\theta\in\Theta
+          \]
+          for any estimator $\hat{g}(X)$ of $g(\theta)$, where
+          \[
+            \phi(\theta) := \E_\theta[\hat{g}(X)].
+          \]
+  \end{enumerate}
 
-\solution
+  \solution
 
+  \textbf{Part (i):} Integrating
+  \begin{align*}
+    \E_\theta[\psi_{\theta^{\prime}, \theta}(X) T(X)] & = \int \left(\frac{f_{\theta'}(x)}{f_\theta(x)} - 1\right) T(x) f_\theta(x) \, dx \\
+                                                      & = \int T(x) f_{\theta'}(x) \, dx  - \int T(x) f_\theta(x) \, dx                   \\
+                                                      & = \E_{\theta'}[T(X)] - \E_\theta[T(X)]
+  \end{align*}
 
 \end{homeworkProblem}
 
@@ -58,43 +79,82 @@ Let $X \sim f_\theta(x)$, where $\theta \in \Theta$ is the unknown parameter. Fo
 
 % -- PROBLEM 3 -- %
 \begin{homeworkProblem}
-Let $X \sim p_\theta(x)$ and $T=T(X)$ be a statistic for $\theta$. Let $s_\theta(x)$ and $I_X(\theta)$ be the score funciton and Fisher 
-information of $\theta$ with respect to the observation $X$, and let $\tilde{s}_\theta(t)$ and $I_T(\theta)$ be the score function and Fisher information 
-of $\theta$ with respect to the statistic $T$. 
-\begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
-  \item Show that 
-    \[
-      \tilde{s}_\theta = \E_\theta[s_\theta(X)|T], \quad \forall\theta.
-    \]
-  \item Show that 
-    \[
-      I_T(\theta) \succeq I_X(\theta), \quad \forall\theta,
-    \]
-    where the equalities hold when $T$ is sufficient statistic of $\theta$. Here, $A \succeq B$ means that $B-A$ is positive definite. \newline 
-\end{enumerate}
+  Let $X \sim p_\theta(x)$ and $T=T(X)$ be a statistic for $\theta$. Let $s_\theta(x)$ and $I_X(\theta)$ be the score funciton and Fisher
+  information of $\theta$ with respect to the observation $X$, and let $\tilde{s}_\theta(t)$ and $I_T(\theta)$ be the score function and Fisher information
+  of $\theta$ with respect to the statistic $T$.
+  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
+    \item Show that
+          \[
+            \tilde{s}_\theta = \E_\theta[s_\theta(X)|T], \quad \forall\theta.
+          \]
+    \item Show that
+          \[
+            I_T(\theta) \preceq I_X(\theta), \quad \forall\theta,
+          \]
+          where the equalities hold when $T$ is sufficient statistic of $\theta$. Here, $A \preceq B$ means that $B-A$ is positive definite. \newline
+  \end{enumerate}
 
-\solution 
+  \solution
 
+  \textbf{Part (i):} The Fisher score
+  \[
+    \tilde{s}_\theta = \int \frac{\partial}{\partial \theta} \log p_\theta(t) p_\theta(t) \, dt = \int \frac{\partial}{\partial \theta} p_\theta(t) \, dt = \E_\theta[s_\theta(X)|T], \quad \forall\theta.
+  \] \\
 
+  \textbf{Part (ii):} By total variance,
+  \[
+    I_X(\theta) = \E_\theta[\Var(s_\theta(X)|T)] + \Var_\theta[\E(s_\theta(X)|T)] = \E_\theta[\Var(s_\theta(X)|T)] + I_T(\theta) \succeq I_T(\theta), \quad \forall\theta,
+  \]
+  therefore
+  \[
+    I_T(\theta) \preceq I_X(\theta), \quad \forall\theta
+  \]
 \end{homeworkProblem}
 
 \pagebreak
 
 % -- PROBLEM 4 -- %
 \begin{homeworkProblem}
-  Let $X\sim f_\theta(x) = \frac{1}{\theta}g\bp{\frac{x}{\theta}}$, where $\theta > 0$ is the unknown parameter 
-  and $g$ is a fixed density function. 
+  Let $X\sim f_\theta(x) = \frac{1}{\theta}g\bp{\frac{x}{\theta}}$, where $\theta > 0$ is the unknown parameter
+  and $g$ is a fixed density function.
   \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
-    \item Show that 
-      \[
-      I(\theta) = \frac{1}{\theta^2} \E_g \left[ \bp{\frac{Yg'(Y)}{g(Y)} + 1}^2 \right]
-      \]
-      where the expectation is over $Y\sim g(y)$.
+    \item Show that
+          \[
+            I(\theta) = \frac{1}{\theta^2} \E_g \left[ \bp{\frac{Yg'(Y)}{g(Y)} + 1}^2 \right]
+          \]
+          where the expectation is over $Y\sim g(y)$.
     \item Let $\eta=\log\theta$. Compute $I(\eta)$.
-    \item Compute $I(\theta)$ when $g$ is $Cauchy(0,1)$. \newline 
-    \end{enumerate} 
-    
-    \solution 
+    \item Compute $I(\theta)$ when $g$ is $Cauchy(0,1)$. \newline
+  \end{enumerate}
+
+  \solution
+
+  \textbf{Part (i):} Here
+  \[
+    \log f_\theta(x) = \cancelto{0}{\log 1} - \log \theta + \log g\bp{\frac{x}{\theta}}
+  \]
+  Then differentiating
+  \[
+    \frac{\partial}{\partial \theta} \log f_\theta(x) = -\frac{1}{\theta} + \frac{g'(\frac{x}{\theta})}{g(\frac{x}{\theta})} \cdot \bp{-\frac{x}{\theta^2}} = \frac{1}{\theta}\bp{\frac{Yg'(Y)}{g(Y)} + 1}
+  \]
+  By the Fisher information theorem,
+  \[
+    I(\theta) = \frac{1}{\theta^2} \E_g \left[ \bp{\frac{Yg'(Y)}{g(Y)} + 1}^2 \right]
+  \]
+
+  \textbf{Part (ii):} Here
+  \[
+    I(\eta) = -\E_\eta\left[\nabla_\eta^2 \log \tilde{f}_\eta(x) \right] = \frac{\theta^2}{\theta^2} \E_g \left[ \bp{\frac{Yg'(Y)}{g(Y)} + 1}^2 \right] = \E_g \left[ \bp{\frac{Yg'(Y)}{g(Y)} + 1}^2 \right]
+  \]
+
+  \textbf{Part (iii):} Here
+  \[
+    g(y) = \frac{1}{\pi(1+y^2)}, \quad g'(y) = -\frac{2y}{\pi(1+y^2)^2}
+  \]
+  which gives
+  \[
+    I(\theta) = \frac{1}{\theta^2} \E_g \left[ \bp{-\frac{y^2-1}{y^2+1}}^2 \right] = \frac{1}{\theta^2} \E_g \left[ \bp{\frac{y^2-1}{y^2+1}}^2 \right] = \frac{1}{\theta^2}
+  \]
 
 
 \end{homeworkProblem}
