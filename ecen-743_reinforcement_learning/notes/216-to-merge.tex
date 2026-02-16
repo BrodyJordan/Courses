@@ -1,0 +1,450 @@
+\documentclass[11pt]{book}
+
+\usepackage{notes}
+\usepackage{math}
+
+\begin{document}
+
+% \var 
+% \norm{}
+% Nc \mathcal{N}
+% \bp{}
+
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+\chapter{February 10, 2026 Lecture}
+\section{Maximum-Likelihood Estimation}
+Finding an UMVUE can be mathematically challenging, and in some cases, it might not even exist. More importantly, while an UMVUE minimizes variance 
+among unbiased estimators, strictly adhering to the unbiased constraint can somestimes lead to a significantly higher variance than a slightly biased estimator.
+\subsubsection{Illuminating examples}
+Perhaps the best known example 
+\[
+  X \sim Poisson(\lambda),
+\]
+where $\lambda > 0$ is the unknown parameter. If our goal is to estimate 
+\[
+  g(\theta) = \exp(-2\lambda),
+\] 
+then it can be shown that the only unbiased estimator is give by the laughable 
+\[
+  \hat{g}(X) = (-1)^X 
+\]
+Another illuminating example is to estimate the location of a light souce based on its projection on the boundary of 
+a dart board over a randomly placed dart.
+\section{Maximum-likelihood estimator (MLE)}
+An alternative frequentist estimator is the maximum-likelihood estimator (MLE). Focusing on estimating the model parameter $\theta$ itself. Given a likelihood 
+family $f_\theta(x)$, an estimator $\hat{\theta} = \hat{\theta}(X)$ is an MLE of $\theta$ if 
+\[
+  \hat{\theta}(x) \in \arg\max_{\theta\in\Theta} f_\theta(x), \quad \forall x\in\Xc
+\]
+or, equivalently,
+\[
+  \hat{\theta}(x) \in \arg\max_{\theta\in\Theta} \log f_\theta(x), \quad \forall x\in\Xc
+\]
+\subsection{Maximizing likelihood and minimizing K-L divergence}
+While mainly motivated by intuition, MLE has an interesting interpretation when the observation $X = (X_1, \dots, X_n)$, where 
+\[
+  X_i \iid p_\theta(x_i)
+\]
+More specifically, given an observation $x = (x_1, \dots, x_n)$, let 
+\[
+  \hat{p}_x (z) = \frac{1}{n}\sum_{i=1}^n 1_{\{x_i=z\}}, \quad \forall z \in\Xc 
+\]
+be the \textit{empirical} estimate of the \textit{marginal} distribution given the observation $x$. For two pmf's $p$ and $q$ 
+over the same alphabet $\Xc$, the \textbf{K-L divergence} between $p$ and $q$ is defined as: 
+\[
+  D_{KL}(p || q) := \E_p \left[ \log\frac{p(Z)}{q(Z)} \right] = \sum_{z\in\Xc} p(z) \log \frac{p(z)}{q(z)}
+\]
+\subsubsection{Information inequality}
+Occurs when 
+\[
+  D_{KL}(p || q) \geq 0 
+\]
+where the equality holds if and only if $p=q$. In statistics, information theory, and machine learning, one often use K-L divergence as a distance measure between two probability
+distributions, even though this distance measure is generally asymmetric about the two input distributions. \\ 
+
+\noindent Claim: maximizing the likelihood 
+\[
+  \sum_{i=1}^n \log p_\theta(x_i)
+\] 
+is equivalent to minimzing the K-L divergence 
+\[
+  D_{KL}(\hat{p}_x || p_\theta)
+\]
+\begin{proof}
+  First note that 
+  \begin{align*}
+    D_{KL}(\hat{p}_x || p_\theta) &= \E_{\hat{p}_x} \left[ \log \frac{\hat{p}_x(Z)}{p_\theta(Z)}\right] \\ 
+                                  &= \E_{\hat{p}_x} [\log\hat{p}_x(Z)] - \E_{\hat{p}_x}[\log p_\theta(Z)]
+  \end{align*}
+  Further note that 
+  \begin{align*}
+  \E_{\hat{p}_x} &= \sum_{z\in\Xc} \hat{p}_x(z)\log p_{\theta}(z) \\ 
+                   &= \frac{1}{n} \sum_{z\in\Xc}\sum_{i=1}^n 1_{\{ x_i=z \}} \log p_\theta(z) \\ 
+                   &= \frac{1}{n} \sum_{i=1}^n \bp{\sum_{z\in\Xc} 1_{\{x_i=z\}} \log p_\theta(z)} \\ 
+                   &= \frac{1}{n} \sum_{i=1}^n \log p_\theta(x_i)
+  \end{align*}
+  Combining the above two results gives 
+  \[
+    D_{KL}(\hat{p}_x || p_\theta) = \E_{\hat{p}_x}[\log \hat{p}_x (Z)] - \frac{1}{n} \sum_{i=1}^n \log p_\theta(x_i)
+  \]
+  We may thus conclude that minimizing the K-L divergence $D_{KL}(\hat{p}_x || p_\theta)$ is equivalent to 
+  maximizing the likelihood $\sum_{i=1}^n \log p_\theta(x_i)$. The above result also suggests that if 
+  our model is identifiable, MLE will recover $\theta$ in the limit as $n \to \infty$. We will have more 
+  to say about this result a bit later.
+\end{proof}
+
+\subsection{Re-parameterization}
+Assume that the likelihood function $f_\theta(x)$ can be re-parameterized in terms of a more natural parameter 
+\[
+  \eta = \eta(\theta)
+\]
+In this case, for any given observation $x$, we have 
+\[
+  \arg\max_{\theta\in\Theta} f_\theta(x) = \{ \theta \in \Theta : \eta(\theta) \in \arg\max_{\theta\in\Theta} \}
+\] ... %TODO
+Consider an exponential family of distribution re-parameterized by the natural parameter $\eta$: 
+\[
+  \tilde{f}_\eta(x) = h(x) \exp(\eta^t T(x) - A(\eta))
+\]
+where the space of the natural parameter is an open and connected subset of $\R^s$. To find an MLE for $\eta$, note that 
+\begin{align*}
+  \nabla_\eta \log\tilde{f}_\eta(x) &= T(x) - \nabla_\eta A(\eta) = T(x) - \E_\eta[T(X)] \\ 
+  \nabla_\eta^2 \log \tilde{f}_\eta(x) &= -\nabla_\eta^2 A(\eta) = \Cov_\eta[T(X)]
+\end{align*}
+A covariance mastrix is always positive semi-definite, so for any $x\in\Xc$, the log-likelihood $\log\tilde{f}_\eta(x)$ is a concave function of $\eta$, for which any stationary point is a global maxima. Therefore,
+any solution for $\eta$ to the equation 
+\[
+  \E_\eta[T(X)] = T(x)
+\] 
+is an MLE for $\eta$. Furthermore, if the covariance matrix of $T(X)$ is positive definite for all 
+$\eta$, for any $x \in \Xc$ the log-likelihood $\log\tilde{f}_\eta(x)$ is a strictly concave function of $\eta$. In this case, the MLE is unique if it exists.
+
+Finally, by the re-parameterization property, any solution for $\theta$ to the equation 
+\[
+  \E_\theta[T(X)] = T(x)
+\]
+is an MLE for $\theta$.
+\subsubsection{Gaussian with unknown mean and variance}
+Recall that in this case, a sufficient statistic is given by 
+\[
+  T_1 = \sum_{i=1}^n X_i \quad\text{and}\quad T_2 = \sum_{i=1}^n X_i^2
+\]
+the expectations of the sufficient statistics are given by: 
+\[
+  \E_\theta[T_1] = n\mu \quad\text{and}\quad \E_\theta[T_2] = n(\sigma^2 + \nu^2)
+\]
+From previous discussion, any solution of $(\mu, \sigma^2)$ to the equations 
+\begin{align*}
+  n\mu &= T_1(x) \\ 
+  n(\sigma^2 + \mu^2) &= T_2(x)
+\end{align*}
+is an MLE. The above equations have a unique solution given by 
+\[
+  \mu = \frac{T_1(x)}{n} \quad\text{and}\quad \sigma^2 = \frac{T_2(x)}{n} - \bp{\frac{T_1(x)}{n}}^2
+\]
+  We may thus conclue that the empirical mean 
+  \[
+    \hat{\mu} = \frac{T_1(x)}{n} = \frac{1}{n} \sum_{i=1}^n X_i
+  \]
+  is the MLE for $\mu$ and the empirical variance 
+  \[
+    \hat{\sigma}^2 = \frac{T_2(x)}{n} - \bp{\frac{T_1(x)}{n}}^2 = \frac{1}{n}\sum_{i=1}^n X_i^2 - \hat{\mu}^2 = \frac{1}{n}\sum_{i=1}^n (X_i - \hat{\mu})^2 
+  \]
+  is the MLE for $\sigma^2$, when both $\mu$ and $\sigma^2$ are unknown. By Cochran's theorem,
+  \[
+    \E_\theta \left[ \sum_{i=1}^n (X_i - \hat{\mu})^2\right] = (n-1)\sigma^2 
+  \]
+  so 
+  \[
+    \E_\theta[\hat{\sigma^2}] = \frac{n-1}{n}\sigma^2 
+  \] 
+  i.e., the empirical variance is a biased estimator for the true variance $\sigma^2$.
+
+\subsection{Consistency and asymptotic normality}
+Note that in the previous example, while the MLE for $\sigma^2$ is biased, the bias vanishes asymptotically in the limit as the sample size $n\to\infty$. Also note that the variances of the MLE for both $\mu$ and $\sigma^2$ coincide with the CRLB for unbiased estimators. Under certain regularity conditions, it can be shown that the above observations hold for a general likelihood function.
+
+More specifically, let $X = (X_1, \dots, X_n)$, where $X_i \iid f_\theta(x_i)$. For any $\theta$ that is in the interior of $\Theta$, let $\hat{\theta}$ be the MLE for $\theta$ given by the unique solution to the equation 
+\[
+  \nabla_\theta \bp{\sum_{i=1}^n \log f_\theta(x_i)} = 0
+\] 
+We have $\sqrt{n}(\hat{\theta} - \theta)$ converges in distribution to $\Nc(0, I_1^{-1}(\theta))$ in the limit as the sample size $n\to\infty$.
+That is, when the sample size $n$ is large, the MLE $\hat{\theta}$ is approximately distributed as 
+\[
+  \Nc \bp{\theta, \frac{1}{n}I_1^{-1}(\theta)}
+\] 
+or, equivalently,
+\[
+  \Nc (\theta,I_n^{-1}(\theta))
+\] 
+due to the additivity of Fisher information $I_n(\theta) = n I_1(\theta)$. Therefore, under certain regularity conditions, the MLE is consistent in that it can recover the unknown parameter $\theta$ in the limit as the sample size $n\to\infty$. The proof of the asymptotic normality of the MLE is based on the well-known central limit theorem. This is omitted here, however.
+
+\subsection{Multinomial with unknown probabilities}
+Goal is to use the empirical counts to estimate the true probability. 
+Let $X\sim p_\theta(x)$, where the observation 
+\[
+   X = (N_1, \dots, N_K)
+ \]
+ is the empirical counts over $K$ categories and $n$ total counts, the unknown parameter 
+ \[
+   \theta = (p_1, \dots, p_K)
+ \] 
+ is a probability vector over $K$ categories, and the likelihood function is multinomial: 
+ \[
+   p_\theta(x) = \frac{n!}{n_1!\cdots n_K!} \prod_{k=1}^K{p_k^{n_k}}
+  \]
+  % TODO: finish this whole section 
+  The total counts $n$ and the number of categories $K$ are assumed to be known. The MLE can be found by 
+  solving the equation 
+  \[
+    \nabla_\theta L_\lambda (\theta) = 0 
+  \] 
+  and then finding a Lagrangian multiplier $\lambda \geq 0$ to satisfy the constraint 
+  \[ 
+    \sum_{k=1}^K p_k = 1 
+  \]
+  The MLE for $\theta$ in this case is given by the empirical frequency estimator 
+  \[
+    \hat{\theta} = \bp{\frac{N_1}{n}, \dots, \frac{N_K}{n}}
+  \] 
+Note that for any $k \in [K]$ 
+\[
+  \E_\theta[N_k] = np_k 
+\] 
+so the empirical frequency estimator $\hat{\theta}$ is unbiased. 
+\section{Estimating $g(\theta)$}
+Let $\eta = g(\theta)$. Note that if the likelihood function $f_\theta(x)$ can be rep-parameterized in terms of 
+$\eta$, then it is natural to use an MLE of $\eta$ as an "MLE" estimate of $g(\theta)$. By the re-parameterization 
+property, $\eta^*$ is an MLE of $\eta$ if and only if 
+\[
+  \eta^* = g(\theta^*)
+\] 
+for some $\theta^*$ that is an MLE of $\theta$. Therefore, if the likelihood function $f_\theta(x)$ can be re-parameterized 
+in terms of $g(\theta)$, the "MLE" of $g(\theta)$ is given by $g(\theta^*)$, where $\theta^*$ is an MLE of $\theta$. 
+
+In statistics, it is customary to define the MLE of $g(\theta)$ as $g(\theta^*)$, whether the likelihood function $f_\theta(x)$ can be re-parameterized
+in terms of $g(\theta)$ or not. This is known as the invariance property of MLE. Many other estimators 
+such as UMVUE do not enjoy the invariance property. 
+%\chapter{February 12, 2026 Lecture}
+   %
+\chapter{The Expectation-Maximization Algorithm}
+In general, finding MLE requires iterative numerical techniques. Gradient descent methods for 
+minimization as Newton-Raphson and Fisher's scoring methods are commonly used. Here we discuss a method known as 
+expectation-maximization (EM) algorithm, which is specifically designed for computing MLE for models with latent variables. 
+\section{Models with latent variables}
+Let $(X,U) \sim f_\theta(x, u)$, where $X$ is the observation and $U$ is the unobserved/latent variable. We seek the ML estimate of $\theta$ based on the observation $X$: 
+\[
+  \hat{\theta}(x) \in \arg\max_{\theta\in\Theta} \log f_\theta(x)
+\]
+where 
+\[
+  f_\theta(x) = \int_{\Uc} f_\theta(x, u) \, du 
+\] 
+The above obtimization problem can be difficult to solve analytically due to the marginalization of the latent variables, 
+which occurs inside the logarithm of the objective function.
+\subsection{Mixture Gaussian model}
+Let $X = (X_1, \dots, X_n)$ and $U = (U_1, \dots, U_n)$, where $(X_i, U_i)$ are i.i.d. according to: 
+\[
+  U_i \sim Cat(u_i; \pi_1, \dots, \pi_K) \quad\text{and}\quad X_i|U_i \sim \Nc(x_i; \mu_{i_i}, \sigma_{u_i}^2)
+\]
+Marginalizing over $U_i$ gives 
+\[
+  f_\theta(x_i) = \sum_{k=1}^K \pi_k \Nc(x_i; \mu_k, \sigma_k^2)
+\] 
+which is a mixture Gaussian distribution, and 
+\[
+  \theta = (\pi_1, \dots, \pi_k, \mu_1, \dots, \mu_K, \sigma_1^2, \dots, \sigma_K^2) 
+\] 
+is the unknown parameter. The log-likelihood for all measurements is given by 
+\[
+  \log f_\theta(x) = \sum_{i=1}^n \log f_\theta(x_i) = \sum_{i=1}^n \log \bp{\sum_{k=1}^K \pi_k \Nc (x_i; \mu_k, \sigma_k^2)}
+\]
+\subsubsection{Finding MLE for $(\mu_1, \dots, \mu_K)$}
+Assume for the moment that $(\pi_1, \dots, \pi_K)$ and $(\sigma_1^2, \dots, \sigma_K^2)$ are known. To find the MLE 
+for $(\mu_1, \dots \mu_K)$, note that for any $j \in [K]$ we have 
+\[
+  \frac{\partial}{\partial \mu_j} \log f_\theta(x) = \sum_{i=1}^n \frac{\tilde{\pi}_j(x_i)(x_i - \mu_j)}{\sigma_j^2}
+\]
+where 
+\[ 
+  \tilde{\pi}_j (x_i) = \frac{x_i \Nc(x_i; \mu_j, \sigma_j^2}{\sum_{k=1}^K x_i \Nc (x_i; \mu_k, \sigma_k^2)} = \mathbb{P}_\theta(U_i = j | X_i = x_i)
+\]
+Setting the partial derivatives equal to zero for all $j$ gives the following set of equations: 
+\[
+  \sum_{i=1}^n \frac{\tilde{\pi_j}(x_i)(x_i - \mu_j)}{\sigma_j^2} = 0, \quad\forall j\in[K]
+\]
+for which the solution for $(\mu_1, \dots, \mu_K)$ is the MLE.
+\subsubsection{A vicious circle}
+Note that if $\tilde{\pi}_j(x_i)$'s are known, the above equations are separate for each 
+$\mu_j$ and hence are very easy to solve: % TODO: here, replace pi with x_i (he is updating notes )
+\[
+  \mu_j = \frac{\sum_{i=1}^n \tilde{\pi}_j(x_i)x_i}{\sum_{i=1}^n \tilde{\pi}_j(x_i)}, \quad\forall j\in[K]
+\]
+However, in reality, $\tilde{\pi}_j(x_i)$'s depend on $(\mu_1, \dots, \mu_K)$ and hence are unknown. Therefore,
+the above equations are interlocked and hence are very difficult to solve. This is a common challenge for 
+finding the MLE for models with latent variables. We are now in the following situation:
+\begin{enumerate}
+  \item If we know $\tilde{\pi}_j(x_i)$'s, we can solve for $\mu_j$'s 
+  \item If we know $\mu_j$'s, we can compute $\tilde{\pi}_j(x_i)$'s 
+\end{enumerate}
+\section{An iterative procedure}
+A successive approximation procedure: 
+\begin{enumerate}  
+  \item Initialize $(\mu_1, \dots, \mu_K)$
+  \item Evaluate the posterior probabilities $(\tilde{\pi}_1(x_i), \dots, \tilde{\pi}_K(x_i)), i \in [n]$ using the current value of $(\mu_1, \dots, \mu_K)$
+  \item Update the value for $(\mu_1, \dots, \mu_K)$ using the posterior probabilities from Step 2 
+  \item Stop if the value for $(\mu_1, \dots, \mu_K)$ has already converges; otherwise go back to Step 2 
+\end{enumerate}
+Next, we shall generalize the above prodedure to general likelihood models with latent variables, and the resulting procedure is known as 
+the expectation-maximization (EM) algorithm. 
+\section{A variational characterization of the log-likelihood}
+The main idea behind the EM algorithm is the following variational characterization of the log-likelihood:
+\[
+  \log f_\theta(x) = \max_{q} F(q, \theta)
+\] 
+where 
+\begin{align}
+  F(q,\theta) &= \log f_\theta(x) - D_{KL}(q(u)|| f_\theta(u|x)) \\ 
+              &= \E_q[\log f_\theta(x, U)] - \E_q[\log q(U)],
+\end{align}
+and both expectations are over $U \sim q(u)$. The main advantage of this variational characterization
+is that it allows us to rewrite the problem of finding the MLE as a double-maximization problem: 
+\[ 
+  (\hat{\theta}, q^*) \in \arg \max_{(\theta, q)} F(q, \theta) 
+\]
+\begin{proof}
+  First note that by the information inequality, for any density function $q$ we have 
+  \[
+    D_{KL}(q(u) || f_\theta(u|x)) \geq 0 
+  \]
+  where the equality holds if and only if 
+  \[
+    q(u) = f_\theta(u | x), \quad\forall u \in\Uc 
+  \]
+  We thus have
+  \[
+    \log f_\theta(x) \geq \log f_\theta(x) - D_{KL}(q(u) || f_\theta(u | x))
+  \] 
+  where the equality holds if and only if 
+  \[
+    q(u) = f_\theta(u | x), \quad\forall u \in \Uc 
+  \] 
+  and hence 
+  \[
+    \log f_\theta(x) = \max_{q} (\log f_\theta(x) - D_{KL}(q(u) || f_\theta(u|x)))
+  \] 
+  Further note that 
+  \begin{align*}
+    \log f_\theta&(x) - D_{KL}(q(u) || f_\theta(u | x)) \\
+                 &= \log f_\theta(x) - (\E_q[\log q(U)] - \E_q[\log f_\theta(U|x)]) \\ 
+                 &= \E_q [\log f_\theta(x)] + \E_q[\log f_\theta(U|x)] - \E_q[\log q(U)] \\ 
+                 &= \E_q [\log (f_\theta(x)f_\theta(U|x))] - \E_q[\log q(U)] \\ 
+                 &= \E_q[\log f_\theta(x, U)] - \E_q[\log q(U)]
+  \end{align*}
+\end{proof}
+We have thus proved that (2.1) and (2.2) are in fact equivalent to each other. 
+
+\section{Finding MLE via alternating maximization}
+Recall that the MLE can be found by solving the double-maximization problem: 
+\[
+  \max_{(\theta, q)} F(q, \theta) 
+\]
+Consider the following alternating-maximization strategy for solving the above double-maximization problem: 
+\begin{enumerate}
+  \item Initialize $\theta = \theta^{(0)}$ and $t=1$
+  \item Repeat the following steps until the values of $(\theta, q)$ converge:
+    \begin{enumerate}
+      \item Fix $\theta = \theta^{(t-1)}$ and find 
+        \[
+          q^{(t)} \in \arg\max_{q}F\bp{q,\theta^{(t-1)}}
+        \] 
+      \item Fix $q = q^{(t)}$ and find
+        \[
+          \theta^{(t)} = \arg\max_{\theta}F\bp{q^{(t)}, \theta}
+        \]
+      \item $t \leftarrow t + 1$
+    \end{enumerate}
+\end{enumerate}
+The problem of fixing $\theta = \theta^{(t-1)}$ and finding 
+\[
+  q^{(t)} \in \arg\max_{q}F\bp{q,\theta^{(t-1)}}
+\] 
+is trivial. By the information inequality, 
+\[
+  q^{(t)}(u) = f_{\theta^{(t-1)}} (u|x),\quad\forall u\in\Uc 
+\] 
+which gives 
+\[
+  F\bp{q^{(t)}, \theta^{(t-1)}} = \log f_{\theta^{(t-1)}}(x)
+\]
+By comparison, the problem of fixing $q=q^{(t)}$ and finding 
+\[
+  \theta^{(t)} \in \arg\max_{\theta}F\bp{q^{(t)},\theta} 
+\]  
+is much more involved. To solve this optimization problem, we shall use expression (2) and write % TODO: fix eqn reference here and above 
+\[
+  F\bp{q^{(t)}, \theta} = \E_{q^{(t)}} [ \log f_\theta(x, U)] - \E_{q^{(t)}} [\log q^{(t)}(U)]
+\]
+Note that the second term in the above expression does \textit{not} involve $\theta$. Thus, $\theta^{(t)}$ can be found by maximizing
+over the first term in the above expression 
+\[
+  \theta^{(t)} \in \arg\max_{\theta} \E_{q^{(t)}} [\log f_\theta(x, U)] 
+\] 
+where 
+\[
+  q^{(t)} (u) = f_{\theta^{(t-1)}} (u | x), \quad\forall u\in\Uc 
+\]
+The above two equations allow us to continuously update the value of $(\theta, q)$, leading to the famous EM algorithm.
+
+\chapter{February 16, Reinforcement Lecture}
+\section{Linear function approximation}
+Feature vector: 
+\[
+  \text{For each } s \in\Sc, \phi(s) \in \R^d, \phi(s) = (\phi_1(s), \phi_2(s), \dots, \phi_d(s))^T 
+\]
+Value function is approximated as, $V(s; w) = w^T \phi(s)$, where $w \in \R^d$ is the weight vector. Typically, $d \ll |\Sc|$. Value function approximation is linear in $w$.
+
+\section{Approximation as projection}
+How do we find the best approximation for $V \in \Vc$ in the set $\Vc_\phi = \{\Phi w, w \in \R^d \}$
+\[
+  V_{\text{approx}} = \arg\min_{\tilde{V}\in\Vc_\phi} \norm{V - \tilde{V}}
+\] 
+\section{Weighted norm and contraction}
+$T_\pi$ is a contraction w.r.t. $\norm{\cdot}_\infty$, but not w.r.t. $\norm{\cdot}_2$. $\Pi$ is non-expansive w.r.t. $\norm{\cdot}_2$, but expansive w.r.t. $\norm{\cdot}_\infty$.
+How do we ensure that the iteration $V_{k+1} = \Pi T_\pi V_k$ will converge? Define the weighted $L^2$ norm, $\norm{V}_{2,\mu} = \E_{s\sim\mu}[V^2(s)]$ where $\mu$ is a probability distribution over $s$.
+
+\subsection{Jensen's Inequality}
+Let $f : \R^n \to \R$ be a convex function and let $X$ be a random vector. Then, $f(\E[X]) \leq \E[f(X)]$.
+
+\begin{lemma}
+  Contraction property of $T_\pi$ w.r.t. $\norm{\cdot}_{2,\mu}$. Let $\mu$ be the stationary distribution corresponding to $P_\pi$, i.e., $\mu P_\pi = \mu$. Then, 
+  $\norm{T_\pi V_1 - T_\pi V_2}_{2, \mu} \leq \gamma \norm{V_1 - V_2}_{2, \mu}$.
+\end{lemma}
+
+\begin{proof}
+  We will first show the following: let $\mu$ be the stationary distribution corresponding to $P_\pi$, i.e., $\mu P_\pi = \mu$. Then, $\norm{P_\pi V}_{2,\mu} \leq \norm{V}_{2\mu}$.
+  \begin{align*}
+    \norm{P_\pi V}_{2, \mu}^2 &= \E_{s\sim \mu} [((P_\pi V)(s))^2] = \sum_{s \in \Sc} \mu(s) \bp{\sum_{s'\in\Sc} P_\pi(s,s')V(s')}^2 \\ 
+    &\leq \sum_{s\in\Sc} \mu(s) \sum_{s'\in\Sc} P_\pi(s,s')V^2(s') \\ 
+    &= \sum_{s'\in\Sc}\sum_{s\in\Sc} \mu(s) P_\pi(s,s') V^2(s') \\ 
+    &= \sum_{s'\in\Sc} \mu(s')V^2(s') = \norm{V}_{2,\mu}^2
+  \end{align*}
+  Then,
+  \begin{align*}
+    \norm{T_\pi V_1 - T_\pi V_2}_{2,\mu} = \norm{(r_\pi)} ...
+  \end{align*}
+\end{proof}
+
+\subsection{Approximation error}
+$\Pi T_\pi$ is a contraction mapping. So, it has a unique fixed point $\bar{V}_\pi$. The iteration $V_{k+1} = \Pi T_\pi V_k$ will converge to $\bar{V}_\pi$. What is the approximation error $\norm{V_\pi - \bar{V}_\pi}_{2,\mu}$?
+\subsubsection{Proposition (approximation error)}
+\[
+  \norm{\Pi V_\pi - V_\pi}_{2,\mu} \leq \norm{\bar{V}_\pi - V_\pi}_{2,\mu} \leq \frac{1}{\sqrt{1-\gamma^2}} \norm{\Pi V_\pi - V_\pi}_{2,\mu}
+\]
+\section{TD Learning with Function Approximation}
+
+\end{document}
