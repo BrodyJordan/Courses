@@ -3,11 +3,12 @@
 \usepackage{geometry}[letterpaper]
 \usepackage{amsmath, amssymb, amsthm}
 
+\usepackage{enumitem}
 \newcommand{\R}{\mathbb{R}}
 \usepackage{graphicx}
 \usepackage{math}
 \usepackage{notes}
-\usepackage{mathbbm}
+
 
 \begin{document}
 
@@ -232,7 +233,7 @@ Significant amount of disk spaces are required in the explicit representation. E
 \subsection{Excessive Gaussian number}
 Many 3D points have small opacity. If its opacity is very small, its contribution is small, so it can be ignored. So preserve those points with high opacity, and remove those with low opacity to improve performance.  
 \[
-  GS_j = \sum_{i=1}^{MHW} \mathbbm{1}(G(\mathbf{X}_j), r_i) \cdot \sigma_j \cdot \gamma_j (\Sigma),
+  GS_j = \sum_{i=1}^{MHW} 1(G(\mathbf{X}_j), r_i) \cdot \sigma_j \cdot \gamma_j (\Sigma),
 \]
 \[
   \gamma(\Sigma) = (V_{\text{norm}})^\beta 
@@ -241,8 +242,83 @@ Many 3D points have small opacity. If its opacity is very small, its contributio
   V_{\text{norm}} = \min \bp{\max{\bp{\frac{V(\Sigma)}{V_\text{max90}},1},1}}
 \] 
 
+\chapter{February 17 Lecture}
+\section{3D scene understanding}
+For homework: 20 dB (higher is better), above 0.8 SSM; downsample image by 2. \\ 
 
+\noindent Semantic segmentation typically takes place in 2D. Fully convolutional networks for segmentation. UNet paper. 
+\subsection{UNet}
+Originally we have a high resolution image, we can downsample to lower and lower size image. Downsampling and upsampling for pyramid perception. Stacking many many layers, gradient becomes problematic.  
+ResNet proposes solution that resolves this issue. 
+\subsection{3D shape completion: ScanComplete}
+Fill in missing data from initial scan since some regions will not be in the scan (under table). \\ 
 
+\noindent Larger scale 3D datasets. ScanNet++:
+\begin{enumerate}[topsep=5pt, itemsep=1pt]
+  \item 1006 high-fidelity scenes 
+  \item 1mm laser scans - DSLR images 
+  \item iPhone RGB-D-semantics
+\end{enumerate}
 
+\subsection{3D point cloud segmentation: PointNet}
+End-to-end learning for scattered, unordered point data. Unified framework for various tasks. Classification network: $n \times 3 \to n \times 64 \to n \times 1024 \to k \text { or } n \times k$ output scores. MLP based neural network.
+
+\subsection{Point transformer: the basic unit}
+Using transformer to process 3D point cloud.
+\begin{figure}[hpbt!]
+  \centering 
+  \includegraphics[width=0.5\textwidth]{figures/transformerlayer.pdf}
+\end{figure}
+Architecture is similar to UNet: downsample first, then upsample.
+\subsection{NeRF with semantic segmentation}
+Input is $\text{PE}(x,y,z)$ output is semantic $(s)$ and RGB $(c)$.
+\[
+  \hat{\mathbf{C}}(\mathbf{r}) = \sum_{k=1}^K \hat{T}(t_k)\alpha(\sigma(t_k)\delta_k)\mathbf{c}(t_k),
+\]
+where
+\[
+  \hat{T}(t_k) = \exp \bp{- \sum_{k'=1}^{k-1} \sigma(t_k) \delta_k}
+\]
+And
+\[
+  \hat{\mathbf{S}}(\mathbf{r}) = \sum_{k=1}^K \hat{T}(t_k)\alpha (\sigma(t_k) \delta_k) \mathbf{s}(t_k)
+\]
+where 
+\[
+  \hat{T}(t_k) = \exp \bp{ - \sum_{k'=1}^{k-1} \sigma(t_k) \delta_k}
+\]
+\subsection{3D data are rare, image data are everywhere}
+Foundation models thrive on large, diverse datasets. Annotated video is rare, but image data is publicly available virtually everywhere.
+\subsection{Can we achieve 3D segmentation without labels?}
+Reference paper: Decomposing ReRF for Editing via Feature Field Distillation. \\
+
+\noindent For each 3D point we have a feature, the we do the volume rendering.
+
+\begin{figure}[hbpt!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/network__fixedfont.pdf}
+\end{figure}
+
+\subsection{NeRF is slow, but we can accelerate this with 3DGS}
+Reference paper: Feature 3DGS: Supercharging 3D Gaussian Splatting to Enable Distilled Feature Fields. \\ 
+
+\noindent In this work, we supercharge the 3D gaussian splatting to learn feature fields via knowledge distillation from 2D foundation models.
+
+\subsection{Unified 3D reconstruction with Gaussian Splatting}
+Reference paper: Large Spatial Model: End-to-end Unposed Images to Semantic 3D. \\ 
+
+\noindent We have some fixed views, but we can output images from a changed perspective$^*$. 
+
+\subsection{Text-Driven Semantic Queries over 3D Maps}
+Reference paper: Large Spatial Model: End-to-end Unposed Images to Semantic 3D. \\ 
+
+\noindent Collect many images from different scenes, train model on these many images to be able to generalize. Input is just image, no 
+annotation or other information. Model has to find camera pose and how to map pixel to 3D gaussian. Find black box that maps pixel to 3D gaussian.
+Then it can warp from one image to another to find the relative information based on the data.
+
+\subsection{Cross-Modal Fusion for Semantic 3D Gaussians}
+Reference paper: Large Spatial Model: End-to-end Unposed Images to Semantic 3D. \\ 
+
+\noindent Also render the feature map alongside the 2D image. This is using a transformer model. 
 
 \end{document}
