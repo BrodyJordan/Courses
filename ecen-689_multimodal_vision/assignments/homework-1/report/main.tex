@@ -6,7 +6,7 @@
 \usepackage{fancyhdr}
 
 \date{}
-\headsep=0.15in
+\headsep=0.25in
 \pagestyle{fancy}
 \fancyhf{}
 
@@ -19,18 +19,18 @@
 \section{Environment}
 I trained this model on a Windows 11 machine with an NVIDIA RTX 5080 GPU using Conda with Python 3.9.25 and CUDA 12.8. This open issue has been particularly helpful in resolving Python/CUDA dependency issues: \url{https://github.com/graphdeco-inria/gaussian-splatting/issues/1215}.
 \section{Data Split}
-I utilized the \texttt{--eval} flag to automatically split the dataset for evaluation.
+I utilized the \verb|"--eval"| flag to automatically split the dataset for evaluation.
 \section{Metrics}
 I ran several iterations and the best of which achieved the following metrics.
 \begin{figure}[hbpt!]
     \centering
     \begin{tabular}{ @{} lll @{} }
         \toprule
-        Metric & Value               & Reference Target \\
+        Metric    & Value     & Reference Target \\
         \midrule
-        PSNR   & 22.797117233276367  & $\geq$ 20.0      \\
-        SSIM   & 0.8152918815612793  & $\geq$ 0.80      \\
-        LPIPS  & 0.18995249271392822 & $\leq$ ?         \\
+        PSNR (dB) & 22.797117 & $\geq$ 20.0      \\
+        SSIM      & 0.8152919 & $\geq$ 0.80      \\
+        LPIPS     & 0.1899525 & $\leq$ ?         \\
 
         \bottomrule
     \end{tabular}
@@ -41,6 +41,6 @@ I ran several iterations and the best of which achieved the following metrics.
 
 \section{Analysis}
 
-Training took, on average, around 6 minutes and 30 seconds to complete at 30,000 iterations.
+Training took, on average, around 6 minutes and 30 seconds to complete at 30,000 iterations. Using the \verb|"--optimizer_type sparse_adam"| flag brought the average training time down to around 3 minutes.
 
 \end{document}
