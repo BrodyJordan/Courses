@@ -4,6 +4,8 @@
 \usepackage{hyperref}
 \usepackage{array, booktabs, siunitx}
 \usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
 
 \date{}
 \headsep=0.25in
@@ -14,6 +16,7 @@
 \fancyhead[C]{Homework 1: 3DGS}
 \fancyhead[R]{Brody Jordan}
 
+\lstset{language=Python}
 
 \begin{document}
 \section{Environment}
@@ -42,5 +45,12 @@ I ran several iterations and the best of which achieved the following metrics.
 \section{Analysis}
 
 Training took, on average, around 6 minutes and 30 seconds to complete at 30,000 iterations. Using the \verb|"--optimizer_type sparse_adam"| flag brought the average training time down to around 3 minutes.
+
+% \begin{lstlisting}
+% python convert.py -s path_to_data
+% python train.py -s path_to_data --eval -m output_model_path
+% python render.py -m input_model_path --eval
+% python metrics.py -m input_model_path
+% \end{lstlisting}
 
 \end{document}
