@@ -3,15 +3,17 @@
 \RequirePackage{math}
 
 % ---------- basic packages ----------
-\RequirePackage{amsmath, amssymb, amsthm}
+\RequirePackage{amsmath, amssymb, amsthm, amsfonts}
 \RequirePackage{graphicx}
 \RequirePackage{geometry}
 \RequirePackage{setspace}
 \RequirePackage{hyperref}
+\RequirePackage{svg}
 
 % ---------- page layout ----------
 \geometry{
-  margin=1in
+  margin=1in,
+  letterpaper,
 }
 
 \setstretch{1.1}
@@ -24,14 +26,29 @@
 \providecommand{\Semester}{}
 
 % ---------- title helper ----------
-\newcommand{\CourseTitle}{
-  \begin{center}
-    {\Large\bfseries \CourseName}\\[0.5em]
-    {\CourseCode}\\[0.25em]
-    {\Instructor}\\
-    {\Semester}
-  \end{center}
-  \vspace{1em}
+\newcommand{\makecoursetitle}{
+    \begin{titlepage}
+        \centering
+        \vspace*{2.33cm}
+        \noindent\rule{\linewidth}{1pt}\vspace*{10pt}\\
+        \textbf{\Huge \CourseName}\\
+        \vspace*{15pt}\textbf{\small TAMU\ \CourseCode}\\
+        \noindent\rule{\linewidth}{1pt}\vspace*{10pt}\\
+        \vspace*{10mm}
+        {\Large \Student}\par
+        \vspace{1mm}
+        {\small \Semester}\par
+        \vspace{15mm}
+        \includegraphics[width=0.5\textwidth]{\Cover}
+    \end{titlepage}
+
+    \input{chapters/_acknowledgement.tex}
+    \vspace*{\fill}
+
+    
+    \setstretch{1.2}
+    \tableofcontents
+    \setstretch{1.0}
 }
 
 % ---------- section styling ----------

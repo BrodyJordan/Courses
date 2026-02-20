@@ -1,0 +1,33 @@
+\chapter{UMVUE II}
+
+\subsection{UMVUE without a complete sufficient statistic}
+Rao-Blackwellization can be used to improve the variance of an unbiased estimator. Applying Rao-Blackwellization with a complete sufficient statistic leads to an UMVUE. What if a complete sufficient statistic does NOT exist? \\
+
+\noindent In the previous cases, the model parameter is $\Theta = (0, \infty)$. Here, we shall assume that $\Theta = (1, \infty)$, i.e., we have the additional knowledge that the unknown parameter $\theta > 1$. Note that with the additional knowledge $\theta > 1$, it does not make sense for the estimator to take any value smaller than $1$. It is natural to consider a modified estimator
+\[
+    \hat{\theta}' = \begin{cases}
+        1               & , \quad \text{  if } T \leq 1 \\
+        \frac{n+1}{n} T & , \quad \text{  if } T > 1
+    \end{cases}
+\]
+For any $\theta > 1$, the expected value of $\hat{\theta}'$ can be calculated as
+\begin{align*}
+    \E_\theta[\hat{\theta}'] & = \int_{0}^{1} f_\theta(t) \, dt + \int_{1}^{0} \frac{n+1}{n} t f_\theta(t) \, dt   \\
+                             & = n\theta^{-n} \int_{0}^{1} t^{n-1} \, dt + (n+1)\theta^{-n} \int_{1}^{0} t^n \, dt \\
+                             & = \theta^{-n} + \theta^{-n}(\theta^{n+1} + 1)
+\end{align*}
+Therefore, if $T$ is again a complete sufficient statistic in this case, then $\hat{\theta}'$ is an UMVUE of $\theta$, knowing that $\theta > 1$. Unfortunately, in this case, $T$ is no longer complete, as it can be seen as follows: \\
+
+Let $\phi(T)$ be a function of $T$ such that $\E_\theta[\phi(T)] = 0, \ \forall \theta > 1$. As before, it can be shown that we must have $\phi(T) = 0, \ \forall t > 1$. However, for $t \leq 1$, $\phi(t)$ does not have to be a zero function to satistfy $\E_\theta[\phi(T)] = 0, \ \forall \theta > 1$. \\
+
+For example, if we let
+\[
+    \phi(t) = \begin{cases} t - \frac{n}{n+1}, & \text{if } t \leq 1 \\
+              0,                 & \text{if } t > 1
+    \end{cases}
+\]
+Apparently, we have $\mathbb{P}_\theta[\phi(T)=0] < 1$,
+
+\subsection{Variance reduction via unbiased estimators of 0}
+Mathematically, for a given likelihood family $f_\theta(x)$, a statistic $U=U(X)$ is called an
+unbiased estimator of 0 if $\E_\theta[U]=0$ for all $\theta \in \Theta$.

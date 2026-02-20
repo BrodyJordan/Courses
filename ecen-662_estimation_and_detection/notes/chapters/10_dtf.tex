@@ -1,0 +1,94 @@
+\chapter{Decision-Theoretic Framework}
+
+In a decision-theoretic framework, the performance of an estimator is evaluated through a loss function.
+Formally, a decision rule $\delta : \Xc \to \Dc$ is a mapping from the observation space $\Xc$ to a decision space $\Dc$. For parameter estimation, $\Dc = \Theta$, and for detection $\Dc = \{0, 1\}$. More
+generally, however, $\Dc$ can be the colletion of any viable decisions. A loss function is any function $L: \Theta \times \Dc \to [0, \infty)$, which is supposed to evaluate the penalty (or error) associated with the
+decision $d$ when the parameter takes the value $\theta$. The frequentist risk associated with a decision rule
+$\delta$ is defined as
+\[
+    R_\delta(\theta) := \E_\theta[L(\theta, \delta(X))]
+\]
+where the expectation is over $X \sim f_\theta(x)$.
+\subsection{Usual loss functions}
+Where the decisions have a numerical nature, the most usual choice of the loss function is the squared-error loss
+\[
+    L(\theta, d) = (\theta - d)^2
+\]
+A similar but less smooth function is the absolute-error loss
+\[
+    L(\theta, d) = |\theta - d|
+\]
+Note that both the squared-error loss and the absolute-error loss are convex functions of $d$ for any given $\theta$, so both are examples of a
+convex loss function. When the decisions have a categorical nature, the most usual choice of the loss function is the 0-1 loss
+\[
+    L(\theta, d) = 1_{\{\theta \neq d\}}
+\]
+for parameter estimation problems and
+\[
+    L(\theta, d) = 1_{\{\theta \notin \Theta_d\}}
+\]
+for detection.
+\subsection{MSE and bias-variance tradeoff}
+Under the squared-error loss, the frequentist risk is given by the mean squared-error (MSE), which can be further decomposed as the
+sum of a bias term and a variance term:
+\begin{align*}
+    R_\delta(\theta) & = \E_\theta[(\theta - \delta(X))^2]                                                   \\
+                     & = \E_\theta[(\theta - \E_\theta[\delta(X)] + \E_\theta[\delta(X)] - \delta(X))^2]     \\
+                     & = (\theta - \E_\theta[\delta(X)])^2 + \E_\theta[(\E_\theta[\delta(X)] - \delta(X))^2] \\
+                     & = (\theta - \E_\theta[\delta(X)])^2 + \Var_\theta[\delta(X)]
+\end{align*}
+In short,
+\[
+    \text{MSE} = \text{Bias}^2 + \text{Variance}
+\]
+Potentially, there is a tradeoff between the bias term and the variance terms in achieving a smaller value of the MSE.
+\subsubsection{Gaussian with unknown mean and variance}
+Consider the following family of estimators
+\[
+    \delta_b(X) = bS^2
+\]
+for the variance parameter $\sigma^2$, where
+\[
+    S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \hat{\mu})^2
+\]
+is the UMVUE for $\sigma^2$, and $b$ can be any positive constant. By Cochran's theorem, we have
+\[
+    Bias^2 = (b-1)^2 \sigma^4
+\]
+\[
+    Variance = \frac{2b^2\sigma^4}{n-1}
+\]
+and hence
+\[
+    MSE = \bp{(b-1)^2 + \frac{2b^2}{b-1}} \sigma^4
+\]
+Note that while for $b\geq 1$, both the bias and the variance terms increase monotonically with $b$,
+for $b\in[0,1]$ the bias term decreses while the variance term increase monotonically with $b$. Therefore, for $b\in[0,1]$
+there is a tradeoff between the bias and the variance terms in achieving a smaller value of the MSE. In particular,
+we can compare the stimators with $b=1$ (the UMVUE) and $b = \frac{n-1}{n}$ (the MLE): the UMVUE has a smaller bias but a larger
+variance than the MLE. In terms of the MSE, we have
+\[
+    \E_\theta[(\theta - \delta_{\frac{n-1}{n}}(X))^2] = \frac{(2n-1)\sigma^4}{n^2} < \frac{2\sigma^4}{n-1} = \E_\theta[(\theta - \delta_1(X))^2]
+\]
+However, neither achieves the minimum MSE, which is achieved at $b = \frac{n-1}{n+1}$ with the minimum MSE given by
+\[
+    \E_\theta[(\theta - \delta_{\frac{n-1}{n+1}}(X))^2] = \frac{2\sigma^4}{n+1}
+\]
+\subsection{Frequentist risk as an evalutation criterion}
+Note that for a decision rule $\delta$, the frequentist risk $R_\delta(\theta)$ is a function of the unknown parameter $\theta$. Therefore, the frequentist criterion
+does not induce a total ordering on the set of decision rules. It is thus generally impossible to compare decision procedures with this criterion, since two crossing risk functions prevent comparison between the corresponding decision rules.
+One may hope for a decision rule $\delta$ that uniformly minimizes the risk $R_\delta(\theta)$, but such cases rarely occur unless the space of decision rules is restricted.
+
+\subsection{Admissability}
+Formally, a decision rule $\delta$ is inadmissable if it is dominated by another decision rule $\delta'$, i.e, for every $\theta \in \Theta$ we have
+\[
+    R_{\delta'}(\theta) \leq R_\delta(\theta)
+\]
+and there exists at least one value $\theta_0 \in \Theta$ such that
+\[
+    R_{\delta'}(\theta_0) < R_\delta(\theta_0)
+\]
+Otherwise, $\delta$ is said to be admissable. So at least in theory, inadmissable estimators should not be
+considered since they can be uniformly improved. For example, for Gaussian with unknown mean and variance, both the
+UMVUE $\delta_1 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2$ and the MLE $\delta_{\frac{n-1}{n}} = \frac{1}{n} \sum_{i=1}^n(X_i - \bar{X})^2$ are inadmissable with
+respect to the squared-error loss, as both are dominated by $\delta_{\frac{n-1}{n+1}} = \frac{1}{n+1} \sum_{i=1}^n (X_i - \bar{X})^2$.

@@ -1,0 +1,75 @@
+\chapter{UMVUE I}
+
+\section{Gaussian with unknown mean and variance}
+The likelihood function is an exponential family of distributions with a complete sufficient statistic $T=(T_1,T_2)$, where
+\[
+    T_1 = \sum_{i=1}^n X_i \text{ and } T_2 = \sum_{i=1}^n X_i^2
+\]
+Thus by the Lehmann-Scheffe theorem, any unbiased estimators that are a function of $T=(T_1, T_2)$ are UMVUE for the unknown parameters $\mu$ and $\sigma^2$.
+
+Therefore, the empirical mean
+\[
+    \hat{\mu} = \frac{1}{n} T_1
+\]
+is an unbiased estimator of $\mu$ and hence is an UMVUE of $\mu$. Recall that the same empirical-mean estimator is also an UMVUE of $\mu$ when the
+variance $\sigma^2$ is known, and the varaince of the estimator is given by
+\[
+    \Var_\theta[\hat{\mu}] = \frac{\sigma^2}{n}
+\]
+which decreases linearly with the sample size $n$. To find an UMVUE for $\sigma^2$, recall that when the mean parameter $\mu$ is the known, an UMVUE is given by the
+empirical variance.
+\[
+    x
+\]
+if $\mu$ is unknown, it is very tempting to replace $\mu$ by its UMVUE $\hat{\mu}$ and consider the estimator
+\[
+    \hat{\sigma^2}' = \frac{1}{n} \sum_{i=1}^n (X_i - \hat{\mu})^2
+\]
+where
+\[
+    \hat{\mu} = \frac{1}{n} \sum{j=1}^n X_j
+\]
+Let $X_i = \sigma Z_i + \mu$, where $(Z_1, Z_2, \dots, Z_n)$ are i.i.d. standard Gaussian varaibles. We can write
+\begin{align*}
+    \hat{\sigma^2}' & = \frac{1}{n} \sum_{i=1}^n \left( X_i - \frac{1}{n}\sum_{j=1}^n X_j \right)^2         \\
+                    & = \frac{\sigma^2}{n} \sum_{i=1}^n \left( Z_i - \frac{1}{n} \sum_{j=1}^n Z_j \right)^2
+\end{align*}
+now $\mathbb{E}_\theta[\hat{\sigma^2}'] = \frac{\sigma^2}{n}(n-1)=\frac{n-1}{n}\sigma^2$. This estimator is biased for $\sigma^2$, but we can get
+rid of this by multiplying $\hat{\sigma^2}'$ with the scaling factor $(n-1)/n$.
+
+Note that $\sum_{i=1}^n (X_i - \hat{\mu})^2 = T_2 - 2 (\frac{T_1}{n}) T_1 + n (\frac{T_1}{n})^2$
+which is a function of $T=(T_1, T_2)$.
+
+The variance of $\hat{\sigma^2}''$ is calculated by
+\begin{align*}
+    \Var_\theta[\hat{\sigma^2}''] = ...
+\end{align*}
+
+This is the price to pay for not knowing the value of the mean parameter $\mu$.
+
+When $n=1$, $X$ itself is a complete sufficient statistic. Therefore, if an unbiased estimator exists, it is also an UMVUE. As an
+exercise, show that for $n=1$, an unbiased estimator for $\sigma^2$ does not exist (when both $\mu$ and $\sigma^2$ are unknown).
+
+Need to find universal delta function such that $\E_\theta[\delta(x)] = \sigma^2 \ \forall(\mu, \sigma^2) = \int_{-\infty}^{\infty} \delta(x) \delta_\theta(x) \ dx = \sigma^2$.
+\newpage
+\subsection{Uniform with unknown support $X_i \sim \mathcal{U}([0, \theta])$}
+Recall that in this case,
+\[
+    T = \max_{i \in [n]} X_i
+\]
+is a complete statistic for $\theta$. Start by checking $\E_\theta[T] = ?$. $T \leq \theta$. \\
+
+\noindent Recall that the pdf of $T$ can be calculated as
+\[
+    f_\theta(t) = nt^{n-1} \theta^{-n} 1_{\{0\leq t \leq \theta \}}
+\]
+The expectation of $T$ is thus given by
+\[
+    \E_\theta[T] = \int_{0}^\theta t f_\theta(t) dt = \frac{n\theta}{n-1}
+\]
+The variance
+\begin{align*}
+    \Var_\theta[T] & = \E_\theta[T^2] - (\E_\theta[T])^2                          \\
+                   & = \frac{n\theta^2}{n+1} - \left(\frac{n\theta}{n+1}\right)^2
+\end{align*}
+From here we can also compute the varnace of ...
