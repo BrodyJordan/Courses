@@ -1,0 +1,118 @@
+\chapter{Exponential Family of Distributions}
+
+\marginpar{\small\textbf{Jan. 22}}
+%% Lecture 3
+\section{Lecture 3: Exponential Family of Distributions}
+A model $f_\theta(x)$ is called an exponential family of distributions if it can be written as
+\[
+    f_\theta(x) = h(x) \exp (\eta^t T - A(\eta))
+\]
+where $\eta = \eta(\theta)$ is an $s$-dimensional function of the model parameter $\theta$; $T=T(x)$ is an $s$-dimensional function of the observation $x$; $h(x)$ is a one-dimensional function of the observation $x$ known as the base measure; $A(\eta)$ is the normalization factor known as the log-partition function and can be computed as:
+\[
+    A(\eta) = \log \left( \int_{\mathcal{X}} h(x) \exp (\eta^t T(x)) \, dx \right)
+\]
+In addition, it is required that the support set $\{x : f_\theta(x) > 0 \}$ does not depend on $\theta$. Note that the likelihood function $f_\theta$ depends on the model parameter $\theta$ only through $\eta = \eta(\theta)$. Therefore, $\eta$ is known as the natural parameter of the model, and any representation of the aforementioned form is known as canonical representation of the expoential family. Note that for any given expoential family of distributions, canonical presentations are not unique. For example, if $(\eta, T, h, A(\eta))$ is a canonical representation, then
+\[
+    (\eta' = B\eta, \, T' = B^{-1}T, \, h'=h, \, A'(\eta') = A(B^{-1} \eta'))
+\]
+is also a canonical representation for any invertible matrix B. A canonical representation is called irreducible if neither $(\eta_i(\theta) : i \in [s])$ nor $(T_i(x) : x \in [s])$ satisfies a linear-equality constraint; otherwise, we can find an alternative canonical representation with a natural parameter of a reduced dimension.
+
+\subsection{Full-ranked and curved families}
+Without loss generality, we shall assume all canonical representations of an expoential family are irreducible. Let $\Theta$ be the space of the model parameter $\theta$ and let $\eta(\Theta) := \{\eta(\theta) : \theta \in \Theta\}$ be the space of the natural parameter $\eta$ induced by $\eta = \eta(\theta)$.
+
+We say that an (irreducible) $s$-parameter expoential family is full-ranked if the space of the natural parameter $\eta(\Theta)$ contains an $s$-dimensional rectangle; otherwise, it is called a curved family. Note that by the Fisher-Neyman factorization theorem, $T(X)$ is a sufficient statistic for $\theta$ for any expoential family. In addition, if the expoential family is full-ranked then $T(X)$ is also complete for $\theta$.
+
+\subsubsection{Multiple independent measurements}
+Let $X = [X_1, \dots, X_n]^t$, where
+\[
+    X_i \overset{iid}{\sim} f_\theta(x_i)
+\]
+and
+\[
+    f_\theta(x_i) = h(x_i) \exp (\eta^t T(x_i) - A(\eta))
+\]
+we thus have
+\[
+    f_\theta(x) = \prod_{i=1}^{n} f_\theta(x_i) = \left(\prod_{i=1} h(x_i) \right) \exp \left( \eta^t \sum_{i=1} T(x_i) - \eta A(\eta) \right)
+\]
+For Bernoulli trials, we have
+\begin{align*}
+    p_\theta (x_i) & = \theta^{x_i} (1-\theta)^{1-x_i}                                                \\
+                   & = \exp \left(x_i \log \frac{\theta}{1-\theta} - \log \frac{1}{1 - \theta}\right)
+\end{align*}
+Thus,
+\[
+    p_\theta(x) = \prod_{i=1}^{n} p_\theta(x_i)
+\]
+is also a one-parameter expoential family of distributions with
+\[
+    \eta(\theta) = \log \frac{\theta}{1 - \theta}, \quad T(x) = \sum{i=1}^{n} x_i, \quad h(x) = 1, \quad \text{and} \quad A(\eta) = n \log (1 + e^\eta)
+\]
+Note that the space of the model parameter $\theta$ is $(0, 1)$, the space space of the natural parameter is $\mathbb{R}_{++}$. Therefore, this expoential family is full-ranked, and the sufficient statistic $T(X) = \sum_{i=1}^n X_i$. \\
+
+\begin{exmp}
+    For Gaussian with unknown mean, we have
+    \[
+        f_\mu(x_i) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp \left( - \frac{x_i^2}{2\sigma^2} \right) \exp \left(...\right)
+    \]
+    Thus,
+    \[
+        f_\mu(x) = \prod_{i=1}^n f_\mu(x_i)
+    \]
+    is also a one-parameter expoential family of distributions with
+    \begin{align*}
+        ...
+    \end{align*}
+
+\end{exmp}
+
+% TODO: complete 
+\begin{exmp}
+    For Gaussian with unknown mean and variance, we have
+    \[
+        f_\theta(x_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp \left( \frac{\mu x_i}{\sigma^2} - \frac{x_i^2}{2\sigma^2} - \frac{\mu^2}{2\sigma^2} \right)
+    \]
+    which is a two-paremeter exponential family of distributions.
+    ...
+    with
+    \[
+        \eta(\theta) = \left(\frac{\mu}{\sigma^2},  -\frac{1}{2\sigma^2} \right), \quad T(x) = \left(\sum_{i=1}^n x_i, \sum_{i=1}^n x_i^2 \right), \quad h(x) = \left( \frac{1}{\sqrt{\pi}}\right)^n
+    \]
+
+\end{exmp}
+
+% TODO: finish above examples
+
+\begin{exmp}
+    $X_i \sim \mathcal{N}$
+    Also a two-parameter exponential family of distributions with
+    \[
+        \eta(\theta) = \left( \frac{1}{\theta}, -\frac{1}{2\theta^2} \right), T(x) = \left( \sum_{i=1}^n x_i, \sum_{x=1}^n x_i^2 \right), h(x) = \left( \frac{1}{\sqrt{2\pi}}\right)^n
+    \]
+    and log-partition function
+    \[
+        A(\eta) = \frac{n}{2} - \frac{n}{2} \log(-\eta 2)
+    \]
+    As discussed, in this case the two-dimensional sufficient statistic
+    \[
+        T(X) = \left( \sum_{i=1}^n X_i, \sum_{i=1} X_i^2 \right)
+    \]
+    is not complete for any $n \geq 1$.
+
+\end{exmp}
+
+\begin{exmp}
+    Uniform with unknown support. Recall that for each $i \in [n]$, the likelihood function
+    \[
+        f_\theta(x_i) = \frac{1}{\theta} 1_{\{x_i \leq 0\}}
+    \]
+    If the support depends on $\theta$, then it is not an exponential family. In this case, the sum is not a sufficient statistic, but the max is.
+    \[
+        T(X) = \max_{i \in [n]} X_i
+    \]
+    rather than
+    \[
+        T(X) = \sum_{i=1}^n X_i
+    \]
+\end{exmp}
+\noindent Distributions and moments of $T(X)$

@@ -1,0 +1,182 @@
+\chapter{UMVUE III}
+\marginpar{\small\textbf{Feb. 5}}
+Assume that our likelihood function $f_\theta(x)$ satisfies the following two regularity assumptions:
+\begin{enumerate}
+    \item The support $\{x : f_\theta(x) > 0 \}$ does not depend on $\theta$
+    \item For any scalar statistic $T(X)$ such that $\E_\theta[|T(X)|] < \infty$ for all $\theta \in \Theta$,
+          \[
+              \nabla_\theta (\E_\theta[T(X)] = \int_{\Xc} T(x) \nabla_\theta (f_\theta(x)) \, dx
+          \]
+\end{enumerate}
+Under the above regularity assumptions, the function
+\[
+    s_\theta(x) := \nabla_\theta(\log f_\theta(x))
+\]
+is known as the (Fisher) score function. The fundamental identity of score function
+\[
+    \E_\theta[s_\theta(X)T(X)] = \nabla_\theta(\E_\theta[T(X)])
+\]
+for any scalar statistic $T(X)$ such that $\E_\theta[|T(X)|] < \infty$ for all $\theta \in \Theta$. Proof of this:
+\begin{align*}
+    \E_\theta[s_\theta(X)T(X)] & = \int_{\Xc} s_\theta(x)T(x)f_\theta(x) \, dx                        \\
+                               & = \int_{\Xc} \nabla_\theta (\log f_\theta(x)) T(x) f_\theta(x) \, dx \\
+                               & = \int_{\Xc} \nabla_\theta(f_\theta(x)) T(x) \, dx                   \\
+                               & = \nabla_\theta \bp{\int_{\Xc} f_\theta(x) T(x) \, dx}               \\
+                               & = \nabla_\theta (E_\theta[T(X)])
+\end{align*}
+Applying the score identity with $T(x) = 1$ gives
+\[
+    \E_\theta[s_\theta(X)] = \nabla_\theta (\E_\theta[1]) = 0
+\]
+i.e., the score function $s_\theta(X)$ always has a zero mean. The covarience matrix of the score function
+\[
+    \Var_\theta[s_\theta(X)] = \E_\theta[s_\theta(X)s_\theta^t (X)]
+\]
+is known as the Fisher information matrix or, in short, Fisher information, and is usually denoted by $I(\theta)$. If the log-likelihood $\log f_\theta(x)$ is twice differentiable with respect to $\theta$ and under the additional regularity assumption that for any scalar
+statistic $T(x)$ such that $\E_\theta[|T(X)|] < \infty$ for all $\theta \in \Theta$,
+\[
+    \nabla_\theta^2 (\E_\theta[T(x)]) = \int_{\Xc} T(x) \nabla_\theta^2 (f_\theta(x)) \, dx
+\]
+We have
+\[
+    \nabla_\theta^2 (\log f_\theta(x)) = \frac{\nabla_\theta^2 (f_\theta(x))}{f_\theta(x)} - s_\theta(x) s_\theta^t(x)
+\]
+and hence, by taking expectation of both sides,
+\[
+    I(\theta) = -\E_\theta[\nabla_\theta^2 (\log f_\theta(x))]
+\]
+Note that $-\frac{\partial^2}{\partial \theta^2} \log f_\theta(x)$ is the curvature of the log-likelihood $\log f_\theta(x)$ with respect to $\theta$ for a given $x$, so Fisher information measures the average curavature of the log-likelihood $\log f_\theta(x)$ at a given value of $\theta$.
+\section{Re-parameterization}
+Sometimes the likelihood function $f_\theta(x)$ can be re-parameterized in terms of a more natural parameter
+\[
+    \eta = \eta(\theta)
+\]
+In this case, it is usually much easier to first work with the re-parameterized model $\tilde{f}_\eta (x)$ and then translate the result back to the original model $f_\theta(\theta)$. \\
+
+\noindent More specifically, let $s_\eta (x)$ and $I(\eta)$ be Fisher score and the Fisher information with respect to the parameter $\eta$, respectively. If $\eta = \eta(\theta)$ is a continuous and differentiable mapping from
+$\theta$ to $\eta$, we have
+\[
+    s_\theta(x) = \nabla_\theta \bp{\log \tilde{f}_\eta(x)} = J_\eta^t \nabla_\eta \bp{\log \tilde{f}_\eta (x)} = J_\eta^t s_\eta(x)
+\]
+where $J_\eta = \left[ \frac{\partial \eta_i}{\partial \theta_j}\right]$ is the Jacobian of $\eta = \eta(\theta)$.
+
+\section{Exponential family of distributions}
+In particular, an exponential family of distributiosn can be re-parameterized in terms of the natural parameter $\eta$ as:
+\[
+    \tilde{f}_\eta(x) = h(x) \exp (\eta^t T(x) - A(\eta))
+\]
+Note that the score function with respect to the natural parameter can be calculated as:
+\begin{align*}
+    s_\eta(x) = \nabla_\eta \log \tilde{f}_\eta(x)    & = T(x) - \nabla_\eta A(\eta) \\
+    \text{and  } \nabla_\eta^2 \log \tilde{f}_\eta(x) & = -\nabla_\eta^2 A(\eta)
+\end{align*}
+The Fisher information with respect to $\eta$ is thus given by
+\[
+    I(\eta) = -\E_\eta \left[ \nabla_\eta^2 \log \tilde{f}_\eta (x)\right] = \nabla_\eta^2 A(\eta)
+\]
+By the re-parameterization formula, the Fisher information with respect to $\theta$ is given by
+\[
+    I(\theta) = J_\eta^t I(\eta) J_\eta = J_\eta^t \nabla_\eta^2 A(\eta) J_\eta
+\]
+\subsubsection{Additivity over independent measurements}
+Let $X = (X_1, \dots, X_n)$ be an observation of $n$ independent measurements:
+\[
+    f_\theta(x) = \prod_{i=1}^n f_\theta(x_i)
+\]
+It follows that the score function
+\[
+    s_\theta(x) = \sum_{i=1}^{n} s_\theta (x_i)
+\]
+By the independence of the measurements, the Fisher information
+\[
+    I_n(\theta) = \Var_\theta[s_\theta(X)] = \sum_{i=1}^n \Var_\theta[s_\theta(X_i)] = n I_1(\theta)
+\]
+i.e., Fisher information is additive over independent measurements.
+\section{Cramer-Rao lower bound (CRLB)}
+Assume that the likelihood function $f_\theta(x)$ satisfies the aforementioned regularity assumptions. We have
+\[
+    \Var_\theta[\hat{g}(X)] \geq J_\phi I^{-1} (\theta) J_\phi^t, \quad \forall \theta \in \Theta
+\]
+for any estimator $\hat{g}(X)$ of $g(\theta)$ where
+\[
+    \phi(\theta) := \E_\theta[\hat{g}(X)],
+\]
+and $J_\phi = \left[ \frac{\partial\phi}{\partial \theta_j}\right]$ is the Jacobian of $\phi = \phi(\theta)$. In particular, if $\hat{g}(X)$ is unbiased, we have
+$\phi(\theta) = g(\theta)$ and hence
+\[
+    \Var_\theta[\hat{g}(X)] \geq J_g I^{-1}(\theta) J_g^t, \quad \forall \theta \in \Theta
+\]
+Therefore, any unbiased estimator whose variance equals
+\[
+    J_g I^{-1} (\theta) J_g^t
+\]
+is the UMVUE for $g(\theta)$.
+
+\begin{proof}
+    Let us assume that $\theta$ is a scalar parameter. The vector case follows essentially the same idea, just requiring more machinery. By the Cauchy-Schwarz inequality, we have
+    \[
+        \Var_\theta [s_\theta(X)] \Var_\theta[\hat{g}(X)] \geq (\Cov_\theta[s_\theta(X), \hat{g}(X)])^2
+    \]
+    so
+    \[
+        \Var_\theta[\hat{g}(X)] \geq \frac{(\Cov_\theta[s_\theta(X), \hat{g}(X)])^2}{\Var_\theta[s_\theta(X)]}
+    \]
+    Recall that
+    \[
+        \E_\theta[s_\theta(X)] = 0, \quad \text{and} \quad \Var_\theta[s_\theta(X)] = I(\theta)
+    \]
+    We thus have
+    \[
+        \Var_\theta[\hat{g}(X)] \geq \frac{(\Cov_\theta[s_\theta(X), \hat{g}(X)])^2}{I(\theta)}
+    \]
+    By the score identity, the covariance
+    \[
+        \Cov_\theta[s_\theta(X), \hat{g}(X)] = \E_\theta[s_\theta(X)\hat{g}(X)] - \E_\theta[s_\theta(X)] \E_\theta[\hat{g}(X)] = \frac{d}{d\theta} \E_\theta[\hat{g}(X)] = \frac{d}{d\theta} \phi(\theta)
+    \]
+    It follows that
+    \[
+        \Var_\theta[\hat{g}(X)] \geq \frac{(\frac{d}{d\theta}g(\theta))^2}{I(\theta)}
+    \] for all $\theta \in \Theta$.
+\end{proof}
+\section{Efficient estimators}
+In statistics, we say $\hat{g}(X)$ is an efficient estimator of $g(\theta)$ if it is unbiased and its variance equals the CRLB. By definition, an efficient estiamator, if exists, must be the UMVUE. However, the variance of the UMVUE may be strictly greater than the CRLB. In this case, an efficient estimator does not exist. Keep in mind that Fisher information and, by extension, CRLB are only defined for likelihood familities that satistify the regularity conditions.
+\subsection{Hammersley-Chapman-Robbins lower bound}
+We have
+\[
+    \Var_\theta[\hat{g}(X)] \geq \sup_{\theta' \in \Theta} \frac{(\phi(\theta')-\phi(\theta))^2}{\E_\theta\left[ (\frac{f_{\theta'}(X)}{f_\theta(X)} - 1)^2\right]}, \quad \forall\theta\in\Theta
+\]
+for any estiamator $\hat{g}(X)$ of $g(\theta)$, where
+\[
+    \phi(\theta) := \E_\theta[\hat{g}(X)]
+\]
+In particular, if $\hat{g}(X)$ is unbiased, we have $\phi(\theta) = g(\theta)$ and hence
+\[
+    \Var_\theta[\hat{g}(X)] \geq \sup_{\theta' \in \Theta} \frac{(g(\theta') - g(\theta))^2}{\E_\theta \left[(\frac{f_{\theta'}(X)}{f_\theta(X)}-1)^2 \right]}, \quad \forall\theta\in\Theta
+\]
+Let $\theta' = \theta + \epsilon$. Under the regularity conditions, it can be shown that
+\[
+    \lim_{||\epsilon|| \to 0} \frac{(\phi(\theta') - \phi(\theta))^2}{\E_\theta \left[(\frac{f_{\theta'}(X)}{f_\theta(X)}-1)^2 \right]} = J_\phi I^{-1} (\theta) J_\phi^t, \quad \forall\theta\in\Theta
+\]
+Therefore, the HCRLB is at least as tight as the CRLB under the regularity conditions. The real power of the HCRLB, however, lies in the fact that it can be applied even when the regularity conditions are not met.
+
+\begin{exmp}
+    Uniform with unknown support $(\theta > 0)$. Here the support of $f_\theta(x)$ depends on $\theta$. Therefore, the regularity
+    conditions are not met for this likelihood family and the CRLB does not apply. In fact, CRLB for any observation consists of $n$ i.i.d. measurements decreases linearly
+    with the sample size $n$.
+
+    However, as shown before, the variance of the UMVUE in this case decreases
+    quadratically with the sample size $n$. To overcome this issue, we can choose $\theta' > \theta`$
+    in the evaluation of the HCRLB, so the support of $f_\theta(x)$ is a subset of the support of $f_{\theta'}(x)$. This gives
+    \[
+        \Var_\theta[\hat{g}(X)] \geq \sup_{\theta' > \theta} \frac{(\theta' - \theta)^2}{\bp{\frac{\theta'}{\theta}}^n - 1} = \sup_{\epsilon > 0} \frac{\theta^2\epsilon^2}{(1+\epsilon)^n - 1}
+    \]
+\end{exmp}
+
+\section{End discussion}
+
+\[
+    \theta = \exp(-\lambda) = \mathbb{P}(X_i = 0) = \exp(-1 \lambda)
+\]
+The only unbiased estimator is $T(X) = (-1)^X$, so estimate is either $-1$ or $1$ depending on the parity of $X$. \\
+
+\noindent We know that $\theta$ can only be positive. Practically, only considering unbiased estimator can have negative consequences.

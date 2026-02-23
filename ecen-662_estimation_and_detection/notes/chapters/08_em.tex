@@ -1,0 +1,172 @@
+\chapter{Expectation-Maximization}
+\marginpar{\small\textbf{Feb. 12}}
+
+In general, finding MLE requires iterative numerical techniques. Gradient descent methods for
+minimization as Newton-Raphson and Fisher's scoring methods are commonly used. Here we discuss a method known as
+expectation-maximization (EM) algorithm, which is specifically designed for computing MLE for models with latent variables.
+\section{Models with latent variables}
+Let $(X,U) \sim f_\theta(x, u)$, where $X$ is the observation and $U$ is the unobserved/latent variable. We seek the ML estimate of $\theta$ based on the observation $X$:
+\[
+    \hat{\theta}(x) \in \arg\max_{\theta\in\Theta} \log f_\theta(x)
+\]
+where
+\[
+    f_\theta(x) = \int_{\Uc} f_\theta(x, u) \, du
+\]
+The above obtimization problem can be difficult to solve analytically due to the marginalization of the latent variables,
+which occurs inside the logarithm of the objective function.
+\subsection{Mixture Gaussian model}
+Let $X = (X_1, \dots, X_n)$ and $U = (U_1, \dots, U_n)$, where $(X_i, U_i)$ are i.i.d. according to:
+\[
+    U_i \sim Cat(u_i; \pi_1, \dots, \pi_K) \quad\text{and}\quad X_i|U_i \sim \Nc(x_i; \mu_{i_i}, \sigma_{u_i}^2)
+\]
+Marginalizing over $U_i$ gives
+\[
+    f_\theta(x_i) = \sum_{k=1}^K \pi_k \Nc(x_i; \mu_k, \sigma_k^2)
+\]
+which is a mixture Gaussian distribution, and
+\[
+    \theta = (\pi_1, \dots, \pi_k, \mu_1, \dots, \mu_K, \sigma_1^2, \dots, \sigma_K^2)
+\]
+is the unknown parameter. The log-likelihood for all measurements is given by
+\[
+    \log f_\theta(x) = \sum_{i=1}^n \log f_\theta(x_i) = \sum_{i=1}^n \log \bp{\sum_{k=1}^K \pi_k \Nc (x_i; \mu_k, \sigma_k^2)}
+\]
+\subsubsection{Finding MLE for $(\mu_1, \dots, \mu_K)$}
+Assume for the moment that $(\pi_1, \dots, \pi_K)$ and $(\sigma_1^2, \dots, \sigma_K^2)$ are known. To find the MLE
+for $(\mu_1, \dots \mu_K)$, note that for any $j \in [K]$ we have
+\[
+    \frac{\partial}{\partial \mu_j} \log f_\theta(x) = \sum_{i=1}^n \frac{\tilde{\pi}_j(x_i)(x_i - \mu_j)}{\sigma_j^2}
+\]
+where
+\[
+    \tilde{\pi}_j (x_i) = \frac{x_i \Nc(x_i; \mu_j, \sigma_j^2}{\sum_{k=1}^K x_i \Nc (x_i; \mu_k, \sigma_k^2)} = \mathbb{P}_\theta(U_i = j | X_i = x_i)
+\]
+Setting the partial derivatives equal to zero for all $j$ gives the following set of equations:
+\[
+    \sum_{i=1}^n \frac{\tilde{\pi_j}(x_i)(x_i - \mu_j)}{\sigma_j^2} = 0, \quad\forall j\in[K]
+\]
+for which the solution for $(\mu_1, \dots, \mu_K)$ is the MLE.
+\subsubsection{A vicious circle}
+Note that if $\tilde{\pi}_j(x_i)$'s are known, the above equations are separate for each
+$\mu_j$ and hence are very easy to solve: % TODO: here, replace pi with x_i (he is updating notes )
+\[
+    \mu_j = \frac{\sum_{i=1}^n \tilde{\pi}_j(x_i)x_i}{\sum_{i=1}^n \tilde{\pi}_j(x_i)}, \quad\forall j\in[K]
+\]
+However, in reality, $\tilde{\pi}_j(x_i)$'s depend on $(\mu_1, \dots, \mu_K)$ and hence are unknown. Therefore,
+the above equations are interlocked and hence are very difficult to solve. This is a common challenge for
+finding the MLE for models with latent variables. We are now in the following situation:
+\begin{enumerate}
+    \item If we know $\tilde{\pi}_j(x_i)$'s, we can solve for $\mu_j$'s
+    \item If we know $\mu_j$'s, we can compute $\tilde{\pi}_j(x_i)$'s
+\end{enumerate}
+\section{An iterative procedure}
+A successive approximation procedure:
+\begin{enumerate}
+    \item Initialize $(\mu_1, \dots, \mu_K)$
+    \item Evaluate the posterior probabilities $(\tilde{\pi}_1(x_i), \dots, \tilde{\pi}_K(x_i)), i \in [n]$ using the current value of $(\mu_1, \dots, \mu_K)$
+    \item Update the value for $(\mu_1, \dots, \mu_K)$ using the posterior probabilities from Step 2
+    \item Stop if the value for $(\mu_1, \dots, \mu_K)$ has already converges; otherwise go back to Step 2
+\end{enumerate}
+Next, we shall generalize the above prodedure to general likelihood models with latent variables, and the resulting procedure is known as
+the expectation-maximization (EM) algorithm.
+\section{A variational characterization of the log-likelihood}
+The main idea behind the EM algorithm is the following variational characterization of the log-likelihood:
+\[
+    \log f_\theta(x) = \max_{q} F(q, \theta)
+\]
+where
+\begin{align}
+    F(q,\theta) & = \log f_\theta(x) - D_{KL}(q(u)|| f_\theta(u|x)) \\
+                & = \E_q[\log f_\theta(x, U)] - \E_q[\log q(U)],
+\end{align}
+and both expectations are over $U \sim q(u)$. The main advantage of this variational characterization
+is that it allows us to rewrite the problem of finding the MLE as a double-maximization problem:
+\[
+    (\hat{\theta}, q^*) \in \arg \max_{(\theta, q)} F(q, \theta)
+\]
+\begin{proof}
+    First note that by the information inequality, for any density function $q$ we have
+    \[
+        D_{KL}(q(u) || f_\theta(u|x)) \geq 0
+    \]
+    where the equality holds if and only if
+    \[
+        q(u) = f_\theta(u | x), \quad\forall u \in\Uc
+    \]
+    We thus have
+    \[
+        \log f_\theta(x) \geq \log f_\theta(x) - D_{KL}(q(u) || f_\theta(u | x))
+    \]
+    where the equality holds if and only if
+    \[
+        q(u) = f_\theta(u | x), \quad\forall u \in \Uc
+    \]
+    and hence
+    \[
+        \log f_\theta(x) = \max_{q} (\log f_\theta(x) - D_{KL}(q(u) || f_\theta(u|x)))
+    \]
+    Further note that
+    \begin{align*}
+        \log f_\theta & (x) - D_{KL}(q(u) || f_\theta(u | x))                                  \\
+                      & = \log f_\theta(x) - (\E_q[\log q(U)] - \E_q[\log f_\theta(U|x)])      \\
+                      & = \E_q [\log f_\theta(x)] + \E_q[\log f_\theta(U|x)] - \E_q[\log q(U)] \\
+                      & = \E_q [\log (f_\theta(x)f_\theta(U|x))] - \E_q[\log q(U)]             \\
+                      & = \E_q[\log f_\theta(x, U)] - \E_q[\log q(U)]
+    \end{align*}
+\end{proof}
+We have thus proved that (2.1) and (2.2) are in fact equivalent to each other.
+
+\section{Finding MLE via alternating maximization}
+Recall that the MLE can be found by solving the double-maximization problem:
+\[
+    \max_{(\theta, q)} F(q, \theta)
+\]
+Consider the following alternating-maximization strategy for solving the above double-maximization problem:
+\begin{enumerate}
+    \item Initialize $\theta = \theta^{(0)}$ and $t=1$
+    \item Repeat the following steps until the values of $(\theta, q)$ converge:
+          \begin{enumerate}
+              \item Fix $\theta = \theta^{(t-1)}$ and find
+                    \[
+                        q^{(t)} \in \arg\max_{q}F\bp{q,\theta^{(t-1)}}
+                    \]
+              \item Fix $q = q^{(t)}$ and find
+                    \[
+                        \theta^{(t)} = \arg\max_{\theta}F\bp{q^{(t)}, \theta}
+                    \]
+              \item $t \leftarrow t + 1$
+          \end{enumerate}
+\end{enumerate}
+The problem of fixing $\theta = \theta^{(t-1)}$ and finding
+\[
+    q^{(t)} \in \arg\max_{q}F\bp{q,\theta^{(t-1)}}
+\]
+is trivial. By the information inequality,
+\[
+    q^{(t)}(u) = f_{\theta^{(t-1)}} (u|x),\quad\forall u\in\Uc
+\]
+which gives
+\[
+    F\bp{q^{(t)}, \theta^{(t-1)}} = \log f_{\theta^{(t-1)}}(x)
+\]
+By comparison, the problem of fixing $q=q^{(t)}$ and finding
+\[
+    \theta^{(t)} \in \arg\max_{\theta}F\bp{q^{(t)},\theta}
+\]
+is much more involved. To solve this optimization problem, we shall use expression (2) and write % TODO: fix eqn reference here and above 
+\[
+    F\bp{q^{(t)}, \theta} = \E_{q^{(t)}} [ \log f_\theta(x, U)] - \E_{q^{(t)}} [\log q^{(t)}(U)]
+\]
+Note that the second term in the above expression does \textit{not} involve $\theta$. Thus, $\theta^{(t)}$ can be found by maximizing
+over the first term in the above expression
+\[
+    \theta^{(t)} \in \arg\max_{\theta} \E_{q^{(t)}} [\log f_\theta(x, U)]
+\]
+where
+\[
+    q^{(t)} (u) = f_{\theta^{(t-1)}} (u | x), \quad\forall u\in\Uc
+\]
+The above two equations allow us to continuously update the value of $(\theta, q)$, leading to the famous EM algorithm.
+
+\marginpar{\small\textbf{Feb. 17\textsuperscript{\textdagger}}}

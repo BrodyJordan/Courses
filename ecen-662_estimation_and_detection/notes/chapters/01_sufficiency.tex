@@ -1,0 +1,66 @@
+\chapter{Sufficiency}
+
+Sufficient statistic;
+
+In case where mapping does not lose any information, that statistic is called a `sufficient` statistic.
+Invertible mapping preserves all data.
+
+Want sufficient statistic that compresses data and preserves information...
+
+Sufficient: If conditional distribution does not depend on $\theta$, $f_\theta (x | t)$
+$p_\theta (x | t) = \frac{p_\theta (x)}{p_\theta(t)}$
+
+% thm
+Fisher-Neyman factorization theorem:
+allows us to identify sufficient statistics direclty from the likelihood function $f_\theta(x)$.
+can be taken as a working definion of sufficiency
+THM: let $f_\theta(x)$ be a pdf or pmf of $X$. Stat $T = T(X)$ is sufficient for $\theta$ iff $\exists$ $g_\theta(t)$ and $h(x)$ s.t.: $f_\theta(x) = g_\theta(T(x))h(x)$
+where $h(x)$ does NOT depend on $\theta$
+
+Bernoulli-trials revisited: PMF of X $p_\theta(x) = \theta^{T(x)} (1 - \theta)^{n - T(x)}$
+here $x$ only shows up as part of $T(x)$
+therefore by the Fisher-Neyman thm, $T = \sum_{i=1}^n X_i$ is a sufficient statistic for $\theta$.
+
+$X$ is discrete, so
+\[
+    p_\theta = \sum_{y:T(y)=t} p_\theta(y)
+\]
+thus for any $(x, t)$ such that $T(x)=t$, we have
+\[
+    p_\theta(x | t) = \frac{h(x)}{\sum_{y:T(y)=t}h(y)}
+\]
+now ratio does not depend on $\theta$, so by definition $T=T(x)$ is a sufficient statistic for $\theta$.
+
+If $p_\theta(x) = h(x) g_\theta(T(x))$...
+
+Example: Gaussian with unknown mean. Suppose we observe $X = [X_1, \dots, X_n]^t$, where
+\[
+    X_i \overset{iid}{~} \mathcal{N}(\mu, \sigma^2)
+\]
+where $\sigma^2$ is a known constant and $\mu$ unknown parameter
+
+We have $f_\mu(x_i) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left(- \frac{(x_i - \mu)^2}{2\sigma^2}\right)$ and hence,
+
+$f_\mu = \frac{1}{(2\pi \sigma^2)^{n/2}} \exp \left( \frac{\mu}{}... \right) = g_\mu(T(x)h(x)$
+
+Example: both $\mu$ and $\sigma^2$ unknown and $\theta = [\mu, \sigma^2]^t$ is a two-dimensional vector
+
+We have $f_\theta(x) = \frac{1}{(2\pi \sigma^2)^{n/2}} \exp \left( ... \right)$
+
+with $T(x) = [\sum_{i=1}^n x_i, \sum_{i=1}^n x_i^2]$
+
+Example: Uniform with unknown parameter
+\[
+    X_i \overset{iid}{~} \mathcal{U}(0, \theta)
+\]
+with $\theta > 0$ unknown parameter, want to make inference on upper-bound
+
+We have
+\[
+    f_\theta(x_i) = \frac{1}{\theta} 1_{x_i \leq \theta}
+\]
+for any $x_i \geq 0$, hence
+\[
+    f_\theta(x) = \frac{1}{\theta^n} \Pi_{i=1}^n 1_{x_i \leq \theta} = \frac{1}{\theta^n}1_{\max_{i \in [n]} x_i \leq \theta}
+\]
+Therefore $T(X) = \max_{i \in [n]} X_i$ is a sufficient statistic

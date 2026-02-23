@@ -1,0 +1,1 @@
+Namespace(sh_degree=3, source_path='C:\\Users\\bljor\\Desktop\\689-hw1\\HW1-data', model_path='C:\\Users\\bljor\\Desktop\\689-hw1\\outputs-fast\\run_096_normal', images='images', depths='', resolution=-1, white_background=False, train_test_exp=False, data_device='cuda', eval=True)

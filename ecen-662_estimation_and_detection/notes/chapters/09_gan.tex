@@ -1,0 +1,54 @@
+\chapter{Generative Adversarial Networks}
+\marginpar{\small\textbf{Feb. 19}}
+
+Generative adversarial network (GAN) is a powerful mathematical framework for learning a generative model. There are two distinct features for GAN. First, GAN uses a deterministic generator $g_\theta(z)$ to produce new data samples.
+Second, GAN uses the Jensen-Shannon (JS) divergence to measure the distance between the target data-generating distribution $p_\theta(x)$ and the true data-generating distribution $p(x)$:
+\[
+    D_{JS}(p_\theta \| p) = \frac{D_{KL}(p_\theta \| \frac{p_\theta + p}{2}) + D_{KL}(p \| \frac{p_\theta + p}{2})}{2}
+\]
+where
+\[
+    D_{KL}(p_\theta \| p) = \E_\theta \left[ \log \frac{p_\theta}{p} \right]
+\]
+Note that unlike the K-L divergence, the J-S divergence is symmetric between its two input distributions.
+
+The main challenge for GAN is that the J-S divergence $D_{JS}(p_\theta \| p)$ is very difficult to estimate from the training data examples. One way to address this challenge is through the following variational characterization of the J-S divergence:
+\[
+    D_{JS}(p_\theta \| p) = \max_{d} \frac{\E_{p_{\theta}}[\log d(X)] + \E_p [\log(1 - d(X))] + 2\log 2}{2}
+\]
+where the maximization is over a discriminator $d : \Xc \to [0, 1]$. An immediate consequence of the above variational
+characterization is that the new objective
+\[
+    L(\theta, d) := \E_{p_\theta} [\log d(X)] + \E_p [\log(1 - d(X))]
+\]
+can now be easily estimated from the training data examples
+\[
+    L(\theta, d) \approx \frac{1}{m'} \sum_{i=1}^{m'} \log d(g_\theta(z_i)) + \frac{1}{m} \sum_{i=1}^m \log(1 - d(x_i))
+\]
+where $z_i$'s are i.i.d. samples of the random source $Z$. \\
+
+\noindent The problem of learning a generator can thus be posed as a min-max optimization problem:
+\[
+    \min_{\theta} \max_{d} \bp{\frac{1}{m'} \sum_{i=1}^{m'} \log d(g_\theta(z_i)) + \frac{1}{m} \sum_{i=1}^{m} \log(1 - d(x_i)) }
+\]
+Just like the EM algorithm, one may consider an alternating-optimization strategy for solving the above min-max problem.
+
+\subsection{Proof of the variational characterization}
+First note that
+\begin{align*}
+    \E_{p_\theta} & [\log d(X)] + \E_p[\log(1-d(X))]                                  \\
+                  & = \int_{\Xc} (p_\theta(x) \log d(x) + p(x) \log (1 - d(x))) \, dx
+\end{align*}
+To maximize the above objective over $d$, we can choose $d(x) \in [0,1]$ to maximize
+\[
+    p_\theta(x) \log d(x) + p(x) \log (1 - d(x))
+\]
+for each $x \in \Xc$. Consider for each $x \in \Xc$, the problem of maximizing
+\[
+    g(t) := p_\theta(x) \log t + p(x) \log (1 - t)
+\]
+over $t \in [0,1]$. Setting $g'(t) = 0$ gives:
+\[
+    \frac{p_\theta(x)}{t} - \frac{p(x)}{1-t} = 0 \quad\implies\quad t = \frac{p_\theta(x)}{p_\theta(x) + p(x)}
+\]
+

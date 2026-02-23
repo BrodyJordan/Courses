@@ -1,0 +1,37 @@
+\chapter{Overview}
+
+Suppose that the distribution of random variable $X \in Xc$, is determined by a parameter $\theta \in \Theta$:
+\[
+    X \sim f_\theta(x)
+\]
+Here, the functional form of $f_\theta$ is known, but the value of $\theta$ is unknown. We use $f_\theta$ to denote probability density function (pdf) and $p_\theta$ to denote probability mass function (pmf), and $f_\theta$ for generic descriptions.
+
+In statistical inference, we observe a realization $x$ of $X$ and need to answer some questions about $\theta$, such as:
+\begin{itemize}
+    \setlength\itemsep{-2.5pt}
+    \item Estimation: what is a good guess of $\theta?$
+    \item Detection: is $\theta \in \Theta_1$, or is $\theta \in \Theta_2$?
+\end{itemize}
+
+\begin{enumerate}[label=\textbf{--}, topsep=5pt, itemsep=5pt]
+    \item a
+    \item b
+    \item c
+\end{enumerate}
+
+\marginpar{\small \textbf{Jan. 13}}
+$p_\theta (x_i) = \theta^{x_i} (1-\theta)^{1- x_i}$ piecewise trick.
+
+$p_\theta = \frac{1}{{n \choose t}}$ not dependent on x
+
+\marginpar{\small \textbf{Jan. 15}}
+
+Model $x \propto f(x)$ distribution unknown, parameterized by unknown $\theta$.
+By looking at x, make inference $\theta$. Dependency of $x$ on $\theta$ is only on the distribution.
+
+Statistic: $T = T(x)$ function of random variable; does not depend on $\theta$.
+
+$ T ~ f_\theta(t)$ potentially not as accurate as the inference made from $x$.
+When mapping $T$ is invertible, there is no difference between $x$ and $t$.
+
+If information is sacrificed ($T$ loses information on $\theta$).
