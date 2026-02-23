@@ -1,0 +1,101 @@
+\documentclass{article}
+
+
+\usepackage[letterpaper, margin=0.70in]{geometry}
+\usepackage{hyperref}
+\usepackage{array, booktabs, siunitx}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\usepackage{titlesec}
+\titlespacing*{\section}
+{0pt}{0.1in}{0.1in}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries}  % subsection size
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}  % subsection size
+  {\thesubsection}{1em}{}
+
+\date{}
+\headsep=0.15in
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{ECEN-689}
+\fancyhead[C]{Homework 1: 3DGS}
+\fancyhead[R]{Brody Jordan}
+
+\lstset{language=Python}
+
+\usepackage{titlesec}
+
+\begin{document}
+\section{Environment \& Data Split}
+I trained this model on a Windows 11 machine with an NVIDIA RTX 5080 GPU using Conda with Python 3.9.25 and CUDA 12.8. This open issue has been particularly helpful in resolving Python/CUDA dependency issues with newer architectures: \url{https://github.com/graphdeco-inria/gaussian-splatting/issues/1215}. I utilized the \texttt{--eval} flag with both \texttt{train.py} and \texttt{render.py} to automatically split the dataset for evaluation (1-in-8).
+\section{Metrics}
+I ran several iterations and the best of which achieved the following metrics.
+\begin{figure}[hbpt!]
+    \centering
+    \begin{tabular}{ @{} lll @{} }
+        \toprule
+        Metric    & Value     & Reference Target \\
+        \midrule
+        PSNR (dB) & 24.692144 & $\geq$ 20.0      \\
+        SSIM      & 0.8416514 & $\geq$ 0.80      \\
+        LPIPS     & 0.1698479 & $\leq$ ?         \\
+
+        % "SSIM": 0.841651439666748,
+        % "PSNR": 24.6921443939209,
+        % "LPIPS": 0.16984789073467255
+
+        \bottomrule
+    \end{tabular}
+    \vspace{-0.2in}
+\end{figure}
+
+\section{Screenshots}
+I rendered the scene using the SIBR viewer and captured the following screenshots for ground truth comparison.
+\subsection{Global View}
+\begin{figure}[h!]
+    \centering
+    \vspace{-0.15in}
+    \includegraphics[width=0.55\textwidth]{figures/global.png}
+    \vspace{-0.075in}
+    \caption{Global view of the rendered scene}
+\end{figure}
+\vspace{-0.15in}
+\subsection{NVS Comparison}
+\begin{figure}[h!]
+    \centering
+    \vspace{-0.15in}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/000291.jpg}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/compare.png}
+    \end{subfigure}
+    \vspace{-0.075in}
+    \caption{Comparison of ground truth (left) and rendered image (right)}
+    \label{fig:both}
+\end{figure}
+
+\section{Analysis}
+In the rendered view, I noticed blurring mostly in the background areas and below the horse. Also, the distant foliage and vegetation is quite blurry and is incorrectly placed much closer to the horse. Training took, on average, approximately 6 minutes and 30 seconds to complete 30{,}000 iterations. Using the \texttt{--optimizer\_type sparse\_adam} flag reduced the average training time to approximately 3 minutes.
+% \begin{lstlisting}
+% python convert.py -s path_to_data
+% python train.py -s path_to_data --eval -m output_model_path
+% python render.py -m input_model_path --eval
+% python metrics.py -m input_model_path
+% \end{lstlisting}
+
+\end{document}
