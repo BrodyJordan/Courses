@@ -1,5 +1,6 @@
 \documentclass{article}
 
+<<<<<<< HEAD
 \usepackage[letterpaper, margin=0.70in]{geometry}
 \usepackage{hyperref}
 \usepackage{array, booktabs, siunitx}
@@ -21,6 +22,12 @@
 \titleformat{\subsection}
   {\normalfont\normalsize\bfseries}  % subsection size
   {\thesubsection}{1em}{}
+=======
+\usepackage[letterpaper, margin=0.75in]{geometry}
+\usepackage{hyperref}
+\usepackage{array, booktabs, siunitx}
+\usepackage{fancyhdr}
+>>>>>>> 249e4c317b2a4234368ca0c3c75e714883e8075a
 
 \date{}
 \headsep=0.15in
@@ -31,6 +38,7 @@
 \fancyhead[C]{Homework 1: 3DGS}
 \fancyhead[R]{Brody Jordan}
 
+<<<<<<< HEAD
 \lstset{language=Python}
 
 \usepackage{titlesec}
@@ -40,12 +48,21 @@
 \begin{document}
 \section{Environment \& Data Split}
 I trained this model on a Windows 11 machine with an NVIDIA RTX 5080 GPU using Conda with Python 3.9.25 and CUDA 12.8. This open issue has been particularly helpful in resolving Python/CUDA dependency issues with newer architectures: \url{https://github.com/graphdeco-inria/gaussian-splatting/issues/1215}. I utilized the \texttt{--eval} flag with both \texttt{train.py} and \texttt{render.py} to automatically split the dataset for evaluation (1-in-8).
+=======
+
+\begin{document}
+\section{Environment}
+I trained this model on a Windows 11 machine with an NVIDIA RTX 5080 GPU using Conda with Python 3.9.25 and CUDA 12.8. This open issue has been particularly helpful in resolving Python/CUDA dependency issues: \url{https://github.com/graphdeco-inria/gaussian-splatting/issues/1215}.
+\section{Data Split}
+I utilized the \texttt{--eval} flag to automatically split the dataset for evaluation.
+>>>>>>> 249e4c317b2a4234368ca0c3c75e714883e8075a
 \section{Metrics}
 I ran several iterations and the best of which achieved the following metrics.
 \begin{figure}[hbpt!]
     \centering
     \begin{tabular}{ @{} lll @{} }
         \toprule
+<<<<<<< HEAD
         Metric    & Value     & Reference Target \\
         \midrule
         PSNR (dB) & 24.692144 & $\geq$ 20.0      \\
@@ -98,5 +115,23 @@ In the rendered view, I noticed blurring mostly in the background areas and belo
 % python render.py -m input_model_path --eval
 % python metrics.py -m input_model_path
 % \end{lstlisting}
+=======
+        Metric & Value               & Reference Target \\
+        \midrule
+        PSNR   & 22.797117233276367  & $\geq$ 20.0      \\
+        SSIM   & 0.8152918815612793  & $\geq$ 0.80      \\
+        LPIPS  & 0.18995249271392822 & $\leq$ ?         \\
+
+        \bottomrule
+    \end{tabular}
+    \vspace{-0.15in}
+\end{figure}
+
+\section{Screenshots}
+
+\section{Analysis}
+
+Training took, on average, around 6 minutes and 30 seconds to complete at 30,000 iterations.
+>>>>>>> 249e4c317b2a4234368ca0c3c75e714883e8075a
 
 \end{document}

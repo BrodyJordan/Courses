@@ -2,6 +2,7 @@
 
 \RequirePackage{math}
 
+<<<<<<< HEAD
 \renewcommand\labelitemi{\textbf{--}}
 
 % ---------- basic packages ----------
@@ -17,6 +18,18 @@
 \geometry{
   margin=1in,
   letterpaper,
+=======
+% ---------- basic packages ----------
+\RequirePackage{amsmath, amssymb, amsthm}
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\RequirePackage{hyperref}
+
+% ---------- page layout ----------
+\geometry{
+  margin=1in
+>>>>>>> 249e4c317b2a4234368ca0c3c75e714883e8075a
 }
 
 \setstretch{1.1}
@@ -29,6 +42,7 @@
 \providecommand{\Semester}{}
 
 % ---------- title helper ----------
+<<<<<<< HEAD
 \newcommand{\makecoursetitle}{
     \begin{titlepage}
         \centering
@@ -52,6 +66,16 @@
     \setstretch{1.2}
     \tableofcontents
     \setstretch{1.0}
+=======
+\newcommand{\CourseTitle}{
+  \begin{center}
+    {\Large\bfseries \CourseName}\\[0.5em]
+    {\CourseCode}\\[0.25em]
+    {\Instructor}\\
+    {\Semester}
+  \end{center}
+  \vspace{1em}
+>>>>>>> 249e4c317b2a4234368ca0c3c75e714883e8075a
 }
 
 % ---------- section styling ----------
