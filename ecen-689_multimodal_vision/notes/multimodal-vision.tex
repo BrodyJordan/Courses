@@ -1,14 +1,6 @@
 \documentclass[11pt, oneside]{book}
 
-\usepackage{geometry}[letterpaper]
-\usepackage{amsmath, amssymb, amsthm}
-
-\usepackage{enumitem}
-\newcommand{\R}{\mathbb{R}}
-\usepackage{graphicx}
-\usepackage{math}
 \usepackage{notes}
-
 
 \begin{document}
 
@@ -320,5 +312,52 @@ Then it can warp from one image to another to find the relative information base
 Reference paper: Large Spatial Model: End-to-end Unposed Images to Semantic 3D. \\ 
 
 \noindent Also render the feature map alongside the 2D image. This is using a transformer model. 
+
+\chapter{The 3D World}
+\lecture{Feb. 24}
+Dynamic subjects, static 3D environment, and the observer (camera pose) are information we need to recover.
+
+\section{Mapping Applications}
+Indoor mapping, undersea mapping, undergroup mapping, and space mapping. The robot needs to build a perception system and make decisions with limited 
+computing power. The robot needs a concept of its surrounding, that is why 3D mapping is so important.
+\section{Simultaneous Localization and Mapping (SLAM)}
+Given the robot's controls and observations, get a map of the environment and the path of the robot. Building a map and locating the robot in the map at the same time (chicken-and-egg problem).
+\subsection{Why SLAM is Hard}
+Robot path error correlates errors in the map. \\ 
+
+\noindent In the real world, the mapping between observations and landmarks is unknown. $\dots$ wrong data associations can have catastrophics consequences
+
+
+\subsection{SLAM Categories}
+SLAM Maps can be categorized as either sparse or dense. Achieving real-time dense construction with just single camera is challenging. Existing real-time monocular SLAM systems use mostly sparse methods. \\ 
+
+\noindent Sparse SLAM method, such as ORB-SLAM track a handful of discrete, distinctive keypoints. These methods are lightweight, fast, and provides an accurate camera pose tracking in real time. However, the resulting maps are under modelled (less-detailed). \\
+
+\noindent On the other hand, dense SLAM approaches estimate per-pixel level accurate features from depth across the entire image. This creates a detailed representation of the environment and predicts accurate camera trajectory. However, it is computationally intensive which limits them to operate real time compared to sparse methods.
+
+\section{Front End}
+Closed-loop training using 3D Gaussian and the reference image. 3D Gaussians are used in Dense SLAM, as the entire scene is captured, rather than in Sparse SLAM, where only key points are captured. \\ 
+
+\begin{figure}[h!]
+  \centering 
+  \includegraphics[width=1.0\textwidth, trim=30 300 20 20, clip]{figures/dust3r.pdf}
+\end{figure}
+
+
+\noindent DUST3R: learn a function $F: (I_1, I_2) \to (P_1, P_2)$. Mapping images $I_i[y, x] = (R,G,B)$ to point maps $P_i[y,x] = (X, Y, Z)$. \\ 
+
+\noindent DUST3R made 2-frame prediction feasible, VGGT made 3-frame prediction feasible.
+
+\section{Video to 3D Reconstruction}
+Video $\to$ split to chunks $\to$ 3D reconstruction over chunks $\to$ alignment.
+
+\section{Excessive Gaussian Number}
+\[
+  GS_j = \sum_{i=1}^{MHW} 1(\mathbf{G}(\mathbf{X}_j), r_i) \cdot \sigma_j \cdot \gamma_j (\mathbf{\Sigma})
+\] 
+where $\gamma(\mathbf{\Sigma}) = (V_\text{norm})^\beta$ and $V_\text{norm} = \min\bp{\max\bp{{\frac{V(\mathbf{\Sigma})}{V_\text{max90}}, 0}}, 1}$
+
+\section{Vectree Quantization}
+Paper: LightGaussian
 
 \end{document}
