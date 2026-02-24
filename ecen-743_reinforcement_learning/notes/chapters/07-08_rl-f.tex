@@ -1,0 +1,48 @@
+\chapter{RL with Function Approximation}
+
+\lecture{Feb. 16}
+\section{Linear function approximation}
+Feature vector:
+\[
+    \text{For each } s \in\Sc, \phi(s) \in \R^d, \phi(s) = (\phi_1(s), \phi_2(s), \dots, \phi_d(s))^T
+\]
+Value function is approximated as, $V(s; w) = w^T \phi(s)$, where $w \in \R^d$ is the weight vector. Typically, $d \ll |\Sc|$. Value function approximation is linear in $w$.
+
+\section{Approximation as projection}
+How do we find the best approximation for $V \in \Vc$ in the set $\Vc_\phi = \{\Phi w, w \in \R^d \}$
+\[
+    V_{\text{approx}} = \arg\min_{\tilde{V}\in\Vc_\phi} \norm{V - \tilde{V}}
+\]
+\section{Weighted norm and contraction}
+$T_\pi$ is a contraction w.r.t. $\norm{\cdot}_\infty$, but not w.r.t. $\norm{\cdot}_2$. $\Pi$ is non-expansive w.r.t. $\norm{\cdot}_2$, but expansive w.r.t. $\norm{\cdot}_\infty$.
+How do we ensure that the iteration $V_{k+1} = \Pi T_\pi V_k$ will converge? Define the weighted $L^2$ norm, $\norm{V}_{2,\mu} = \E_{s\sim\mu}[V^2(s)]$ where $\mu$ is a probability distribution over $s$.
+
+\subsection{Jensen's Inequality}
+Let $f : \R^n \to \R$ be a convex function and let $X$ be a random vector. Then, $f(\E[X]) \leq \E[f(X)]$.
+
+\begin{lemma}
+    Contraction property of $T_\pi$ w.r.t. $\norm{\cdot}_{2,\mu}$. Let $\mu$ be the stationary distribution corresponding to $P_\pi$, i.e., $\mu P_\pi = \mu$. Then,
+    $\norm{T_\pi V_1 - T_\pi V_2}_{2, \mu} \leq \gamma \norm{V_1 - V_2}_{2, \mu}$.
+\end{lemma}
+
+\begin{proof}
+    We will first show the following: let $\mu$ be the stationary distribution corresponding to $P_\pi$, i.e., $\mu P_\pi = \mu$. Then, $\norm{P_\pi V}_{2,\mu} \leq \norm{V}_{2\mu}$.
+    \begin{align*}
+        \norm{P_\pi V}_{2, \mu}^2 & = \E_{s\sim \mu} [((P_\pi V)(s))^2] = \sum_{s \in \Sc} \mu(s) \bp{\sum_{s'\in\Sc} P_\pi(s,s')V(s')}^2 \\
+                                  & \leq \sum_{s\in\Sc} \mu(s) \sum_{s'\in\Sc} P_\pi(s,s')V^2(s')                                         \\
+                                  & = \sum_{s'\in\Sc}\sum_{s\in\Sc} \mu(s) P_\pi(s,s') V^2(s')                                            \\
+                                  & = \sum_{s'\in\Sc} \mu(s')V^2(s') = \norm{V}_{2,\mu}^2
+    \end{align*}
+    Then,
+    \begin{align*}
+        \norm{T_\pi V_1 - T_\pi V_2}_{2,\mu} = \norm{(r_\pi)} ...
+    \end{align*}
+\end{proof}
+
+\subsection{Approximation error}
+$\Pi T_\pi$ is a contraction mapping. So, it has a unique fixed point $\bar{V}_\pi$. The iteration $V_{k+1} = \Pi T_\pi V_k$ will converge to $\bar{V}_\pi$. What is the approximation error $\norm{V_\pi - \bar{V}_\pi}_{2,\mu}$?
+\subsubsection{Proposition (approximation error)}
+\[
+    \norm{\Pi V_\pi - V_\pi}_{2,\mu} \leq \norm{\bar{V}_\pi - V_\pi}_{2,\mu} \leq \frac{1}{\sqrt{1-\gamma^2}} \norm{\Pi V_\pi - V_\pi}_{2,\mu}
+\]
+\section{TD Learning with Function Approximation}

@@ -5,12 +5,17 @@
 
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 
 % ---------- math shortcuts ----------
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator*{\argmax}{arg\,max}
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\Cov}{\mathrm{Cov}}
+
 
 % ---- Commands for blackboard letters ----
 
