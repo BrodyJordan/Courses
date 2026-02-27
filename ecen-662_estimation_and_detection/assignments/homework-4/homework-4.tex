@@ -1,0 +1,119 @@
+\documentclass{article}
+
+\input{../../course-info}
+\usepackage[
+    AssignmentName={Homework 4},
+    DueDate={March 3, 2026 at 11:59 PM}
+]{assignment}
+
+\usepackage{cancel}
+
+\begin{document}
+\MakeAssignmentTitle
+
+% ------ PROBLEM 1 ------ %
+\begin{homeworkProblem}
+  Let $\theta > 0$ be an unknown parameter, and let $X = (X_0, X_1, \ldots, X_n)$ where
+  $X_0 \sim Poisson(\theta)$ and for any $i \in [n]$,
+  \[
+    X_i | (X_0, X_1, \ldots, X_{i-1}) \sim Poisson (\theta X_{i-1}).
+  \]
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Find the MLE of $\theta$ based on the observation $X$.
+    \item Compute $I(\theta)$ with respect to the observation $X$. \newline
+  \end{enumerate}
+
+  \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 2 ------ %
+\begin{homeworkProblem}
+  Let $X = (X_1, \ldots, X_n)$, where
+  \[
+    X_i \iid f_\theta(x_i) = \frac{1}{2} \exp(-|x_i - \theta|),
+  \]
+  and $\theta > 0$ is the unknown parameter. Find an MLE of $\theta$. (Hint: Consider the cases where $n$
+  is even and odd separately and find the MLE in terms of the order statistics.) \\
+
+  \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 3 ------ %
+\begin{homeworkProblem}
+  Given a fixed known integer $r > 1$, let $X = X_{i, j} : i \in [n], j \in [r]$ such that
+  \[
+    X_{i, j} \sim \Nc(\mu_i, \sigma^2)
+  \]
+  and $X_{i, j}$’s are mutually independent. The unknown parameters are $\theta = (\mu_1, \ldots, \mu_n, \sigma^2)$, where
+  $\mu_i$ can be any real number for all $i \in [n]$ and $\sigma^2 > 0$.
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Find the MLE of $\theta$.
+    \item Is the MLE asymptotically unbiased for $\sigma^2$ as $n \to \infty$? Can you explain, intuitively, why or why not? \newline
+  \end{enumerate}
+
+  \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 4 ------ %
+\begin{homeworkProblem}
+  Let $X = (X_1, \ldots, X_n)$, where
+  \[
+    X_i \iid \theta f_1(x_i) + (1 - \theta) f_2(x_i).
+  \]
+  Here, $f_1$ and $f_2$ are two different known density functions, and $\theta \in [0,1]$ is the unknown parameter.
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Find a sufficient and necessary condition for which the score equation
+          \[
+            \frac{d}{d\theta} \log f_\theta(x) = 0
+          \]
+          has a unique solution. Show that if the score equation has a unique solution, it is the MLE.
+    \item Find the MLE when the score equation has no solution. \newline
+  \end{enumerate}
+
+  \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 5 ------ %
+\begin{homeworkProblem}
+  You have two biased coins (Coin A and Coin B) with unknown
+  probabilities of landing on heads ($\theta_A$ and $\theta_B$). You pick one coin at random, flip it 10 times, and
+  record the results (e.g., (5H, 5T)). You repeat this five times for a total of 50 flips. You do not know
+  which coin was used for each set of 10 flips. This “which coin” information is the latent variable
+  ($U_i \in \{A, B\}, i = 1, 2, 3, 4, 5$). The goal here is to use the EM algorithm to estimate the true bias
+  ($\theta_A$ and $\theta_B$) for each coin.
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Find an explicit expression for the posterior distribution and the expectation
+          \[
+            q^{(t)} (u) = f_{\theta^{(t-1)}} (u|x) \quad\text{and}\quad \E_{q^{(t)}} [\log f_\theta(x, U)]
+          \]
+          in the E-step and the update rule
+          \[
+            \theta^{(t)} = \arg\max_{\theta} \E_{q^{(t)}} [\log f_\theta(x, U)]
+          \]
+          in the M-step.
+    \item Given that the observations for the five trials are:
+          \[
+            \text{Trial 1 (5H, 5T), Trial 2 (9H, 1T), Trial 3 (8H, 2T), Trial 4 (4H, 6T), Trial 5 (7H, 3T),}
+          \]
+          write a compute program to find the MLE of $\theta = (\theta_A, \theta_B)$. Plot the posterior probabilities
+          $p_{\theta^{(t-1)}}(u_i = A|x)$, $i = 1, 2, 3, 4, 5$ and the estimates $(\theta_A^{(t)}, \theta_B^{(t)})$ as a function of the number
+          of iterations t. \newline
+  \end{enumerate}
+  \solution
+
+\end{homeworkProblem}
+\end{document}
+
