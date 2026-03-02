@@ -25,6 +25,25 @@
 
   \solution
 
+  \textbf{Part (i):}
+  \begin{align*}
+    \Lc (\theta) & = \log P(X_0) + \sum_{i=1}^n \log P(X_i | X_0, X_1, \ldots, X_{i-1})                                                                             \\
+                 & = \left[-\theta + X_0 \log \theta - \log (X_0 !)\right] + \sum_{i=1}^n \left( -\theta X_{i-1} + X_i \log (\theta X_{i-1}) - \log (X_i !) \right) \\
+                 & = -\theta \sum_{i=0}^{n-1} X_i + \left( \sum_{i=0}^n X_i \right) \log \theta + \sum_{i=1}^n X_i \log X_{i-1} - \sum_{i=0}^n \log (X_i !)
+  \end{align*}
+  The derivative w.r.t. $\theta$
+  \begin{align*}
+    \frac{d}{d\theta} \Lc (\theta) & = -\sum_{i=0}^{n-1} X_i + \frac{1}{\theta} \sum_{i=0}^n X_i.
+  \end{align*}
+  Therefore, the MLE of $\theta$ is
+  \[
+    \hat{\theta} = \frac{\sum_{i=0}^n X_i}{\sum_{i=0}^{n-1} X_i}
+  \]
+  \textbf{Part (ii):}
+  \begin{align*}
+    I(\theta) & = -\E \left[ \frac{d^2}{d\theta^2} \Lc (\theta) \right] = -\E \left[ -\frac{1}{\theta^2} \sum_{i=0}^n X_i \right] = \frac{1}{\theta^2} \E \left[ \sum_{i=0}^n X_i \right] = \frac{(n+1)\theta}{\theta^2} = \frac{n+1}{\theta}
+  \end{align*}
+
 
 \end{homeworkProblem}
 
@@ -40,6 +59,14 @@
   is even and odd separately and find the MLE in terms of the order statistics.) \\
 
   \solution
+
+  Maximizing the objective function
+  \[
+    \hat{\ell}(\theta) = \sum_{i=1}^n \log f_\theta(x_i) = \sum_{i=1}^n \log \left[ \frac{1}{2} \exp(-|x_i - \theta|) \right] = -n \log 2 - \sum_{i=1}^n |x_i - \theta|
+  \]
+  The MLE of $\theta$ is the median of the order statistics.
+
+
 
 \end{homeworkProblem}
 
@@ -59,6 +86,22 @@
   \end{enumerate}
 
   \solution
+
+  \textbf{Part (i):}
+  \begin{align*}
+    \ell(\mu_i, \sigma^2) & = \sum_{i=1}^n \sum_{j=1}^r \log \left[ \frac{1}{\sqrt{2\pi \sigma^2}} \exp\left( -\frac{(x_{i,j} - \mu_i)^2}{2\sigma^2} \right) \right] \\
+                          & = -nr \log \sqrt{2\pi\sigma^2} - \frac{1}{2\sigma^2} \sum_{i=1}^n \sum_{j=1}^r (x_{i,j} - \mu_i)^2
+  \end{align*}
+  The MLE of w.r.t.\ $\mu_i$:
+  \[
+    \frac{d}{d\mu_i} \left( -\frac{1}{2\sigma^2} \sum_{i=1}^n \sum_{j=1}^r (x_{i,j} - \mu_i)^2 \right) = \frac{1}{\sigma^2} \sum_{i=1}^n \sum_{j=1}^r (x_{i,j} - \mu_i) = 0 \quad\implies\quad \hat{\mu}_i = \frac{1}{r} \sum_{i=1}^n \sum_{j=1}^r x_{i,j}.
+  \]
+  Similarly for $\sigma^2$:
+  \[
+    \frac{d}{d\sigma^2} \ell(\mu_i, \sigma^2) = \frac{nr}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i=1}^n \sum_{j=1}^r (x_{i,j} - \mu_i)^2 = 0 \quad\implies\quad \hat{\sigma}^2 = \frac{1}{nr} \sum_{i=1}^n \sum_{j=1}^r (x_{i,j} - \hat{\mu}_i)^2.
+  \]
+  \textbf{Part (ii):}
+  The MLE is not asymptotically unbiased for $\sigma^2$ as $n \to \infty$, as the number
 
 \end{homeworkProblem}
 
@@ -81,6 +124,12 @@
   \end{enumerate}
 
   \solution
+
+  \textbf{Part (i):}
+  The score function has a unique solution if and only if $f_1$ and $f_2$ are convex functions. \\
+
+  \textbf{Part (ii):} When the score equation has no solution, the MLE is either $\hat{\theta} = 0$ or $\hat{\theta} = 1$.
+
 
 \end{homeworkProblem}
 
@@ -113,6 +162,14 @@
           of iterations t. \newline
   \end{enumerate}
   \solution
+
+  \textbf{Part (i):} Using Bayes’ theorem
+  \[
+    q^{(t)} (u) = f_{\theta^{(t-1)}} (u|x) = \frac{f_{\theta^{(t-1)}} (x|u) f_{\theta^{(t-1)}} (u)}{f_{\theta^{(t-1)}} (x)}
+  \]
+
+  \textbf{Part (ii):} $\hat{\theta} = (0.58, 0.71)$
+
 
 \end{homeworkProblem}
 \end{document}
