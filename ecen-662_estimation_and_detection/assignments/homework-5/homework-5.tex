@@ -1,0 +1,49 @@
+\documentclass{article}
+
+\input{../../course-info}
+\usepackage[
+    AssignmentName={Homework 5},
+    DueDate={March 8, 2026 at 11:59 PM}
+]{assignment}
+
+\usepackage{cancel}
+
+\begin{document}
+\MakeAssignmentTitle
+
+% ------ PROBLEM 1 ------ %
+\begin{homeworkProblem}
+  Let $X = (X_1, X_2)$ where
+  \[
+    X_i \iid Exp(\theta)
+  \]
+  \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+    \item Find the UMVUE for $1/\theta$.
+    \item Show that the geometric mean $\sqrt{X_1 X_2}$ has a smaller MSE than the UMVUE for all $\theta > 0$.
+    \item Find another estimator that has an even smaller MSE for all $\theta > 0$. \newline
+  \end{enumerate}
+
+  \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 2 ------ %
+\begin{homeworkProblem}
+  Let $X = (X_1, \ldots, X_n)$ wher e
+  \[
+    X_i \iid f_\theta(x_i) = \exp(-(x_i - \theta)) 1_{\{ x_i \geq \theta \}}.
+  \]
+  \begin{enumerate}[label=(\alph*), topsep=5pt, itemsep=5pt]
+    \item Find the MLE of $\theta$ and calculate its bias and MSE.
+    \item Find the UMREE of $\theta$ under the squared-error loss and calculate its bias and MSE. How do you compare them with those of the MLE? \newline
+  \end{enumerate}
+
+  \solution
+
+\end{homeworkProblem}
+
+\end{document}
+
