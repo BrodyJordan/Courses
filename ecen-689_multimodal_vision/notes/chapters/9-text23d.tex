@@ -1,0 +1,34 @@
+\chapter{Text to 3D Content Generation}
+
+\section{DreamFusion, the Text to 3D Framework}
+Given a caption, DreamFusion generates relightable 3D objects with high-fidelity appearance, depth, and normals. Objects are represented as a Neural Radiance Field and leverage a pretrained text-to-image diffusion prior such as Imagen.
+\section{3D Diffusion Models}
+\subsection{Point clouds}
+ShapeGF (Cai et al., 2020); DPM (Luo and Hu, 2021); LION (Nichol et al., 2022).
+\subsection{Voxel representation}
+PVD (Zhou et al., 2022); Diffusion-SDF (Li et al., 2022).
+\subsection{Latent representation}
+SDFusion (Cheng et al., 2022); DiffusionSDF (w/o hyphen, Chou et al., 2023).
+\subsection{Triplane representation}
+NFD (Shue et al., 2022).
+\subsection{Diffusion in the spectral domain}
+NeuraWavelet (Hui et al., 2022).
+\section{Diffusion w/ Different Representations}
+\subsection{Implicit representation (latent features)}
+Latent diffusion is an example of this. Best quality of the generated data, but requires retraining for each conditional generation setup (everything must be aligned).
+\subsection{Explicit representation (pixels in images)}
+The original DDPM model for images. This method has suboptimal performance due to the high dimensionality and cannot change the resolution of the data. It can be directly leveraged in conditional generation setups in a zero-shot manner, however. 
+
+\section{3D Data Deficiency}
+We have a small-scale 3D dataset, but images on an internet scale. The LAION 2D dataset is over 5.8 billion, whereas the ObjaverseXL 3D dataset is only 10 million.
+\subsection{3D reconstruction by NeRF or Gaussian Splatting}
+We can use input images to reconstruct and render a 3D scene for use in our 3D projects. \\ 
+
+\noindent NeRF/3DGS optimization flow:
+\begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=1pt]
+  \item Render a NeRF representation into a specific view.
+  \item Compute the difference with the given image.
+  \item Update the NeRF using gradient descent.
+\end{enumerate}
+
+Can we perform NeRF reconstruction with a few images? DietNeRF answers this by using priors learned by CLIP, a text-image model. The idea is to keep the standard image loss 
