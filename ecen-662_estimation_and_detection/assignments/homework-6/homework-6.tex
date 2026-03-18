@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\input{../../course-info}
+\usepackage[
+    AssignmentName={Homework 6},
+    DueDate={March 25, 2026 at 11:59 PM}
+]{assignment}
+
+\usepackage{cancel}
+
+\begin{document}
+\MakeAssignmentTitle
+
+% ------ PROBLEM 1 ------ %
+\begin{homeworkProblem}
+
+  Consider a Gaussian Mixture Model (GMM) with two well-separated modes:
+  \[
+    p(\theta) = 0.5 \cdot \Nc(\theta;-3, 1) + 0.5 \cdot \Nc(\theta;3, 1),
+  \]
+  where $\Nc(\theta;\mu,\sigma^2)$ is a Gaussian density with mean $\mu$ and variance $\sigma^2$. Our goal is to approximate the above GMM using the variational
+  distribution:
+  \[
+    q_\lambda(\theta) = \Nc(\theta; \mu, \sigma^2),
+  \]
+  where the variational parameter $\lambda = (\mu, \sigma)$.
+  \begin{enumerate}[label=\roman*), topsep=5pt, itemsep=5pt]
+    \item Derive the explicit update rule for both $\mu$ and $\sigma$ using the re-parameterization trick.
+    \item Write a computer program to find the optimal variational distribution for the
+          above GMM model. Try multiple initial values for $\mu$ and $\sigma$ and describe how the value of
+          $\mu$ and $\sigma$ change over the iterations.
+    \item Repeat Part ii) for the following updated GMM model:
+          \[
+            p(\theta) = 0.5 \cdot \Nc(\theta;-3, 4) + 0.5 \cdot \Nc(\theta;3, 0.25).
+          \]
+  \end{enumerate}
+
+  \solution
+
+
+\end{homeworkProblem}
+
+\end{document}
+
