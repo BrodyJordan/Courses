@@ -37,6 +37,69 @@
 
   \solution
 
+  \textbf{Part (i):} ELBO:
+  \[
+    \Lc(\mu, \sigma) = \E_{q_{\lambda}} [\log q_\lambda(\theta) - \log p (\theta)]
+  \]
+  So
+  \[
+    \Lc(\mu, \sigma) = \E_{\epsilon \sim \Nc(0, 1)} [\log q_\lambda(\mu + \sigma \epsilon) - \log p (\mu + \sigma \epsilon)]
+  \]
+  Which becomes
+  \[
+    \Lc(\mu, \sigma) = - \frac{1}{2} \log (2\pi \sigma^2) - \E_{\epsilon \sim \Nc(0, 1)} [\log p (\mu + \sigma \epsilon)]
+  \]
+  Now taking the gradients:
+  \[
+    \nabla_\mu \Lc(\mu, \sigma) = - \E_{\epsilon \sim \Nc(0, 1)} [\nabla_\theta \log p (\theta)]
+  \]
+  \[
+    \nabla_\sigma \Lc(\mu, \sigma) = - \frac{1}{\sigma} - \E_{\epsilon \sim \Nc(0, 1)} [\epsilon \cdot \nabla_\theta \log p (\theta)]
+  \]
+  Thus we update $\mu$ an $\sigma$ as follows:
+  \begin{align*}
+    \mu    & \leftarrow \mu + \alpha \nabla_\theta \log p (\mu + \sigma \epsilon)                                                     \\
+    \sigma & \leftarrow \sigma + \alpha \left( \frac{1}{\sigma} + \epsilon \cdot \nabla_\theta \log p (\mu + \sigma \epsilon) \right)
+  \end{align*}
+
+  \textbf{Part (ii):}
+
+  \begin{table}[hp!]
+    \centering
+    \begin{tabular}{c|c|c}
+      Initial $\mu$ & Initial $\sigma$ & Final $(\mu, \sigma)$ \\
+      \hline
+      -3            & 1                & (-3.04, 1.01)         \\
+      -3            & 3                & (-3.02, 1.01)         \\
+      0             & 1                & (-0.13, 2.74)         \\
+      0             & 3                & (0.16, 2.84)          \\
+      3             & 1                & (3.06, 1.00)          \\
+      3             & 3                & (2.96, 1.03)          \\
+    \end{tabular}
+  \end{table}
+  \pagebreak
+
+  \textbf{Part (iii):} Rerunning but now with
+  \[
+    p(\theta) = 0.5 \cdot \Nc(\theta;-3, 4) + 0.5 \cdot \Nc(\theta;3, 0.25)
+  \]
+  yields
+
+  \begin{table}[hp!]
+    \centering
+    \begin{tabular}{c|c|c}
+      Initial $\mu$ & Initial $\sigma$ & Final $(\mu, \sigma)$ \\
+      \hline
+      -3            & 1                & (-2.04, 2.79)         \\
+      -3            & 3                & (-1.96, 2.62)         \\
+      0             & 1                & (-2.06, 2.82)         \\
+      0             & 3                & (-2.09, 2.62)         \\
+      3             & 1                & (3.01, 0.51)          \\
+      3             & 3                & (3.01, 0.51)          \\
+    \end{tabular}
+  \end{table}
+
+
 
 \end{homeworkProblem}
 
