@@ -116,3 +116,19 @@ The gradient can then be computed easily.
 % $a = \mu_\phi(s) + \epsilon = f_\phi(\epsilon; s)
 
 \section{Twin Delayed Deep Deterministic Policy Gradient (TD3) Algorithm}
+\subsection{Deterministic Policy Gradient}
+Recall the (stochastic) policy gradient theorem 
+\[
+  \nabla V_{\pi_\theta} = \frac{1}{(1-\gamma)} \E_{(s,a) \sim \rho_{\pi_\theta}(\cdot, \cdot)} [\nabla_\theta \log \pi_\theta (s,a) Q_{\pi_\theta}(s,a)]
+\] 
+\begin{theorem}
+Deterministic policy gradient theorem. \\ 
+
+Let $\pi_\theta$ be a deterministic policy. Then 
+\[
+  \nabla_\theta V_{\pi_\theta} = \frac{1}{(1-\gamma)} \E_{s\sim\rho_{\pi_\theta}(\cdot)}[\nabla_\theta \pi_\theta(s) \nabla_a Q_{\pi_\theta}(s,a)|_{a = \pi_\theta(s)}]
+\] 
+
+\subsection{Q-value Estimation}
+In deep Q-learning, the Q-function parameter 
+\end{theorem}
