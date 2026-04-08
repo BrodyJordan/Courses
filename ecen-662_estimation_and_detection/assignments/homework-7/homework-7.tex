@@ -1,0 +1,109 @@
+\documentclass{article}
+
+\input{../../course-info}
+\usepackage[
+    AssignmentName={Homework 7},
+    DueDate={April 12, 2026 at 11:59 PM}
+]{assignment}
+
+\usepackage{cancel}
+
+\begin{document}
+\MakeAssignmentTitle
+
+% ------ PROBLEM 1 ------ %
+\begin{homeworkProblem}
+
+  Let $X = (X_1, \dots, X_n)^t$ where
+  \[
+    X_i \iid Bernoulli(\theta),
+  \]
+  where $\theta$ is the unknown parameter. Assume that the prior distribution for $\Theta$ is $\Uc((0, 1))$.
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Find the Bayes estimator of $\theta$ under the squared-error loss.
+    \item Now let $X_{n+1}$ be a new observation such that $X_{n+1} \sim Bernoulli(\theta)$ and is
+          independent of X given $\theta$. Find $\mathbb{P}(X_{n+1} = 1|X)$. \newline
+  \end{enumerate}
+
+  \solution
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 2 ------ %
+\begin{homeworkProblem}
+
+  Suppose that $X$ has a density of exponential form
+  \[
+    f_\theta(x) \propto_{x} h(x) \exp \bp{\sum_{i=1}^{d} \theta_i T_i(x) - A(\theta)}
+  \]
+  where each $T_i(x)$ is differentiable.
+
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Show that if $X$ has support in real line and $g$ is any differentiable function such that $\E_\theta[g^{\prime}(X)] < \infty$, then
+          \[
+            \E_\theta \left[ \bp{\frac{h^{\prime}(X)}{h(X)} + \sum_{i=1}^{d} \theta_i T_i^{\prime}(X)} g(X) \right] = - \E_\theta[g^{\prime}(X)].
+          \]
+    \item Using part a), show that if $X \sim \Nc(\mu, \sigma^2)$, then
+          \[
+            \Cov_\theta[g(X), X] = \sigma^2 \E_\theta[g^{\prime} (X)]
+          \]
+          where $\theta = [\mu, \sigma^2]^t$.
+    \item Use part ii) to compute the third and fourth moments of $\Nc(\mu, \sigma^2)$. \newline
+  \end{enumerate}
+
+  \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 3 ------ %
+\begin{homeworkProblem}
+
+  Let
+  \[
+    f_\theta(x) = h(x) \exp(\theta x - A(\theta))
+  \]
+  be a one-parameter, canonical exponential family.
+
+  \begin{enumerate}[label=(\roman*), topsep=5pt, itemsep=5pt]
+    \item Show that for any prior $\pi(\theta)$,
+          \[
+            \E_\pi [\Theta \mid X = x] = \frac{d}{dx} \log \bp{\frac{m_\pi(x)}{h(x)}},
+          \]
+          where $m_\pi(x)$ is the marginal distribution of $X$.
+    \item Use part i) to prove Tweedie's formula:
+          \[
+            \E_\pi [ \Theta \mid X = x] = x + \frac{d}{dx} \log m_\pi(x),
+          \]
+          when $f_\theta$ is $\Nc(\theta, 1)$. \newline
+  \end{enumerate}
+
+  \solution
+
+\end{homeworkProblem}
+
+\pagebreak
+
+% ------ PROBLEM 4 ------ %
+\begin{homeworkProblem}
+
+  Assume that
+  \[
+    \Theta_i \iid \pi(\theta_i) \quad \text{and} \quad X_i \mid \Theta_i = \theta_i \ind Poisson(\theta_i),
+  \]
+  Show that for any prior $\pi$ and any $i \in [n]$, we have
+  \[
+    \mathbb{E}_\pi\left[\Theta_i \mid X_i=x_i\right]=\frac{\left(x_i+1\right) m_\pi\left(x_i+1\right)}{m_\pi\left(x_i\right)}=\frac{\left(x_i+1\right) \mathbb{E}_\pi\left[Y_{x_i+1}\right]}{\mathbb{E}_\pi\left[Y_{x_i}\right]},
+  \]
+  where $Y_x = \sum_{i=1}^{n} 1_{\{X_i = x\}}$. \\
+
+  \solution
+
+\end{homeworkProblem}
+
+\end{document}
+
