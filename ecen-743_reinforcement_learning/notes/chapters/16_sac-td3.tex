@@ -2,46 +2,46 @@
 \section{Soft Actor Critic (SAC) Algorithm}
 \subsection{Entropy Regularized RL}
 Standard RL objective:
-\[  
+\[
   \max_\pi \, \E[\sum_{t=0}^{\infty} \gamma^t r(s_t, a_t) ], \quad \text{where, } a_t \sim \pi(s_t, \cdot)
-\] 
+\]
 Entropy regularized RL objective:
 \[
   \max_{\pi} \, \E[\sum_{t=0}^{\infty} \gamma^t (r(s_t, a_t) - \alpha \log \pi(s_t, a_t))], \quad \text{where, } a_t \sim \pi(s_t, \cdot)
-\] 
+\]
 Entropy of a distribution $p$:
 \[
   H(p) = - \sum_{x} p(x) \log p(x)
-\] 
+\]
 So, this is also called maximum entropy RL:
 \[
   \max_{\pi} \, \E [\sum_{t=0}^{\infty} \gamma^t (r(s_t,a_t) + \alpha H(\pi(s_t, \cdot)))], \quad \text{where, } a_t \sim \pi(s_t, \cdot)
 \]
 \subsubsection{Why max-entropy?}
-You are essentially trying to find a policy that maximized the cumulative reward. What it also says is 
-that you want to maximize the cumulative reward, but select a stochastic policy with a little more randomness 
-to it. We want to introduce some randomness into action choice. \\ 
+You are essentially trying to find a policy that maximized the cumulative reward. What it also says is
+that you want to maximize the cumulative reward, but select a stochastic policy with a little more randomness
+to it. We want to introduce some randomness into action choice. \\
 
 \noindent It gives nicer objective functions from an optimization perspective.
 
 \section{Soft Values}
-Standard value function 
+Standard value function
 \[
   V_{\pi, \mu} = \E_{s\sim \mu} [V_\pi (s)]
-\] 
+\]
 Soft value function:
 \[
   V_{\pi,\mu}^s = \E[\sum_{t=0}^{\infty} \gamma^t (r(s_t, a_t) - \alpha \log (\pi(s_t, \cdot)))], \quad \text{where, } a_t \sim \pi(s_t, \cdot)
-\] 
-Denoting $H(\pi, \mu) = \E_{s\sim \rho_{\pi,\mu}} [H(\pi(s, \cdot))]$, we get 
+\]
+Denoting $H(\pi, \mu) = \E_{s\sim \rho_{\pi,\mu}} [H(\pi(s, \cdot))]$, we get
 \[
   V_{\pi,\mu}^s = V_{\pi,\mu} + \alpha H(\pi,\mu)
-\] 
-Denoting $\pi^*$ and $\pi^{*s}$ as the optimal policies of standard and regularized objectives, we get 
+\]
+Denoting $\pi^*$ and $\pi^{*s}$ as the optimal policies of standard and regularized objectives, we get
 \[
   V_{\pi^*, \mu} \leq V_{\pi^{*s}, \mu}^s \leq V_{\pi^*, \mu} + \frac{\alpha \log |\Ac|}{(1-\gamma)}
-\] 
-So, $\pi^{*s}$ could also be nearly optimal in terms of the standard value function, as long as the regularization parameter $\alpha$ is chosen 
+\]
+So, $\pi^{*s}$ could also be nearly optimal in terms of the standard value function, as long as the regularization parameter $\alpha$ is chosen
 to be sufficiently small.
 
 \subsection{Form of the Optimal Soft Policy}
@@ -49,7 +49,7 @@ We want to solve:
 \[
   \max_{\pi} \, \E_{a \sim \pi(s, \cdot)}[Q(s,a) - \alpha \log \pi(s, a)]
 \]
-Note that state $s$ is fixed. Writing it as $\sum_a \pi(s, a) Q(s, a) - \alpha \sum_{a} \pi(s, a) \log \pi(s, a)$, and taking gradient w.r.t. $\pi$ and equating it to zero, we get: \\ 
+Note that state $s$ is fixed. Writing it as $\sum_a \pi(s, a) Q(s, a) - \alpha \sum_{a} \pi(s, a) \log \pi(s, a)$, and taking gradient w.r.t. $\pi$ and equating it to zero, we get: \\
 
 \noindent Optimal soft policy has the softmax form:
 \[
@@ -57,78 +57,82 @@ Note that state $s$ is fixed. Writing it as $\sum_a \pi(s, a) Q(s, a) - \alpha \
 \]
 More precisely,
 \begin{align*}
-  \pi^{*s}(s,a) &= \exp \bp{\frac{1}{\alpha}(Q^{*s}(s, a) - V^{*s}(s))}, \text{ and, } \\ 
-  V^{*s}(s) &= \alpha \log \bp{\sum_{a} \exp(Q^{*s}(s,a)/\alpha)}
+  \pi^{*s}(s,a) & = \exp \bp{\frac{1}{\alpha}(Q^{*s}(s, a) - V^{*s}(s))}, \text{ and, } \\
+  V^{*s}(s)     & = \alpha \log \bp{\sum_{a} \exp(Q^{*s}(s,a)/\alpha)}
 \end{align*}
 
 \subsection{Soft Policy Evaluation}
 \[
-  T_{\pi}^s Q(s,a) = r(s,a) + \gamma \E_{s^{\prime}\sim P(s,a)}[V(s^{\prime})], \text{ where, } V(s) = \E_{a\sim\pi(s,\cdot)} [Q(s,a) - \alpha \log \pi(s, a)] 
-\] 
+  T_{\pi}^s Q(s,a) = r(s,a) + \gamma \E_{s^{\prime}\sim P(s,a)}[V(s^{\prime})], \text{ where, } V(s) = \E_{a\sim\pi(s,\cdot)} [Q(s,a) - \alpha \log \pi(s, a)]
+\]
 \subsection{Soft Bellman Operator}
 
 \subsection{Soft Policy Iteration}
-Similar to the standard policy iteration. Start with an initial policy $\pi_0$. For each $k$, 
-perform soft policy evaluation and soft policy update. \\ 
+Similar to the standard policy iteration. Start with an initial policy $\pi_0$. For each $k$,
+perform soft policy evaluation and soft policy update. \\
 
-\noindent Soft policy evaluation: Given the policy $\pi_k$, compute $Q_{\pi_k}^s$ \\ 
+\noindent Soft policy evaluation: Given the policy $\pi_k$, compute $Q_{\pi_k}^s$ \\
 
 \noindent Soft policy update: Given $Q_\pi^s$, update the policy to get $\pi_{k+1}(s,a) = \frac{1}{Z_{\pi_k}(s)}\exp(Q_{\pi_k}^s(s,a) / \alpha)$.
 
 \section{Off-policy Learning}
-Policy optimization algorithms such as PG, TRPO, PPO are on-policy learning algorithms. On-policy algorithms require new samples to be collected for every update 
-of the policy; data collected from the previous iterates is discarded in on-policy algorithms. On-policy data collection is expensive (in terms 
-of the number of gradient steps and samples per step needed); this is exacerbated in high dimensional complex tasks. Off-policy learning algorithms can reuse the 
-data from all learning episodes (recall the replay buffer in DQN). \\ 
+Policy optimization algorithms such as PG, TRPO, PPO are on-policy learning algorithms. On-policy algorithms require new samples to be collected for every update
+of the policy; data collected from the previous iterates is discarded in on-policy algorithms. On-policy data collection is expensive (in terms
+of the number of gradient steps and samples per step needed); this is exacerbated in high dimensional complex tasks. Off-policy learning algorithms can reuse the
+data from all learning episodes (recall the replay buffer in DQN). \\
 
 \noindent \textit{SAC is an off-policy policy optimization algorithm.}
 
 \section{Soft Actor-Critic Algorithm}
 \subsection{Q-Value update}
-Function approximation for soft Q-function $Q_\theta$ and policy $\pi_\phi$. Instead of running evaluation for each policy $\pi_k$ and performing 
-improvement using $Q_{\pi_k}^s$, SAC alternate between optimizating $\theta, \phi$ networks with stochastic gradient descent. \\ 
+Function approximation for soft Q-function $Q_\theta$ and policy $\pi_\phi$. Instead of running evaluation for each policy $\pi_k$ and performing
+improvement using $Q_{\pi_k}^s$, SAC alternate between optimizating $\theta, \phi$ networks with stochastic gradient descent. \\
 
-\noindent Soft Q-function parameter update: recall that $V_\pi^s(s) = \E_{a\sim\pi(s,\cdot)}[Q_\pi^s(s, a) - \alpha \log \pi(S, a)]$. So, we define the loss function $L_Q(\theta)$ as 
+\noindent Soft Q-function parameter update: recall that $V_\pi^s(s) = \E_{a\sim\pi(s,\cdot)}[Q_\pi^s(s, a) - \alpha \log \pi(S, a)]$. So, we define the loss function $L_Q(\theta)$ as
 \[
   L_Q(\theta) = (\frac{1}{2})\E_{(s,a,r,s^{\prime})\sim\Dc} [\bp{Q_\theta(s,a) - (r + \gamma \E_{a^{\prime} \sim \pi_\phi(s, \cdot)}[Q_{\overline{\theta}}(s^{\prime}, a^{\prime}) - \alpha \log \pi(s^{\prime}, a^{\prime})])}^2]
-\] 
-where, the target $\overline{\theta}$ is an exponentially moving average of past soft Q-function weights. The gradient of $L_Q(\theta)$ estimated using a single sample $(s, a, r, s^{\prime})$ and $a^{\prime}\sim\pi_\phi(s^{\prime}, \cdot)$ as 
+\]
+where, the target $\overline{\theta}$ is an exponentially moving average of past soft Q-function weights. The gradient of $L_Q(\theta)$ estimated using a single sample $(s, a, r, s^{\prime})$ and $a^{\prime}\sim\pi_\phi(s^{\prime}, \cdot)$ as
 \[
   \hat{\nabla}_\theta L_Q(\theta) = \nabla_\theta Q_\theta(s, a)(Q_\theta(s,a) - (r + \gamma \E_{})) % TODO: fix
-\] 
+\]
 
 \subsection{Policy update}
-Policy parameter update: SAC updates policy using the loss function 
+Policy parameter update: SAC updates policy using the loss function
 \[
-  L_\pi(\phi) = \E_{s\sim\Dc} \left[ D_{\text{KL}}(\pi_\phi(s, \cdot), \, \frac{1}{Z_\theta(s)} \exp(Q_\theta(s, \cdot) / \alpha)) \right] 
-\] 
-This can be rewritten as 
+  L_\pi(\phi) = \E_{s\sim\Dc} \left[ D_{\text{KL}}(\pi_\phi(s, \cdot), \, \frac{1}{Z_\theta(s)} \exp(Q_\theta(s, \cdot) / \alpha)) \right]
+\]
+This can be rewritten as
 \[
-  L_\pi(\phi) = \E_{s\sim\Dc}\E_{a \sim\pi_\phi(s, \cdot)} [ \alpha \log \pi_\phi(s, a) - Q_\theta(s, a)] 
-\] 
-Use $a \sim \Nc(\mu_\phi(s), I) \rightarrow a = \mu_\phi(s) + \epsilon = f_\phi(\epsilon; s)$, where $\epsilon$ is an input noise vector samples from a fixed distribution such as Gaussian. Then, 
-we can rewrite the above loss function as 
+  L_\pi(\phi) = \E_{s\sim\Dc}\E_{a \sim\pi_\phi(s, \cdot)} [ \alpha \log \pi_\phi(s, a) - Q_\theta(s, a)]
+\]
+Use $a \sim \Nc(\mu_\phi(s), I) \rightarrow a = \mu_\phi(s) + \epsilon = f_\phi(\epsilon; s)$, where $\epsilon$ is an input noise vector samples from a fixed distribution such as Gaussian. Then,
+we can rewrite the above loss function as
 \[
-  L_\pi(\phi) = \E_{s \sim \Dc} \E_{\epsilon \sim \Nc}[\log \pi_\phi(s, f_\phi(\epsilon; s)) - Q_\theta(s, f_\phi(\epsilon; s))] 
-\] 
+  L_\pi(\phi) = \E_{s \sim \Dc} \E_{\epsilon \sim \Nc}[\log \pi_\phi(s, f_\phi(\epsilon; s)) - Q_\theta(s, f_\phi(\epsilon; s))]
+\]
 The gradient can then be computed easily.
 % $a \sim \Nc(\mu_\phi(s), I)
 % $a = \mu_\phi(s) + \epsilon = f_\phi(\epsilon; s)
 
 \section{Twin Delayed Deep Deterministic Policy Gradient (TD3) Algorithm}
 \subsection{Deterministic Policy Gradient}
-Recall the (stochastic) policy gradient theorem 
+Recall the (stochastic) policy gradient theorem
 \[
   \nabla V_{\pi_\theta} = \frac{1}{(1-\gamma)} \E_{(s,a) \sim \rho_{\pi_\theta}(\cdot, \cdot)} [\nabla_\theta \log \pi_\theta (s,a) Q_{\pi_\theta}(s,a)]
-\] 
+\]
 \begin{theorem}
-Deterministic policy gradient theorem. \\ 
+  Deterministic policy gradient theorem. \\
 
-Let $\pi_\theta$ be a deterministic policy. Then 
-\[
-  \nabla_\theta V_{\pi_\theta} = \frac{1}{(1-\gamma)} \E_{s\sim\rho_{\pi_\theta}(\cdot)}[\nabla_\theta \pi_\theta(s) \nabla_a Q_{\pi_\theta}(s,a)|_{a = \pi_\theta(s)}]
-\] 
+  Let $\pi_\theta$ be a deterministic policy. Then
+  \[
+    \nabla_\theta V_{\pi_\theta} = \frac{1}{(1-\gamma)} \E_{s\sim\rho_{\pi_\theta}(\cdot)}[\nabla_\theta \pi_\theta(s) \nabla_a Q_{\pi_\theta}(s,a)|_{a = \pi_\theta(s)}]
+  \]
 
-\subsection{Q-value Estimation}
-In deep Q-learning, the Q-function parameter 
+  \subsection{Q-value Estimation}
+  In deep Q-learning, the Q-function parameter
 \end{theorem}
+
+\[
+  s \sim \rho_{\pi_{\theta}} (\cdot) [\nabla_\theta \pi_\theta(s)]
+\]
