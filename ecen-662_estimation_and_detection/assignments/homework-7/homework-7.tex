@@ -6,6 +6,7 @@
     DueDate={April 12, 2026 at 11:59 PM}
 ]{assignment}
 
+
 \usepackage{cancel}
 
 \begin{document}
@@ -26,6 +27,29 @@
   \end{enumerate}
 
   \solution
+
+  \textbf{Part (i):} We know the likelihood
+  \[
+    L(\theta \mid X) = \theta^{\sum_{i=1}^{n} X_i} (1 - \theta)^{n - \sum_{i=1}^{n} X_i}
+  \]
+  So
+  \[
+    \pi(\theta \mid X) \propto \theta^{\sum_{i=1}^{n} X_i} (1 - \theta)^{n - \sum_{i=1}^{n} X_i} \cdot 1
+  \]
+  Which means
+  \[
+    \E[\Theta | X] = \frac{\sum_{i=1}^{n} X_i + 1}{(\sum_{i=1}^{n} X_i + 1) + (n + 1 - \sum_{i=1}^{n} X_i)} = \frac{\sum_{i=1}^{n} X_i + 1}{n + 2}
+  \]
+  Which is the Bayes estimator under the squared-error loss. \\
+
+  \textbf{Part (ii):} We have
+  \[
+    \P(X_{n+1} = 1 \mid X) = \int_{0}^{1} \theta \pi(\theta \mid X) \, d\theta = \E[\P(X_{n+1} = 1 \mid X) \mid X] = \E[\Theta \mid X]
+  \]
+  So
+  \[
+    \P(X_{n+1} = 1 \mid X) = \frac{\sum_{i=1}^{n} X_i + 1}{n + 2}
+  \]
 
 
 \end{homeworkProblem}
@@ -56,6 +80,45 @@
 
   \solution
 
+  \textbf{Part (i):} We have
+  \[
+    \E_\theta[g^{\prime}(X)] = \int_{-\infty}^{\infty} g^{\prime}(x) f_\theta(x) \, dx = - \int_{-\infty}^{\infty} g(x) f_\theta^{\prime}(x) \, dx
+  \]
+  Where $f_\theta^{\prime}(x) = f_\theta(x) \bp{\frac{h^{\prime}(x)}{h(x)} + \sum_{i=1}^{d} \theta_i T_i^{\prime}(x)}$. So
+  \[
+    \E_\theta [g^{\prime} (X)] = - \int_{-\infty}^{\infty} g(x) f_\theta(x) \bp{\frac{h^{\prime}(x)}{h(x)} + \sum_{i=1}^{d} \theta_i T_i^{\prime}(x)} \, dx = - \E_\theta \left[ \bp{\frac{h^{\prime}(X)}{h(X)} + \sum_{i=1}^{d} \theta_i T_i^{\prime}(X)} g(X) \right]
+  \]
+
+  \textbf{Part (ii):} For $X \sim \Nc(\mu, \sigma^2)$, we have
+  \[
+    f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp \bp{-\frac{(x-\mu)^2}{2\sigma^2}} = \frac{1}{\sqrt{2\pi}} \exp \bp{\frac{\mu x}{\sigma^2} - \frac{x^2}{2\sigma^2} - \frac{\mu^2}{2\sigma^2} - \frac{1}{2} \log \sigma^2}
+  \]
+  Where $h(x) = \frac{1}{\sqrt{2\pi}}$, $h^{\prime} (x) = 0$, $\{\theta_1, \theta_2\} = \left(\frac{\mu}{\sigma^2}, -\frac{1}{2\sigma^2}\right)$, $\{T_1(x), T_2(x) \}  = \{ x, x^2 \}  \implies \{T_1^{\prime}(x), T_2^{\prime}(x) \}  = \{ 1, 2x \}$. Thus,
+  \begin{align*}
+    \E_\theta[g^{\prime} (X)] & = - \E_\theta \left[ \bp{\frac{h^{\prime}(X)}{h(X)} + \sum_{i=1}^{d} \theta_i T_i^{\prime}(X)} g(X) \right]            \\
+                              & = - \E_\theta \left[ \bp{\frac{0}{(2\pi)^{-{1}/{2}}} + \bp{-\frac{\mu}{\sigma^2} - \frac{2x}{2\sigma^2}}} g(X) \right] \\
+                              & = \E_\theta \left[ \frac{\mu + x}{\sigma^2} g(X) \right]
+  \end{align*}
+  Since $\Cov_\theta[g(X), X] = \E_\theta[g(X) X] - \E_\theta[g(X)] \E_\theta[X]$, we have
+  \[
+    \sigma^2\E_\theta[g^{\prime} (X)] = \Cov_\theta[g(X), X]
+  \]
+
+  \pagebreak
+
+  \textbf{Part (iii):} Third moment:
+  \begin{align*}
+    \E[X^3] & = 2\sigma^2\mu + \E[X^2]\E[X]           \\
+            & = 2\sigma^2\mu + (\sigma^2 + \mu^2) \mu \\
+            & = 3\sigma^2\mu + \mu^3
+  \end{align*}
+  Fourth moment:
+  \begin{align*}
+    \E[X^4] & = 3\sigma^2\E[X^2] + \E[X^3]\E[X]                          \\
+            & = 3\sigma^2(\sigma^2 + \mu^2) + (3\sigma^2\mu + \mu^3) \mu \\
+            & = 3\sigma^4 + 6\sigma^2\mu^2 + \mu^4
+  \end{align*}
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -84,6 +147,29 @@
 
   \solution
 
+  \textbf{Part (i):} We know
+  \[
+    m_\pi(x) = h(x) \int \pi(\theta) \exp(\theta x - A(\theta)) \, d\theta
+  \]
+  So
+  \[
+    \E_\pi[\Theta \mid X=x] = \frac{\int \theta f_\theta(x) \pi(\theta) \, d\theta}{m_\pi(x)} = \frac{h(x)}{m_\pi(x)} \int \theta \pi(\theta) \exp(\theta x - A(\theta)) \, d\theta
+  \]
+  And since $\nabla p = p + \nabla\log p$, we have
+  \[
+    \E_\pi [\Theta \mid X=x] = \frac{h(x)}{m_\pi(x)} \frac{d}{dx} \log \bp{\frac{m_\pi(x)}{h(x)}} = \frac{d}{dx} \log \bp{\frac{m_\pi(x)}{h(x)}}
+  \]
+
+  \textbf{Part (ii):}
+  We have
+  \[
+    f_\theta(x) = \frac{1}{2\pi} \exp(-\frac{(x-\theta)^2}{2})
+  \]
+  So $h(x) = \frac{1}{2\pi} \exp(-\frac{x^2}{2})$. Thus,
+  \[
+    \E_\pi[\Theta \mid X=x] = \frac{d}{dx} \log m_\pi(x) + \frac{d}{dx} \log \bp{\frac{1}{2\pi} \exp(-\frac{x^2}{2})} = x + \frac{d}{dx} \log m_\pi(x)
+  \]
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -102,6 +188,19 @@
   where $Y_x = \sum_{i=1}^{n} 1_{\{X_i = x\}}$. \\
 
   \solution
+
+  We know
+  \[
+    \E_\pi\left[\Theta_i \mid X_i=x_i\right] = \frac{\int \theta f_\theta(x_i) \pi(\theta) \, d\theta}{m_\pi(x_i)}
+  \]
+  and since $f_\theta(x) = \frac{\theta^x e^{-\theta}}{x!}$, we have
+  \[
+    \E_\pi[\Theta_i \mid X_i = x_i] = \frac{1}{x_i! m_\pi (x_i)} \int \theta^{x_i + 1} e^{-\theta} \pi(\theta) \, d\theta = \frac{(x_i + 1) m_\pi(x_i + 1)}{m_\pi(x_i)}
+  \]
+  Since $Y_x = \sum_{i=1}^{n} 1_{\{X_i = x\}}$, we have $\E_\pi[Y_x] = n \P(X_i = x) = n m_\pi(x)$. Thus,
+  \[
+    \E_\pi[\Theta_i | X_i = x_i] = \frac{nm_\pi(x_i + 1)}{nm_\pi(x_i)} = (x_i + 1) \frac{\E_\pi[Y_{x_i + 1}]}{\E_\pi[Y_{x_i}]} = \frac{(x_i + 1) m_\pi(x_i + 1)}{m_\pi(x_i)}
+  \]
 
 \end{homeworkProblem}
 
