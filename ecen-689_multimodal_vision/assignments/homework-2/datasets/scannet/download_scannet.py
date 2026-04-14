@@ -10,7 +10,7 @@ import tempfile
 import ssl 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-BASE_URL = 'http://kaldir.vc.cit.tum.de/scannet/'
+BASE_URL = 'https://kaldir.vc.cit.tum.de/scannet/'
 TOS_URL = BASE_URL + 'ScanNet_TOS.pdf'
 FILETYPES = ['.aggregation.json', '.sens', '.txt', '_vh_clean.ply', '_vh_clean_2.0.010000.segs.json', '_vh_clean_2.ply', '_vh_clean.segs.json', '_vh_clean.aggregation.json', '_vh_clean_2.labels.ply', '_2d-instance.zip', '_2d-instance-filt.zip', '_2d-label.zip', '_2d-label-filt.zip']
 FILETYPES_TEST = ['.sens', '.txt', '_vh_clean.ply', '_vh_clean_2.ply']
@@ -161,6 +161,7 @@ def main():
 
     release_file = BASE_URL + RELEASE + '.txt'
     release_scans = get_release_scans(release_file)
+    release_scans = release_scans[:100]
     file_types = FILETYPES;
     release_test_file = BASE_URL + RELEASE + '_test.txt'
     release_test_scans = [] if args.v1 else get_release_scans(release_test_file)

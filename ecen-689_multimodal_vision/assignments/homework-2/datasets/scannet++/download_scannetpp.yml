@@ -31,7 +31,7 @@
 token: XAcxq8FmeCQhc0CAlLvpqHS7wwtReBOOZ6NeU1deDaplLyGPht74J6iqJ5snDlqu
 ###### download the data here ######
 # specify an absolute path
-data_root: <DOWNLOAD_LOCATION_HERE>
+data_root: C:\\Users\\bljor\\Sync\\Courses\\ecen-689_multimodal_vision\\assignments\\homework-2\\datasets\\scannet++
 
 # root url of the data
 root_url: https://scannetpp.mlsg.cit.tum.de/scannetpp/download/v2?version=v1&token=TOKEN&file=FILEPATH
@@ -43,7 +43,7 @@ metadata_only: false
 dry_run: false
 
 # show output for each file being download and unzipped
-verbose: false
+verbose: true
 
 ###### specify the scenes to download ######
 # select the splits to download
@@ -53,7 +53,7 @@ download_splits: [nvs_sem_train, nvs_sem_val, nvs_test, sem_test, nvs_test_iphon
 # enter the scene IDs separated by comma
 # scene lists can be downloaded by setting metadata_only to true
 # an example scene ID is provided below
-# download_scenes: [56a0ec536c]
+#download_scenes: [56a0ec536c]
 
 ###### specify the assets to download ######
 # by default, these assets are downloaded for each scene:
