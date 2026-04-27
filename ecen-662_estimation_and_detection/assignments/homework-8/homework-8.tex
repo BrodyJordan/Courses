@@ -2,8 +2,8 @@
 
 \input{../../course-info}
 \usepackage[
-    AssignmentName={Homework 7},
-    DueDate={April 12, 2026 at 11:59 PM}
+    AssignmentName={Homework 8},
+    DueDate={April 26, 2026 at 11:59 PM}
 ]{assignment}
 
 
@@ -22,6 +22,20 @@
   \]
 
   \solution
+
+  Calculating CDF (with help from WolframAlpha):
+  \begin{align*}
+    F(x) & = \int_{0}^{x} \frac{t}{\sigma^2} \exp \bp{- \frac{t^2}{2\sigma^2}} dt \\
+         & = 1 - \exp \bp{- \frac{x^2}{2\sigma^2}}
+  \end{align*}
+  Now equating with $U$:
+  \begin{align*}
+    U          & = F(x)  = 1 - \exp \bp{- \frac{x^2}{2\sigma^2}} \\
+    U - 1      & = - \exp \bp{- \frac{x^2}{2\sigma^2}}           \\
+    1 - U      & = \exp \bp{- \frac{x^2}{2\sigma^2}}             \\
+    \ln(1 - U) & = - \frac{x^2}{2\sigma^2}                       \\
+    x          & = \sigma \sqrt{-2 \ln(1 - U)}
+  \end{align*}
 
 
 \end{homeworkProblem}
@@ -48,6 +62,28 @@
 
   \solution
 
+  \textbf{Part (i):} Setting the ratio $h(x) = \frac{f(x)}{g(x)}$:
+  \[
+    h(x) = \frac{\exp(-\frac{x^2}{2})}{\lambda \exp(-\lambda x)} = \frac{1}{\lambda} \exp\bp{-\frac{x^2}{2} + \lambda x}.
+  \]
+  And taking the derivative and equating to zero:
+  \[
+    \frac{d}{dx} \bp{-\frac{x^2}{2} + \lambda x} = -x + \lambda = 0 \implies x = \lambda.
+  \]
+  Now plugging back in:
+  \[
+    M(\lambda) = \frac{1}{\lambda} \exp\bp{\frac{\lambda^2}{2}}
+  \]
+
+  \textbf{Part (ii):} Differentiating the logarithm of $M(\lambda)$ and equating to zero:
+  \[
+    \frac{d}{d\lambda} \ln M(\lambda) = \frac{1}{M(\lambda)} \frac{d}{d\lambda} M(\lambda) = -\frac{1}{\lambda} + \frac{\lambda}{2} = 0
+  \]
+  Solving for $\lambda$:
+  \[
+    \lambda^2 = 2 \implies \lambda = \sqrt{2}
+  \]
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -70,6 +106,14 @@
   \end{enumerate}
 
   \solution
+
+  \textbf{Part (i):} The expected number of samples is given by
+  \begin{align*}
+    \E[X > 4] & = n \P(X>4) = 10^5 \int_{4}^{\infty} \frac{1}{\sqrt{2\pi}} \exp\bp{-\frac{x^2}{2}} \, dx \\
+              & = 3.167
+  \end{align*}
+
+  \textbf{Part (ii):} A Gaussian distribution with mean $\mu = 4$ and variance $\sigma^2 = 1$ would be an improvement as it is centered around the target region.
 
 \end{homeworkProblem}
 
@@ -94,6 +138,15 @@
   \end{enumerate}
 
   \solution
+
+  \textbf{Part (i):} The acceptance ratio is given by
+  \begin{align*}
+    \alpha(x_t, x^{\prime}) & = \min\bp{1, \frac{\pi(x^{\prime}) p(x^{\prime}, x_t)}{\pi(x_t) p(x_t, x^{\prime})}}                                          \\
+                            & = \min\bp{1, \frac{\exp(-\frac{(0-3)^2}{2}) + \exp(-\frac{(0+3)^2}{2})}{\exp(-\frac{(3-3)^2}{2}) + \exp(-\frac{(3+3)^2}{2})}} \\
+                            & = \min\bp{1, \frac{2\exp(-4.5)}{1 + \exp(-18)}} \approx 0.022
+  \end{align*}
+
+  \textbf{Part (ii):} If the proposal variance is set extremely small, the Markov Chain will make only small moves, lowering exploration. With extremely large proposal variance, many proposed states will result in rejection, reducing exploration.
 
 \end{homeworkProblem}
 
