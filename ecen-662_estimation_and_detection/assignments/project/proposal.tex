@@ -1,0 +1,258 @@
+% ============================================================
+% ECEN 662 Project Report
+% Compile: pdflatex proposal && bibtex proposal && pdflatex proposal && pdflatex proposal
+% Requires neurips_2025.sty in the same directory
+% ============================================================
+
+\documentclass{article}
+\usepackage[preprint]{neurips_2025}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\KL}{\mathrm{KL}}
+
+\title{The Many Faces of EM: Classical, Variational, Monte Carlo,
+       and Online Expectation-Maximization on Hidden Markov Models}
+
+\author{
+  Brody Jordan \\
+  Department of Electrical \& Computer Engineering \\
+  Texas A\&M University \\
+  \texttt{blj@tamu.edu}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  The Expectation-Maximization (EM) algorithm resolves the intractability of
+  maximum likelihood estimation in latent variable models via successive
+  approximation. When the E-step itself is intractable, three variants address
+  the bottleneck differently: Variational EM approximates the posterior with a
+  mean-field family, Monte Carlo EM estimates it via a particle filter, and
+  Online EM processes data one sequence at a time. This report compares all four
+  on Hidden Markov Models, where the exact Baum-Welch solution provides a
+  verifiable ground truth.
+\end{abstract}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+The central challenge in latent variable models is that the marginal
+likelihood requires integrating out the unobserved variable $U$:
+\begin{equation}
+  f_\theta(x) = \int f_\theta(x, u)\, du.
+  \label{eq:marginal}
+\end{equation}
+This integral appears \emph{inside} the log in the maximum likelihood estimation (MLE) objective, making
+direct maximization intractable \citep{liu_ecen662_em}. EM resolves this via
+successive approximation, but the E-step can itself become intractable for
+complex models. This project studies four strategies for handling that
+bottleneck on a shared Hidden Markov Model (HMM) testbed.
+
+% ============================================================
+\section{Background}
+% ============================================================
+
+\subsection{Maximum Likelihood Estimation with Latent Variables}
+
+Given observations $X$ and latent variables $U$, the MLE is
+\citep{liu_ecen662_em}:
+\begin{equation}
+  \hat\theta(x) \in \arg\max_{\theta \in \Theta}\; \log f_\theta(x),
+  \qquad f_\theta(x) = \int f_\theta(x, u)\, du.
+\end{equation}
+The marginalization inside the log is the core difficulty.
+
+\subsection{The Evidence Lower Bound (ELBO)}
+
+For any auxiliary distribution $q(u)$, the log-likelihood decomposes as
+\citep{liu_ecen662_em}:
+\begin{equation}
+  \log f_\theta(x)
+  \;=\;
+  \underbrace{
+    \E_q\!\left[\log f_\theta(x, u)\right] - \E_q\!\left[\log q(u)\right]
+  }_{\displaystyle\mathcal{L}(\theta,\, q)\ (\text{ELBO})}
+  \;+\;
+  \KL\!\left(q \;\|\; f_\theta(u \mid x)\right)
+  \;\geq\; \mathcal{L}(\theta,\, q).
+  \label{eq:elbo}
+\end{equation}
+Since $\KL \geq 0$, the ELBO is always a lower bound on the log-likelihood.
+Setting $q = f_\theta(u \mid x)$ collapses the KL term to zero and makes the
+bound tight.
+
+\subsection{The Computational Trap}
+
+For a Gaussian Mixture Model with $K$ components and $n$ observations, the
+evidence requires summing over all $K^n$ discrete assignment configurations
+\citep{liu_ecen662_vi}:
+\begin{equation}
+  m(x) = \sum_c p(c) \int f(\mu) \prod_{i=1}^n f(x_i \mid \mu_{c_i})\, d\mu.
+\end{equation}
+This scales exponentially in $n$, making exact inference strictly intractable.
+
+% ============================================================
+\section{Methods}
+% ============================================================
+
+All four methods alternate between an E-step (computing or approximating
+the posterior over latent states) and an M-step (updating $\theta$). They
+differ only in how the E-step is handled.
+
+\subsection{Base EM}
+\subsection{Variational EM (VEM)}
+\subsection{Expectation conditional maximization (ECM)}
+
+ECM \citep{meng1993maximum} addresses cases where the joint M-step maximization
+over all parameters is hard, but maximizing over subsets conditional on the
+others is tractable. Partition $\theta$ into subvectors
+$(\theta_1, \ldots, \theta_p)$. Each iteration proceeds as:
+
+\begin{algorithm}[ht]
+  \caption{Expectation Conditional Maximization (ECM) \citep{meng1993maximum}}
+  \begin{algorithmic}[1]
+    \State Initialize $\theta^{(0)}$
+    \Repeat
+    \State \textbf{E-step:} Compute
+    $Q(\theta,\, \theta^{(t)}) =
+      \mathbb{E}_{f(u \mid x,\, \theta^{(t)})}\!\left[\log f_\theta(x, u)\right]$
+    \For{$j = 1, \ldots, p$}
+    \State \textbf{CM-step $j$:}
+    $\theta_j^{(t+1)} = \arg\max_{\theta_j}\;
+      Q\!\left(\theta_j,\, \theta_{-j}^{(t+1)},\, \theta^{(t)}\right)$
+    \EndFor
+    \Until{$\left|\log f_{\theta^{(t+1)}}(x) - \log f_{\theta^{(t)}}(x)\right| < \varepsilon$}
+  \end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Generalized EM (GEM)}
+
+% \subsection{The EM Algorithm}
+
+% The E-step computes the exact posterior marginals via the forward-backward
+% algorithm \citep{liu_ecen662_em}. Define:
+% \begin{align}
+%   \alpha_t(k) & = p(x_1, \ldots, x_t,\, Z_t = k),       \\
+%   \beta_t(k)  & = p(x_{t+1}, \ldots, x_T \mid Z_t = k).
+% \end{align}
+% The posterior state marginals and pairwise marginals are:
+% \begin{align}
+%   \gamma_t(k) & = \frac{\alpha_t(k)\,\beta_t(k)}{\sum_j \alpha_t(j)\,\beta_t(j)},
+%   \label{eq:gamma}                                                                      \\
+%   \xi_t(j, k) & \propto \alpha_t(j)\,A_{jk}\,p(x_{t+1} \mid Z_{t+1}=k)\,\beta_{t+1}(k).
+%   \label{eq:xi}
+% \end{align}
+% The M-step updates $\theta$ in closed form using $\gamma_t(k)$ and $\xi_t(j,k)$:
+% \begin{equation}
+%   \hat\mu_k = \frac{\sum_t \gamma_t(k)\,x_t}{\sum_t \gamma_t(k)}, \qquad
+%   \hat A_{jk} = \frac{\sum_t \xi_t(j,k)}{\sum_t \gamma_t(j)}.
+%   \label{eq:mstep}
+% \end{equation}
+
+% \begin{algorithm}[ht]
+%   \caption{The EM Algorithm}
+%   \begin{algorithmic}[1]
+%     \State Initialize $\theta^{(0)}$
+%     \Repeat
+%     \State \textbf{E-step:} Run forward-backward to compute
+%     $\gamma_t(k)$, $\xi_t(j,k)$ for all $t$, $k$
+%     \State \textbf{M-step:} Update $\theta$ via Eq.~\eqref{eq:mstep}
+%     \Until{$|\log f_{\theta^{(t+1)}}(x) - \log f_{\theta^{(t)}}(x)| < \varepsilon$}
+%   \end{algorithmic}
+% \end{algorithm}
+
+% \subsection{Variational EM}
+
+% When the exact posterior is intractable, VI replaces it with the closest
+% member of a tractable family $\mathcal{Q}$ \citep{liu_ecen662_vi}:
+% \begin{equation}
+%   q^* = \arg\min_{q \in \mathcal{Q}}\; \KL\!\left(q(z_{1:T}) \;\|\; f_\theta(z_{1:T} \mid x)\right).
+%   \label{eq:vi}
+% \end{equation}
+% We use the mean-field family $\mathcal{Q} = \{q : q(z_{1:T}) = \prod_t q_t(z_t)\}$.
+% The coordinate-ascent update for each factor is \citep{liu_ecen662_vi}:
+% \begin{equation}
+%   \log q_t^*(z_t = k) \;\propto\;
+%   \log p(x_t \mid k)
+%   + \sum_j q_{t-1}(j) \log A_{jk}
+%   + \sum_j q_{t+1}(j) \log A_{kj}.
+%   \label{eq:mf}
+% \end{equation}
+% The M-step substitutes $q_t(k)$ for $\gamma_t(k)$ in Eq.~\eqref{eq:mstep}.
+
+% \subsection{Monte Carlo EM (MCEM)}
+
+% The E-step expectation is estimated with $M$ particles via a bootstrap
+% particle filter. At each time step:
+% \begin{align}
+%   z_t^{(m)} & \sim \mathrm{Cat}\!\left(A_{z_{t-1}^{(m)},\cdot}\right), \\
+%   w_t^{(m)} & \propto p\!\left(x_t \mid z_t^{(m)}\right), \quad
+%   \hat\gamma_t(k) = \sum_{m=1}^M w_t^{(m)}\,\mathbf{1}\!\left[z_t^{(m)} = k\right].
+%   \label{eq:mcem}
+% \end{align}
+% As $M \to \infty$, $\hat\gamma_t(k) \to \gamma_t(k)$ (the exact Baum-Welch
+% marginal). The M-step is identical to Eq.~\eqref{eq:mstep}.
+
+% \subsection{Online EM}
+
+% Because the HMM complete-data log-likelihood belongs to the exponential
+% family, the M-step only requires sufficient statistics $s(x, z)$.
+% Online EM maintains a running average updated after each sequence
+% \citep{liu_ecen662_em}:
+% \begin{equation}
+%   \bar S_s = (1 - \eta_s)\,\bar S_{s-1}
+%   + \eta_s\,\E_{f(z \mid x^{(s)},\,\theta_{s-1})}\!\left[s\!\left(x^{(s)}, z\right)\right],
+%   \label{eq:online}
+% \end{equation}
+% with step size $\eta_s = (s + \tau)^{-\kappa}$, $\kappa \in (\tfrac{1}{2}, 1]$.
+% The M-step computes $\theta_s$ from $\bar S_s$ in closed form after each sequence.
+
+\pagebreak
+
+% ============================================================
+\section{Experiments}
+% ============================================================
+
+We generate $S = 50$ sequences of length $T = 100$ from a $K = 3$ state HMM
+with known ground truth parameters:
+\begin{equation}
+  \pi^* = (0.4,\; 0.35,\; 0.25), \quad
+  A^* = \begin{pmatrix} 0.7 & 0.2 & 0.1 \\ 0.1 & 0.6 & 0.3 \\ 0.2 & 0.2 & 0.6 \end{pmatrix}, \quad
+  \mu^* = (-3,\; 0,\; 3), \quad
+  \sigma^* = (0.8,\; 0.8,\; 0.8).
+\end{equation}
+All four methods are initialized from the same random starting point.
+We evaluate: (1) log-likelihood $\sum_s \log f_\theta(x^{(s)})$ vs.\ iteration,
+(2) parameter RMSE $\|\hat\mu - \mu^*\|_2 / \sqrt{K}$ after optimal state
+relabeling, and (3) the MCEM bias-variance tradeoff over
+$M \in \{10, 25, 50, 100, 200, 500\}$.
+
+% ============================================================
+\section{Discussion}
+% ============================================================
+
+The four methods expose a fundamental tradeoff: Baum-Welch is exact but
+assumes a tractable E-step; Variational EM introduces a structural bias via
+the mean-field independence assumption; MCEM is asymptotically unbiased but
+noisy for small $M$; and Online EM trades per-iteration accuracy for
+scalability. Together, they illustrate that every variant of EM is maximizing
+the same ELBO from Eq.~\eqref{eq:elbo}---the differences lie entirely in how
+the intractable E-step is handled.
+
+% ============================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

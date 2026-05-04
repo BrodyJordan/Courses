@@ -1,0 +1,460 @@
+% ============================================================
+% ECEN 662 Project Report
+% Compile: pdflatex proposal && bibtex proposal && pdflatex proposal && pdflatex proposal
+% Requires neurips_2026.sty in the same directory
+% ============================================================
+
+\documentclass{article}
+\usepackage[final]{neurips_2026}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+
+
+\makeatletter
+\def\@noticestring{}
+\makeatother
+
+% Method palette (matches the Python script's METHOD_COLORS).
+\definecolor{baseColor}{HTML}{1F77B4}
+\definecolor{vemColor}{HTML}{D62728}
+\definecolor{ecmColor}{HTML}{2CA02C}
+\definecolor{gemColor}{HTML}{9467BD}
+
+% Shared pgfplots style for all EM panels.
+\pgfplotsset{
+  emaxis/.style={
+    width=0.48\linewidth,
+    height=0.36\linewidth,
+    grid=both,
+    grid style={dashed, gray!30},
+    tick label style={font=\footnotesize},
+    label style={font=\small},
+    title style={font=\small, yshift=-1ex},
+    legend cell align={left},
+    legend style={font=\footnotesize, fill=white, fill opacity=0.85,
+                  draw=none, inner sep=2pt},
+  },
+}
+
+% Band+median line driven by columns <prefix>_p25, <prefix>_med, <prefix>_p75
+% in the data file passed as the first argument.
+% #1 file, #2 color, #3 prefix, #4 x-column key, #5 legend label
+\newcommand{\embandline}[5]{%
+  \addplot[name path=#3lo, draw=none, forget plot]
+    table[x=#4, y=#3_p25, col sep=comma] {#1};
+  \addplot[name path=#3hi, draw=none, forget plot]
+    table[x=#4, y=#3_p75, col sep=comma] {#1};
+  \addplot[#2, opacity=0.18, draw=none, forget plot]
+    fill between[of=#3lo and #3hi];
+  \addplot[#2, very thick]
+    table[x=#4, y=#3_med, col sep=comma] {#1};
+  \addlegendentry{#5}%
+}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\KL}{\mathrm{KL}}
+
+\title{A Comparative Study of EM Variants}
+
+\author{%
+  Brody Jordan \\
+  Department of Electrical \& Computer Engineering \\
+  Texas A\&M University \\
+  \texttt{blj@tamu.edu} \\
+}
+
+\begin{document}
+\maketitle
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{fillbetween}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+\subsection{Topic Selection}
+While reviewing the lecture notes for this course, I found the EM algorithm section particularly interesting. Notably,
+in the later slides, a few different variants of the EM algorithm were briefly mentioned, but not explored in depth. I
+decided to implement and compare these variants on a shared testbed to better understand their operational
+differences. So while there is
+some experimentation, I think it is closer to a reading project.
+
+\subsection{Problem Overview}
+The central challenge in latent variable models is that the marginal
+likelihood requires integrating out the unobserved variable $U$:
+\begin{equation}
+  f_\theta(x) = \int f_\theta(x, u)\, du.
+  \label{eq:marginal}
+\end{equation}
+This integral appears inside the log in the maximum likelihood
+estimation (MLE) objective, making direct maximization infeasible.
+EM resolves this via successive approximation, but
+compute requirements can still be a bottleneck for more complex models.
+% This project
+% studies four strategies for handling that bottleneck on a shared Hidden
+% Markov Model (HMM) testbed.
+
+% ============================================================
+\section{Background}
+% ============================================================
+
+\subsection{Maximum Likelihood Estimation with Latent Variables}
+
+Given observations $X$ and latent variables $U$, the MLE problem is:
+\begin{equation}
+  \hat\theta(x) \in \arg\max_{\theta \in \Theta}\; \log f_\theta(x),
+  \qquad f_\theta(x) = \int f_\theta(x, u)\, du.
+\end{equation}
+The marginalization inside the log is the core difficulty.
+
+\subsection{The Evidence Lower Bound (ELBO)}
+
+For any auxiliary distribution $q(u)$, the log-likelihood decomposes as:
+\begin{equation}
+  \log f_\theta(x)
+  \;=\;
+  \underbrace{
+    \E_q\!\left[\log f_\theta(x, u)\right] - \E_q\!\left[\log q(u)\right]
+  }_{\displaystyle F(q,\, \theta)\ (\text{ELBO})}
+  \;+\;
+  \KL\!\left(q \;\|\; f_\theta(u \mid x)\right)
+  \;\geq\; F(q,\, \theta).
+  \label{eq:elbo}
+\end{equation}
+Since $\KL \geq 0$, the ELBO is always a lower bound on the log-likelihood.
+Setting $q = f_\theta(u \mid x)$ collapses the KL term to zero and makes the
+bound tight.
+
+\subsection{Computational Complexity}
+
+For a Gaussian Mixture Model with $K$ components and $n$ observations, the
+evidence requires summing over all $K^n$ discrete assignment configurations:
+\begin{equation}
+  m(x) = \sum_c p(c) \int f(\mu) \prod_{i=1}^n f(x_i \mid \mu_{c_i})\, d\mu.
+\end{equation}
+This scales exponentially in $n$, making exact inference strictly intractable.
+
+
+% ============================================================
+\section{Methods}
+% ============================================================
+
+All four methods alternate between an E-step (computing or approximating
+the posterior over latent states) and an M-step (updating $\theta$). They
+differ in how the E-step and M-step are handled.
+
+\subsection{Base EM}
+
+Beginning with the base EM algorithm, we define:
+\begin{align}
+  \alpha_t(k) & = f_\theta(x_1, \ldots, x_t,\, Z_t = k),       \\
+  \beta_t(k)  & = f_\theta(x_{t+1}, \ldots, x_T \mid Z_t = k).
+\end{align}
+The posterior state marginals and pairwise marginals are
+\begin{align}
+  \gamma_t(k) & = \frac{\alpha_t(k)\,\beta_t(k)}{\sum_j \alpha_t(j)\,\beta_t(j)},
+  \label{eq:gamma}                                                                             \\
+  \xi_t(j, k) & \propto \alpha_t(j)\,A_{jk}\,f_\theta(x_{t+1} \mid Z_{t+1}=k)\,\beta_{t+1}(k).
+  \label{eq:xi}
+\end{align}
+With $q^{(t)}(z) = f_{\theta^{(t-1)}}(z \mid x)$ the $\KL$ term in
+Eq.~\eqref{eq:elbo} vanishes, so the M-step maximizes
+$\E_{q^{(t)}}[\log f_\theta(x, U)]$, which separates over $\theta$
+because all summations move outside the logarithm. The Lagrangian derivation extends
+to the chain-structured statistics $\gamma_t, \xi_t$, giving the
+closed-form updates
+\begin{equation}
+  \hat\pi_k = \gamma_1(k), \qquad
+  \hat A_{jk} = \frac{\sum_t \xi_t(j,k)}{\sum_t \gamma_t(j)}, \qquad
+  \hat\mu_k = \frac{\sum_t \gamma_t(k)\,x_t}{\sum_t \gamma_t(k)}, \qquad
+  \hat\sigma_k^2 = \frac{\sum_t \gamma_t(k)\,(x_t - \hat\mu_k)^2}{\sum_t \gamma_t(k)}.
+  \label{eq:bw-mstep}
+\end{equation}
+
+\begin{algorithm}[ht]
+  \caption{Base EM (Baum--Welch)}
+  \begin{algorithmic}[1]
+    \State Initialize $\theta^{(0)}$
+    \Repeat
+    \State \textbf{E-step:} Run forward--backward to compute
+    $\gamma_t(k)$, $\xi_t(j,k)$ via Eqs.~\eqref{eq:gamma}--\eqref{eq:xi}
+    \State \textbf{M-step:} Update $\theta^{(t)}$ via Eq.~\eqref{eq:bw-mstep}
+    \Until{$|\log f_{\theta^{(t)}}(x) - \log f_{\theta^{(t-1)}}(x)| < \varepsilon$}
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Variational EM (VEM)}
+
+VEM restricts $q$ to a tractable family $\mathcal{Q}$ to handle settings
+where the exact posterior is intractable. Start by adopting the mean-field family
+$q(z) = \prod_{t=1}^T q_t(z_t)$, which discards the chain dependencies
+preserved by Eqs.~\eqref{eq:gamma}--\eqref{eq:xi}. The E-step is the
+Coordinate Ascent Variational Inference (CAVI) sweep: cycling through $t = 1, \ldots, T$, update
+\begin{equation}
+  \log q_t(k) \;\propto\;
+  \log \mathcal{N}(x_t; \mu_k, \sigma_k^2)
+  \;+\; \sum_j q_{t-1}(j)\,\log A_{jk}
+  \;+\; \sum_j q_{t+1}(j)\,\log A_{kj},
+  \label{eq:vem-q}
+\end{equation}
+which is the HMM specialization of the generic CAVI rule
+$\log q_j \propto \E_{-j}[\log f(\Theta_j, \Theta_{-j}, x)]$.
+After CAVI converges, the chain-aware
+$\gamma_t, \xi_t$ in Eq.~\eqref{eq:bw-mstep} are replaced by their
+mean-field surrogates
+\begin{equation}
+  \tilde\gamma_t(k) = q_t(k), \qquad
+  \tilde\xi_t(j,k)  = q_t(j)\, q_{t+1}(k),
+  \label{eq:vem-stats}
+\end{equation}
+and the M-step then applies Eq.~\eqref{eq:bw-mstep} with these
+substitutions. Because $q$ is restricted to $\mathcal{Q}$, the $\KL$
+term in Eq.~\eqref{eq:elbo} does not vanish and VEM maximizes a strict
+lower bound on $\log f_\theta(x)$.
+
+\begin{algorithm}[ht]
+  \caption{Variational EM (mean-field)}
+  \begin{algorithmic}[1]
+    \State Initialize $\theta^{(0)}$ and $q^{(0)}(z) = \prod_t q_t^{(0)}(z_t)$
+    \Repeat
+    \State \textbf{E-step:} Sweep CAVI updates Eq.~\eqref{eq:vem-q} until
+    the ELBO converges; form $\tilde\gamma_t, \tilde\xi_t$ via
+    Eq.~\eqref{eq:vem-stats}
+    \State \textbf{M-step:} Update $\theta^{(t)}$ via
+    Eq.~\eqref{eq:bw-mstep} with $\tilde\gamma_t, \tilde\xi_t$ in place
+    of $\gamma_t, \xi_t$
+    \Until{$|F(q^{(t)},\theta^{(t)}) - F(q^{(t-1)},\theta^{(t-1)})| < \varepsilon$}
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Expectation conditional maximization (ECM)}
+
+ECM replaces the joint M-step of
+Eq.~\eqref{eq:bw-mstep} with a sequence of conditional maximizations
+over parameter blocks. We partition $\theta$ into a dynamics block
+$\theta_d = (\pi, A)$ and a $(\mu, \sigma^2)$ block
+$\theta_e = (\mu_{1:K}, \sigma_{1:K}^2)$. The first CM-step uses
+$\gamma_t, \xi_t$ from Eqs.~\eqref{eq:gamma}--\eqref{eq:xi} computed
+under $\theta^{(t-1)}$ and updates only the dynamics:
+\begin{equation}
+  \hat\pi_k = \gamma_1(k), \qquad
+  \hat A_{jk} = \frac{\sum_t \xi_t(j,k)}{\sum_t \gamma_t(j)}.
+  \label{eq:ecm-cm1}
+\end{equation}
+We then refresh the E-step under
+$(\hat\pi, \hat A, \mu^{(t-1)}, \sigma^{(t-1)})$ to obtain new marginals
+$\gamma_t^{\,\prime}$, and the second CM-step updates $(\mu, \sigma^2)$
+using these refreshed posteriors:
+\begin{equation}
+  \hat\mu_k = \frac{\sum_t \gamma_t^{\,\prime}(k)\, x_t}{\sum_t \gamma_t^{\,\prime}(k)},
+  \qquad
+  \hat\sigma_k^2 = \frac{\sum_t \gamma_t^{\,\prime}(k)\,(x_t - \hat\mu_k)^2}{\sum_t \gamma_t^{\,\prime}(k)}.
+  \label{eq:ecm-cm2}
+\end{equation}
+Each CM-step is a partial maximization of $F(q, \theta)$, so ECM
+inherits the monotone ascent of EM; the cost is
+one additional forward--backward pass per outer iteration.
+
+\begin{algorithm}[ht]
+  \caption{Expectation Conditional Maximization (ECM)}
+  \begin{algorithmic}[1]
+    \State Initialize $\theta^{(0)} = (\pi^{(0)}, A^{(0)}, \mu^{(0)}, \sigma^{(0)})$
+    \Repeat
+    \State \textbf{E-step 1:} Run forward--backward under
+    $\theta^{(t-1)}$ to compute $\gamma_t, \xi_t$ via
+    Eqs.~\eqref{eq:gamma}--\eqref{eq:xi}
+    \State \textbf{CM-step 1:} Update $(\pi, A)$ via Eq.~\eqref{eq:ecm-cm1}
+    \State \textbf{E-step 2:} Run forward--backward under
+    $(\hat\pi, \hat A, \mu^{(t-1)}, \sigma^{(t-1)})$ to obtain
+    $\gamma_t^{\,\prime}$
+    \State \textbf{CM-step 2:} Update $(\mu, \sigma^2)$ via Eq.~\eqref{eq:ecm-cm2}
+    \Until{$|\log f_{\theta^{(t)}}(x) - \log f_{\theta^{(t-1)}}(x)| < \varepsilon$}
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Generalized EM (GEM)}
+
+GEM relaxes the M-step to require only a non-decreasing update
+of $F(q^{(t)}, \theta)$. We instantiate this
+with a damped step toward the Base EM maximizer
+$\hat\theta^{(t)}$ defined by Eq.~\eqref{eq:bw-mstep}.
+Here the update is
+\begin{equation}
+  \eta^{(t)} \;=\; (1 - \alpha)\, \eta^{(t-1)} \;+\; \alpha\,
+  \hat\eta^{(t)},
+  \qquad \alpha \in (0, 1],
+  \label{eq:gem-update}
+\end{equation}
+And any $\alpha \in (0, 1]$ yields a non-decreasing update
+and therefore a valid GEM step; $\alpha = 1$
+recovers Base EM. We use $\alpha = 0.5$ throughout to expose the
+convergence-rate cost of an inexact M-step.
+
+\begin{algorithm}[ht]
+  \caption{Generalized EM with damped M-step}
+  \begin{algorithmic}[1]
+    \Require Damping coefficient $\alpha \in (0, 1]$
+    \State Initialize $\theta^{(0)}$
+    \Repeat
+    \State \textbf{E-step:} Run forward--backward to compute
+    $\gamma_t, \xi_t$ via Eqs.~\eqref{eq:gamma}--\eqref{eq:xi}
+    \State \textbf{M-step:} Compute $\hat\theta^{(t)}$
+    via Eq.~\eqref{eq:bw-mstep}; update $\theta^{(t)}$ via
+    Eq.~\eqref{eq:gem-update}
+    \Until{$|\log f_{\theta^{(t)}}(x) - \log f_{\theta^{(t-1)}}(x)| < \varepsilon$}
+  \end{algorithmic}
+\end{algorithm}
+
+
+\pagebreak
+
+% ============================================================
+\section{Experiments}
+% ============================================================
+
+\paragraph{Setup.} We start by generating some HMMs, then simulate a large number of observations from each truth and run the four
+methods for from a shared initialization. Convergence
+is reported as the excess log-likelihood
+$\log f_\theta(x) - \log f_{\theta^\star}(x)$ so that trajectories
+aggregate across the random truths.
+
+\paragraph{Convergence and $\hat\mu$ recovery.}
+Figure~\ref{fig:em-comparison} shows convergence per iteration. Base
+EM, ECM, and VEM close the gap to the MLE within $10$
+iterations or so while GEM ($\alpha = 0.5$) takes roughly twice as long. The $\hat\mu$ error in panel (b)
+shows the log-likelihood trajectory for each method.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{groupplot}[
+        group style={group size=2 by 1, horizontal sep=1.6cm},
+        emaxis,
+      ]
+      \nextgroupplot[
+        title={(a) Convergence vs.\ iteration},
+        xlabel={EM iteration},
+        ylabel={$\log f_\theta(x) - \log f_{\theta^\star}(x)$},
+        xmin=0, xmax=30,
+        legend style={at={(0.97,0.04)}, anchor=south east},
+      ]
+      \embandline{../code/convergence_iter.csv}{baseColor}{base}{iter}{Base EM}
+      \embandline{../code/convergence_iter.csv}{vemColor}{vem}{iter}{VEM}
+      \embandline{../code/convergence_iter.csv}{ecmColor}{ecm}{iter}{ECM}
+      \embandline{../code/convergence_iter.csv}{gemColor}{gem}{iter}{GEM}
+
+      \nextgroupplot[
+        title={(b) $\hat\mu$ recovery},
+        xlabel={EM iteration},
+        ylabel={$\tfrac{1}{K}\sum_k |\hat\mu_k - \mu_k^\star|$},
+        ymode=log, xmin=0, xmax=30,
+        legend style={at={(0.97,0.96)}, anchor=north east},
+      ]
+      \embandline{../code/mu_error.csv}{baseColor}{base}{iter}{Base EM}
+      \embandline{../code/mu_error.csv}{vemColor}{vem}{iter}{VEM}
+      \embandline{../code/mu_error.csv}{ecmColor}{ecm}{iter}{ECM}
+      \embandline{../code/mu_error.csv}{gemColor}{gem}{iter}{GEM}
+    \end{groupplot}
+  \end{tikzpicture}
+  \caption{EM variants on Gaussian HMMs with random ground truth.
+    (a) Excess log-likelihood. (b) $\hat\mu$ error.}
+  \label{fig:em-comparison}
+\end{figure}
+
+\paragraph{Distance to the true distribution.}
+Figure~\ref{fig:em-dist} plots a composite distance between each
+recovered HMM and the ground truth.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        emaxis,
+        width=0.66\linewidth, height=0.42\linewidth,
+        title={Distance to true HMM vs.\ iteration},
+        xlabel={EM iteration},
+        ylabel={Composite distance to $\theta^\star$},
+        xmin=0, xmax=40,
+        legend style={at={(0.97,0.96)}, anchor=north east},
+      ]
+      \embandline{../code/dist_to_truth.csv}{baseColor}{base}{iter}{Base EM}
+      \embandline{../code/dist_to_truth.csv}{vemColor}{vem}{iter}{VEM}
+      \embandline{../code/dist_to_truth.csv}{ecmColor}{ecm}{iter}{ECM}
+      \embandline{../code/dist_to_truth.csv}{gemColor}{gem}{iter}{GEM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Distance to $\theta^\star$ across iterations.}
+  \label{fig:em-dist}
+\end{figure}
+
+\paragraph{Recovered marginal density.}
+Figure~\ref{fig:em-density} compares the stationary marginal
+$p_\theta(x) = \sum_k \pi^\infty_k \, \mathcal{N}(x; \mu_k, \sigma_k^2)$
+under each method to the truth on a single random selection, with the
+empirical histogram of the observations as backdrop. Base
+EM, ECM, and VEM lay close to the ground truth, while GEM does not quickly close the distance.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        emaxis,
+        width=0.78\linewidth, height=0.40\linewidth,
+        title={Recovered marginal density vs.\ truth},
+        xlabel={$x$}, ylabel={Density},
+        ymin=0,
+        legend style={at={(0.97,0.96)}, anchor=north east},
+      ]
+      \addplot[ybar interval, fill=gray!30, draw=gray!55,
+        fill opacity=0.6, forget plot]
+      table[x=x, y=density, col sep=comma] {../code/density_hist.csv};
+      \addplot[black, very thick, dashed]
+      table[x=x, y=truth_pdf, col sep=comma] {../code/density_curves.csv};
+      \addlegendentry{Truth}
+      \addplot[baseColor, thick]
+      table[x=x, y=base_pdf, col sep=comma] {../code/density_curves.csv};
+      \addlegendentry{Base EM}
+      \addplot[vemColor, thick]
+      table[x=x, y=vem_pdf, col sep=comma] {../code/density_curves.csv};
+      \addlegendentry{VEM}
+      \addplot[ecmColor, thick]
+      table[x=x, y=ecm_pdf, col sep=comma] {../code/density_curves.csv};
+      \addlegendentry{ECM}
+      \addplot[gemColor, thick]
+      table[x=x, y=gem_pdf, col sep=comma] {../code/density_curves.csv};
+      \addlegendentry{GEM}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Recovered marginal density.}
+  \label{fig:em-density}
+\end{figure}
+
+
+\pagebreak
+% ============================================================
+\section{Discussion}
+% ============================================================
+
+
+Each of the four tested algorithms converges fairly quickly to the ground truth but not all at the same rate.
+Base EM, ECM, and VEM all reach the MLE within about $10$ iterations, while GEM ($\alpha = 0.5$) takes roughly twice as long.
+I found that it is preferable to use Base EM when
+feasible, and to utilize a variant only algorithm when a
+harder model forces such a choice.
+
+
+% ============================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

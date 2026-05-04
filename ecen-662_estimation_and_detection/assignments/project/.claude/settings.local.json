@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"C:/Users/bljor/Sync/Courses/ecen-662_estimation_and_detection/assignments/project/.venv/Scripts/python.exe\" -c \"import numpy, scipy, matplotlib; print\\('venv has:', numpy.__version__, scipy.__version__, matplotlib.__version__\\)\")",
+      "Bash(\".venv/Scripts/python.exe\" code/em_comparison.py)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "Bash(../.venv/Scripts/python.exe -c ' *)"
+    ]
+  }
+}

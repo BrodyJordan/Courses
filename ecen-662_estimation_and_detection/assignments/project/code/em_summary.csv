@@ -1,0 +1,5 @@
+method,final_ll_excess_mean,final_ll_excess_std,final_dist_mean,final_dist_std,iters
+base,6.5154,2.7186,0.6462,0.1850,80
+vem,5.9883,2.4925,0.6571,0.1906,80
+ecm,6.5154,2.7186,0.6463,0.1850,80
+gem,6.5084,2.7147,0.6456,0.1850,80
